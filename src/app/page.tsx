@@ -6,6 +6,13 @@ type ProjectLink = {
   url: string;
 };
 
+type Interest = {
+  title: string;
+  image: string;
+  url?: string;
+  objectPosition?: string;
+};
+
 const experiences = [
   {
     role: "Founder",
@@ -17,6 +24,10 @@ const experiences = [
     links: [
       { label: "Napoleon App", url: "https://www.napoleonapp.com/en" },
       { label: "Time Left Association", url: "https://www.timeleft.ong/" },
+      {
+        label: "Customer Interview",
+        url: "https://www.linkedin.com/posts/nathanhirsch2_i-read-i-write-now-i-bought-my-first-activity-7343888302053158914-3R64?utm_source=share&utm_medium=member_desktop&rcm=ACoAABhbRQwBC46hhXT9jjObVyFGHWJ5npJc_b4",
+      },
     ] as ProjectLink[],
   },
   {
@@ -94,24 +105,77 @@ const experiences = [
   },
 ];
 
+const education = [
+  {
+    degree: "Master of Science in Entrepreneurship (MSc)",
+    school: "EDHEC Business School",
+    detail: "Graduated in 2017",
+    url: "https://www.edhec.edu/en",
+  },
+  {
+    degree: "Prep. Class for French Business Schools",
+    school: "Intégrale",
+    detail: "Class of 2013",
+    url: "https://www.integrale-prepa.com/",
+  },
+];
+
+const interests: Interest[] = [
+  {
+    title: "Crossfit - Competitive level",
+    image: "/crossfit.png",
+    objectPosition: "50% 35%",
+  },
+  {
+    title: "Free diving - 30m deep",
+    image: "/freediving.png",
+    objectPosition: "50% 42%",
+  },
+  {
+    title: "Writing Essay - check it out",
+    image: "/writing.png",
+    url: "https://nathanhirsch.posthaven.com/",
+    objectPosition: "50% 30%",
+  },
+  {
+    title: "Acting - Joined #1 acting school in France (2023)",
+    image: "/acting.png",
+    objectPosition: "50% 40%",
+  },
+  {
+    title:
+      "The Conversation - 2sided platform connecting native speakers to students",
+    image: "/conversation.png",
+    url: "https://sites.google.com/view/theconversationexperience",
+    objectPosition: "50% 45%",
+  },
+  {
+    title: "Football (Soccer) - Elite, almost pro (1997-2010)",
+    image: "/soccer.png",
+    objectPosition: "50% 45%",
+  },
+];
+
 export default function Home() {
   return (
     <section className="space-y-10">
-      <div className="space-y-4">
-        <p className="inline-flex rounded-full border border-cyan-500/30 bg-cyan-500/10 px-3 py-1 text-xs font-medium tracking-wide text-cyan-300">
-          Portfolio in Progress
-        </p>
-        <h1 className="max-w-3xl text-4xl font-semibold tracking-tight text-white md:text-5xl">
-          Hi, I&apos;m Nathan. I build practical products with AI.
-        </h1>
-        <p className="max-w-2xl text-lg text-slate-300">
-          Building products that change behavior. Founder. Built in web3 and
-          AI. Exploring how far AI and humans can go together to create real
-          impact.
-        </p>
+      <div className="flex min-h-[64vh] flex-col justify-center space-y-6 md:min-h-[72vh]">
+        <div className="space-y-4">
+          <p className="inline-flex rounded-full border border-cyan-500/30 bg-cyan-500/10 px-3 py-1 text-xs font-medium tracking-wide text-cyan-300">
+            Portfolio in Progress
+          </p>
+          <h1 className="max-w-4xl text-4xl font-semibold tracking-tight text-white md:text-6xl">
+            Hi, I&apos;m Nathan. I build products with AI.
+          </h1>
+          <p className="max-w-3xl text-xl text-slate-300">
+            Building products that change behavior. Founder. Built in web3 and
+            AI. Exploring how far AI and humans can go together to create real
+            impact.
+          </p>
+        </div>
       </div>
 
-      <div className="space-y-4">
+      <div id="experience-timeline" className="space-y-4">
         <h2 className="text-2xl font-semibold tracking-tight text-white">
           Experience Timeline
         </h2>
@@ -189,6 +253,75 @@ export default function Home() {
           </p>
         </Link>
       </div>
+
+      <section className="space-y-4">
+        <h2 className="text-2xl font-semibold tracking-tight text-white">
+          Education
+        </h2>
+        <div className="grid gap-3 md:grid-cols-2">
+          {education.map((item) => (
+            <a
+              key={`${item.degree}-${item.school}`}
+              href={item.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block rounded-xl border border-slate-800 bg-slate-900/60 p-5 transition hover:border-cyan-400/60 hover:bg-slate-900"
+            >
+              <h3 className="text-base font-medium text-white">{item.degree}</h3>
+              <p className="mt-1 text-sm text-slate-300">{item.school}</p>
+              <p className="mt-1 text-sm text-slate-400">{item.detail}</p>
+            </a>
+          ))}
+        </div>
+      </section>
+
+      <section className="space-y-4">
+        <h2 className="text-2xl font-semibold tracking-tight text-white">
+          Interests
+        </h2>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {interests.map((interest) =>
+            interest.url ? (
+              <a
+                key={interest.title}
+                href={interest.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="overflow-hidden rounded-xl border border-slate-800 bg-slate-900/60 transition hover:border-cyan-400/60 hover:bg-slate-900"
+              >
+                <img
+                  src={interest.image}
+                  alt={interest.title}
+                  className="h-44 w-full object-cover"
+                  style={
+                    interest.objectPosition
+                      ? { objectPosition: interest.objectPosition }
+                      : undefined
+                  }
+                />
+                <p className="p-4 text-sm text-slate-200">{interest.title}</p>
+              </a>
+            ) : (
+              <article
+                key={interest.title}
+                className="overflow-hidden rounded-xl border border-slate-800 bg-slate-900/60"
+              >
+                <img
+                  src={interest.image}
+                  alt={interest.title}
+                  className="h-44 w-full object-cover"
+                  style={
+                    interest.objectPosition
+                      ? { objectPosition: interest.objectPosition }
+                      : undefined
+                  }
+                />
+                <p className="p-4 text-sm text-slate-200">{interest.title}</p>
+              </article>
+            )
+          )}
+        </div>
+      </section>
     </section>
   );
 }
