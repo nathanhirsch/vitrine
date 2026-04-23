@@ -40,8 +40,23 @@ export default function RootLayout({
         <div className="mx-auto flex min-h-screen w-full max-w-6xl flex-col px-6 py-8 md:px-10">
           <header className="relative mb-12 border-b border-slate-800/80">
             <div className="relative flex min-h-[3rem] items-center justify-center py-3.5">
+              <div className="pointer-events-none absolute left-0 top-0 z-10">
+                <Link
+                  href="/"
+                  aria-label="Home"
+                  className="pointer-events-auto block leading-none"
+                >
+                  <img
+                    src="/nathan-pixel.png"
+                    alt=""
+                    width={40}
+                    height={40}
+                    className="h-9 w-9 object-contain object-bottom mix-blend-lighten md:h-10 md:w-10"
+                  />
+                </Link>
+              </div>
               <nav
-                className="mx-auto flex max-w-full flex-wrap items-center justify-center gap-x-6 gap-y-2 px-14 sm:gap-x-10 sm:px-28 md:px-32"
+                className="mx-auto flex max-w-full flex-wrap items-center justify-center gap-x-6 gap-y-2 pl-[3.25rem] pr-14 sm:gap-x-10 sm:pl-[3.5rem] sm:pr-28 md:px-32"
                 aria-label="Primary"
               >
                 {navItems.map((item) => (
@@ -67,8 +82,8 @@ export default function RootLayout({
             </div>
           </header>
           <main className="flex-1">{children}</main>
-          <footer className="mt-12 border-t border-slate-800 pt-6 text-sm text-slate-400">
-            <p>Built with Next.js. Hosted on Vercel.</p>
+          <footer className="mt-12 border-t border-slate-800 pt-6 text-center text-sm text-slate-400">
+            <p>Nathan Hirsch 2026</p>
           </footer>
         </div>
       </body>

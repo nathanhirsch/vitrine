@@ -5,7 +5,7 @@ const experiences = [
     company: "Napoleon",
     period: "Mar 2025 - Sep 2025 · Paris, France",
     impact:
-      "Built a behavioral product to reduce social media addiction with usage-based pricing on attention. Launched an MVP and acquired 200+ users generating early revenue, while building in public to reach 100k people.",
+      "Built a behavioral product to reduce scrolling addiction with usage-based pricing on attention. Launched an MVP and acquired 200+ users generating early revenue, while building in public to reach 100k people.",
     stack: ["Product Strategy", "Mobile MVP", "Behavior Design", "Growth"],
   },
   {
@@ -14,7 +14,12 @@ const experiences = [
     period: "Aug 2022 - Mar 2025 · Paris, France",
     impact:
       "Scaled NFT infrastructure to support 2M+ NFTs for global brands, led EVM standards integration with eBay, and launched privacy-first minting and Salesforce-integrated web3 insights products.",
-    stack: ["Web3", "NFT Infrastructure", "EVM Standards", "ZK Privacy"],
+    stack: [
+      "Entreprise SaaS",
+      "EVM Protocol",
+      "Privacy",
+      "Interoperability",
+    ],
   },
   {
     role: "Founder",
@@ -22,7 +27,7 @@ const experiences = [
     period: "Aug 2021 - Jul 2022 · Paris, France",
     impact:
       "Built and launched a browser-based mobile testing environment for product teams, acquired 100+ active users, integrated with core design workflows, and pitched top-tier VCs including YC.",
-    stack: ["0-1 Product", "Design Tooling", "User Research", "Fundraising"],
+    stack: ["0-1 Product", "Fundraising", "Tooling"],
   },
   {
     role: "Senior Product Manager",
@@ -38,11 +43,11 @@ const experiences = [
     period: "Mar 2018 - Apr 2019 · Cape Town, South Africa",
     impact:
       "Helped grow the product from 0 to 100K+ users as an early team member, ran 200+ user interviews, built analytics foundations, and launched an ambassador program at scale.",
-    stack: ["0-1 Product", "Analytics", "PMF", "Community"],
+    stack: ["PMF", "Customer research", "Analytics", "Community"],
   },
   {
     role: "Venture Launcher",
-    company: "FinchatBot",
+    company: "FCB.ai",
     period: "May 2017 - Nov 2017 · Paris, France",
     impact:
       "Opened European operations, secured a partnership with a top-tier reinsurer, pitched to 300+ fintech stakeholders, and designed onboarding for the chatbot product.",
