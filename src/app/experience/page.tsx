@@ -1,19 +1,52 @@
+import React from "react";
 const experiences = [
   {
-    role: "Senior Product Engineer",
-    company: "Your Company",
-    period: "2023 - Present",
+    role: "Founder",
+    company: "Napoleon",
+    period: "Mar 2025 - Sep 2025 · Paris, France",
     impact:
-      "Led product delivery for customer-facing features, improving adoption and retention.",
-    stack: ["Next.js", "TypeScript", "Node.js", "PostgreSQL"],
+      "Built a behavioral product to reduce social media addiction with usage-based pricing on attention. Launched an MVP and acquired 200+ users generating early revenue, while building in public to reach 100k people.",
+    stack: ["Product Strategy", "Mobile MVP", "Behavior Design", "Growth"],
   },
   {
-    role: "Software Engineer",
-    company: "Previous Company",
-    period: "2021 - 2023",
+    role: "Senior Product Manager",
+    company: "Arianee",
+    period: "Aug 2022 - Mar 2025 · Paris, France",
     impact:
-      "Built internal tooling that reduced manual workflow time and improved team throughput.",
-    stack: ["React", "Python", "AWS"],
+      "Scaled NFT infrastructure to support 2M+ NFTs for global brands, led EVM standards integration with eBay, and launched privacy-first minting and Salesforce-integrated web3 insights products.",
+    stack: ["Web3", "NFT Infrastructure", "EVM Standards", "ZK Privacy"],
+  },
+  {
+    role: "Founder",
+    company: "Clean Design",
+    period: "Aug 2021 - Jul 2022 · Paris, France",
+    impact:
+      "Built and launched a browser-based mobile testing environment for product teams, acquired 100+ active users, integrated with core design workflows, and pitched top-tier VCs including YC.",
+    stack: ["0-1 Product", "Design Tooling", "User Research", "Fundraising"],
+  },
+  {
+    role: "Senior Product Manager",
+    company: "Luno",
+    period: "Apr 2019 - Aug 2021 · Cape Town, South Africa",
+    impact:
+      "Led a 60-person wallet division, drove $1.1B+ in trading volume and $20M+ in revenue from listings, launched Earn products, and improved engagement, NPS, and paid upgrades through product redesign.",
+    stack: ["Growth", "Trading Products", "Crypto", "Team Leadership"],
+  },
+  {
+    role: "Product Manager",
+    company: "Wala",
+    period: "Mar 2018 - Apr 2019 · Cape Town, South Africa",
+    impact:
+      "Helped grow the product from 0 to 100K+ users as an early team member, ran 200+ user interviews, built analytics foundations, and launched an ambassador program at scale.",
+    stack: ["0-1 Product", "Analytics", "PMF", "Community"],
+  },
+  {
+    role: "Venture Launcher",
+    company: "FinchatBot",
+    period: "May 2017 - Nov 2017 · Paris, France",
+    impact:
+      "Opened European operations, secured a partnership with a top-tier reinsurer, pitched to 300+ fintech stakeholders, and designed onboarding for the chatbot product.",
+    stack: ["Go-to-Market", "Partnerships", "Fintech", "Onboarding"],
   },
 ];
 
@@ -25,8 +58,8 @@ export default function ExperiencePage() {
           Work Experience
         </h1>
         <p className="max-w-2xl text-slate-300">
-          Replace these placeholders with your real accomplishments and
-          measurable outcomes.
+          Product leadership across AI and web3, from 0-1 founder builds to
+          scaled global platforms.
         </p>
       </div>
 
