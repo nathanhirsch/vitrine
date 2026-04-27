@@ -20,16 +20,14 @@ const experiences = [
     period: "Mar 2025 - Sep 2025 · Paris, France",
     highlight:
       "Built a behavioral product to reduce social media addiction, launched an MVP, and acquired 200+ users with early paid validation.",
-    themes: [
-      "Behavior Change",
-      "Founder",
-      "Mobile App",
-      "AI",
-      "Build in Public",
-    ],
+    themes: ["Mobile App", "AI", "Build in Public"],
     links: [
       { label: "Napoleon App", url: "https://www.napoleonapp.com/en" },
       { label: "Time Left Association", url: "https://www.timeleft.ong/" },
+      {
+        label: "Customer testimony",
+        url: "https://www.linkedin.com/posts/nathanhirsch2_today-something-truly-special-happened-activity-7340660735288467456-tQoS?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAABhbRQwBC46hhXT9jjObVyFGHWJ5npJc_b4",
+      },
       {
         label: "Customer Interview",
         url: "https://www.linkedin.com/posts/nathanhirsch2_i-read-i-write-now-i-bought-my-first-activity-7343888302053158914-3R64?utm_source=share&utm_medium=member_desktop&rcm=ACoAABhbRQwBC46hhXT9jjObVyFGHWJ5npJc_b4",
@@ -42,12 +40,7 @@ const experiences = [
     period: "Aug 2022 - Mar 2025 · Paris, France",
     highlight:
       "Scaled NFT infrastructure to 2M+ NFTs and shipped privacy-first and interoperability products with global brand partners.",
-    themes: [
-      "Entreprise SaaS",
-      "EVM Protocol",
-      "Privacy",
-      "Interoperability",
-    ],
+    themes: ["Enterprise SaaS", "EVM Protocol", "Interoperability"],
     links: [
       { label: "Arianee Protocol", url: "https://www.arianee.org/" },
       {
@@ -93,7 +86,7 @@ const experiences = [
     period: "Mar 2018 - Apr 2019 · Cape Town, South Africa",
     highlight:
       "Helped scale the product from 0 to 100K+ users, built analytics foundations, and ran deep user research for PMF.",
-    themes: ["PMF", "Customer research", "Analytics", "Community"],
+    themes: ["PMF", "Customer research", "Analytics"],
     links: [
       {
         label: "CoinDesk Feature",
@@ -143,10 +136,10 @@ const interests: Interest[] = [
     objectPosition: "50% 42%",
   },
   {
-    title: "Writing Essay - check it out",
+    title: "Essays",
     image: "/writing.png",
     url: "https://nathanhirsch.posthaven.com/",
-    objectPosition: "50% 30%",
+    objectPosition: "50% 8%",
   },
   {
     title: "Acting - Joined #1 acting school in France (2023)",
@@ -181,7 +174,7 @@ export default function Home() {
           <p className="max-w-xl text-lg leading-relaxed text-slate-300 md:text-xl">
             Building products that change behavior. Founder. Built in web3 and
             AI. Exploring how far AI and humans can go together to create real
-            impact.
+            impact. Recently moved to California.
           </p>
         </div>
       </div>

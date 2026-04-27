@@ -6,7 +6,7 @@ const experiences = [
     period: "Mar 2025 - Sep 2025 · Paris, France",
     impact:
       "Built a behavioral product to reduce scrolling addiction with usage-based pricing on attention. Launched an MVP and acquired 200+ users generating early revenue, while building in public to reach 100k people.",
-    stack: ["Product Strategy", "Mobile MVP", "Behavior Design", "Growth"],
+    stack: ["Mobile App", "AI", "Build in Public"],
   },
   {
     role: "Senior Product Manager",
@@ -14,12 +14,7 @@ const experiences = [
     period: "Aug 2022 - Mar 2025 · Paris, France",
     impact:
       "Scaled NFT infrastructure to support 2M+ NFTs for global brands, led EVM standards integration with eBay, and launched privacy-first minting and Salesforce-integrated web3 insights products.",
-    stack: [
-      "Entreprise SaaS",
-      "EVM Protocol",
-      "Privacy",
-      "Interoperability",
-    ],
+    stack: ["Enterprise SaaS", "EVM Protocol", "Interoperability"],
   },
   {
     role: "Founder",
@@ -35,7 +30,7 @@ const experiences = [
     period: "Apr 2019 - Aug 2021 · Cape Town, South Africa",
     impact:
       "Led a 60-person wallet division, drove $1.1B+ in trading volume and $20M+ in revenue from listings, launched Earn products, and improved engagement, NPS, and paid upgrades through product redesign.",
-    stack: ["Growth", "Trading Products", "Crypto", "Team Leadership"],
+    stack: ["Growth", "Monetization", "Team Leadership"],
   },
   {
     role: "Product Manager",
@@ -43,7 +38,7 @@ const experiences = [
     period: "Mar 2018 - Apr 2019 · Cape Town, South Africa",
     impact:
       "Helped grow the product from 0 to 100K+ users as an early team member, ran 200+ user interviews, built analytics foundations, and launched an ambassador program at scale.",
-    stack: ["PMF", "Customer research", "Analytics", "Community"],
+    stack: ["PMF", "Customer research", "Analytics"],
   },
   {
     role: "Venture Launcher",
@@ -51,7 +46,7 @@ const experiences = [
     period: "May 2017 - Nov 2017 · Paris, France",
     impact:
       "Opened European operations, secured a partnership with a top-tier reinsurer, pitched to 300+ fintech stakeholders, and designed onboarding for the chatbot product.",
-    stack: ["Go-to-Market", "Partnerships", "Fintech", "Onboarding"],
+    stack: ["Go-to-Market", "Partnerships", "Fintech"],
   },
 ];
 
