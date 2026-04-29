@@ -1,4 +1,28 @@
-const projects = [
+import React from "react";
+import Link from "next/link";
+
+type Project = {
+  title: string;
+  description: string;
+  status: "In Progress" | "Launched";
+  href?: string;
+  skills: string[];
+};
+
+const projects: Project[] = [
+  {
+    title: "Customer Insight Engine",
+    description:
+      "Clusters customer feedback at scale, surfaces product-level themes and blind spots, and improves insight quality through evaluation loops.",
+    status: "Launched",
+    href: "/ai-labs/customer-insight-engine",
+    skills: [
+      "Embedding-based clustering",
+      "Topic extraction",
+      "Human feedback loop",
+      "Learning memory",
+    ],
+  },
   {
     title: "Autonomous Content Operator",
     description:
@@ -21,18 +45,7 @@ const projects = [
       "Hallucination mitigation",
     ],
   },
-  {
-    title: "Customer Insight Engine",
-    description:
-      "Clusters customer feedback at scale, surfaces product-level themes and blind spots, and improves insight quality through evaluation loops.",
-    status: "In Progress",
-    skills: [
-      "Embedding-based clustering",
-      "Topic extraction",
-      "Dataset bias detection",
-    ],
-  },
-] as const;
+];
 
 export default function AILabsPage() {
   return (
@@ -48,31 +61,69 @@ export default function AILabsPage() {
         </p>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2">
-        {projects.map((project) => (
-          <article
-            key={project.title}
-            className="rounded-xl border border-slate-800 bg-slate-900/60 p-5"
-          >
-            <div className="mb-3 flex items-center justify-between gap-3">
-              <h2 className="text-lg font-medium text-white">{project.title}</h2>
-              <span className="shrink-0 rounded-full border border-emerald-500/35 bg-emerald-500/10 px-2.5 py-1 text-xs font-medium text-emerald-300">
-                {project.status}
-              </span>
-            </div>
-            <p className="text-sm text-slate-300">{project.description}</p>
-            <div className="mt-3 flex flex-wrap gap-1.5">
-              {project.skills.map((skill) => (
+      <div className="columns-1 gap-4 md:columns-2">
+        {projects.map((project) =>
+          project.href ? (
+            <Link
+              key={project.title}
+              href={project.href}
+              className="mb-4 block break-inside-avoid rounded-xl border border-slate-800 bg-slate-900/60 p-5 transition hover:border-cyan-400/60 hover:bg-slate-900"
+            >
+              <div className="mb-3 flex items-center justify-between gap-3">
+                <h2 className="text-lg font-medium text-white">{project.title}</h2>
                 <span
-                  key={skill}
-                  className="rounded-full border border-slate-700/70 bg-slate-950/40 px-2.5 py-0.5 text-[11px] leading-snug text-slate-400"
+                  className={
+                    project.status === "Launched"
+                      ? "shrink-0 rounded-full border border-cyan-500/35 bg-cyan-500/10 px-2.5 py-1 text-xs font-medium text-cyan-300"
+                      : "shrink-0 rounded-full border border-emerald-500/35 bg-emerald-500/10 px-2.5 py-1 text-xs font-medium text-emerald-300"
+                  }
                 >
-                  {skill}
+                  {project.status}
                 </span>
-              ))}
-            </div>
-          </article>
-        ))}
+              </div>
+              <p className="text-sm text-slate-300">{project.description}</p>
+              <div className="mt-3 flex flex-wrap gap-1.5">
+                {project.skills.map((skill) => (
+                  <span
+                    key={skill}
+                    className="rounded-full border border-slate-700/70 bg-slate-950/40 px-2.5 py-0.5 text-[11px] leading-snug text-slate-400"
+                  >
+                    {skill}
+                  </span>
+                ))}
+              </div>
+            </Link>
+          ) : (
+            <article
+              key={project.title}
+              className="mb-4 break-inside-avoid rounded-xl border border-slate-800 bg-slate-900/60 p-5"
+            >
+              <div className="mb-3 flex items-center justify-between gap-3">
+                <h2 className="text-lg font-medium text-white">{project.title}</h2>
+                <span
+                  className={
+                    project.status === "Launched"
+                      ? "shrink-0 rounded-full border border-cyan-500/35 bg-cyan-500/10 px-2.5 py-1 text-xs font-medium text-cyan-300"
+                      : "shrink-0 rounded-full border border-emerald-500/35 bg-emerald-500/10 px-2.5 py-1 text-xs font-medium text-emerald-300"
+                  }
+                >
+                  {project.status}
+                </span>
+              </div>
+              <p className="text-sm text-slate-300">{project.description}</p>
+              <div className="mt-3 flex flex-wrap gap-1.5">
+                {project.skills.map((skill) => (
+                  <span
+                    key={skill}
+                    className="rounded-full border border-slate-700/70 bg-slate-950/40 px-2.5 py-0.5 text-[11px] leading-snug text-slate-400"
+                  >
+                    {skill}
+                  </span>
+                ))}
+              </div>
+            </article>
+          )
+        )}
       </div>
     </section>
   );
