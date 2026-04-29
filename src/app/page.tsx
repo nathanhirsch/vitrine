@@ -165,8 +165,8 @@ export default function Home() {
     <section className="space-y-10">
       <div className="flex min-h-[64vh] flex-col justify-center space-y-6 md:min-h-[72vh]">
         <div className="max-w-xl space-y-4 text-left md:max-w-2xl lg:max-w-3xl">
-          <p className="inline-flex rounded-full border border-cyan-500/30 bg-cyan-500/10 px-3 py-1 text-xs font-medium tracking-wide text-cyan-300">
-            Portfolio in Progress
+          <p className="inline-flex rounded-full border border-emerald-500/35 bg-emerald-500/10 px-3 py-1 text-xs font-medium tracking-wide text-emerald-300">
+            AI Labs Active
           </p>
           <h1 className="max-w-full text-4xl font-semibold tracking-tight text-white md:text-5xl lg:text-6xl">
             Hi, I&apos;m Nathan. I build products with AI.
