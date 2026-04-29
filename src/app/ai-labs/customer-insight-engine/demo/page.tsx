@@ -16,12 +16,27 @@ const SAMPLE_INPUT = [
   "Setup took too long. I had to contact support twice to connect our data source correctly.",
 ].join("\n");
 
+type FeedbackDraft = {
+  classification: string;
+  clustering: string;
+  productRecommendations: string;
+};
+
 export default function CustomerInsightEngineDemoPage() {
   const [emailsText, setEmailsText] = useState("");
   const [result, setResult] = useState<AnalyzeMiniResult | null>(null);
   const [loading, setLoading] = useState(false);
   const [stepIndex, setStepIndex] = useState(0);
   const [error, setError] = useState<string | null>(null);
+  const [feedbackDraft, setFeedbackDraft] = useState<FeedbackDraft>({
+    classification: "",
+    clustering: "",
+    productRecommendations: "",
+  });
+  const [savedFeedback, setSavedFeedback] = useState<{
+    data: FeedbackDraft;
+    savedAt: string;
+  } | null>(null);
 
   const parsedEmails = useMemo(
     () =>
@@ -89,6 +104,7 @@ export default function CustomerInsightEngineDemoPage() {
         throw new Error(data.error || "Analysis failed.");
       }
       setResult(data);
+      setSavedFeedback(null);
     } catch (err) {
       const message = err instanceof Error ? err.message : "Analysis failed.";
       setError(message);
@@ -107,6 +123,19 @@ export default function CustomerInsightEngineDemoPage() {
       const data = (await response.json()) as AnalyzeMiniResult;
       setResult(data);
     }
+    setFeedbackDraft({
+      classification: "",
+      clustering: "",
+      productRecommendations: "",
+    });
+    setSavedFeedback(null);
+  };
+
+  const handleSaveFeedback = () => {
+    setSavedFeedback({
+      data: feedbackDraft,
+      savedAt: new Date().toLocaleTimeString(),
+    });
   };
 
   return (
@@ -251,6 +280,85 @@ export default function CustomerInsightEngineDemoPage() {
                 </div>
               ))}
             </div>
+          </article>
+
+          <article className="rounded-xl border border-slate-800 bg-slate-900/60 p-6">
+            <h2 className="mb-4 text-lg font-medium text-white">
+              Human feedback loop
+            </h2>
+            <p className="mb-4 text-sm text-slate-300">
+              Correct outputs below to simulate reviewer feedback before future
+              runs.
+            </p>
+            <div className="space-y-3">
+              <div>
+                <label className="mb-1 block text-sm text-slate-300">
+                  Classification correction
+                </label>
+                <textarea
+                  value={feedbackDraft.classification}
+                  onChange={(event) =>
+                    setFeedbackDraft((current) => ({
+                      ...current,
+                      classification: event.target.value,
+                    }))
+                  }
+                  rows={3}
+                  className="w-full rounded-lg border border-slate-700 bg-slate-950/60 p-3 text-sm text-slate-100 outline-none ring-cyan-400/50 placeholder:text-slate-500 focus:ring-2"
+                  placeholder="Adjust themes, emotions, or intents..."
+                />
+              </div>
+              <div>
+                <label className="mb-1 block text-sm text-slate-300">
+                  Clustering correction
+                </label>
+                <textarea
+                  value={feedbackDraft.clustering}
+                  onChange={(event) =>
+                    setFeedbackDraft((current) => ({
+                      ...current,
+                      clustering: event.target.value,
+                    }))
+                  }
+                  rows={3}
+                  className="w-full rounded-lg border border-slate-700 bg-slate-950/60 p-3 text-sm text-slate-100 outline-none ring-cyan-400/50 placeholder:text-slate-500 focus:ring-2"
+                  placeholder="Adjust cluster labels, summaries, or email grouping..."
+                />
+              </div>
+              <div>
+                <label className="mb-1 block text-sm text-slate-300">
+                  Product recommendation correction
+                </label>
+                <textarea
+                  value={feedbackDraft.productRecommendations}
+                  onChange={(event) =>
+                    setFeedbackDraft((current) => ({
+                      ...current,
+                      productRecommendations: event.target.value,
+                    }))
+                  }
+                  rows={3}
+                  className="w-full rounded-lg border border-slate-700 bg-slate-950/60 p-3 text-sm text-slate-100 outline-none ring-cyan-400/50 placeholder:text-slate-500 focus:ring-2"
+                  placeholder="Refine recommendation quality and actionability..."
+                />
+              </div>
+            </div>
+            <div className="mt-4 flex items-center gap-3">
+              <button
+                onClick={handleSaveFeedback}
+                className="rounded-md border border-cyan-500/50 bg-cyan-500/10 px-4 py-2 text-sm font-medium text-cyan-300 transition hover:bg-cyan-500/20"
+              >
+                Save feedback
+              </button>
+              {savedFeedback ? (
+                <p className="text-xs text-emerald-300">
+                  Feedback saved at {savedFeedback.savedAt}
+                </p>
+              ) : null}
+            </div>
+            <p className="mt-3 text-sm text-slate-400">
+              Corrections become learning memory for future runs.
+            </p>
           </article>
         </>
       ) : null}
