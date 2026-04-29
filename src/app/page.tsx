@@ -176,6 +176,20 @@ export default function Home() {
             AI. Exploring how far AI and humans can go together to create real
             impact. Recently moved to California.
           </p>
+          <div className="flex flex-wrap gap-3 pt-2">
+            <Link
+              href="/resume"
+              className="inline-flex items-center justify-center rounded-lg border border-slate-700 bg-slate-900/70 px-5 py-2.5 text-sm font-medium text-white transition hover:border-cyan-400/60 hover:bg-slate-900"
+            >
+              Go to Resume
+            </Link>
+            <Link
+              href="/ai-labs"
+              className="inline-flex items-center justify-center rounded-lg border border-slate-700 bg-slate-900/70 px-5 py-2.5 text-sm font-medium text-white transition hover:border-cyan-400/60 hover:bg-slate-900"
+            >
+              Go to AI Labs
+            </Link>
+          </div>
         </div>
       </div>
 
