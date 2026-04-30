@@ -35,7 +35,7 @@ export default function MyWritingAgentPage() {
             rel="noopener noreferrer"
             className="inline-flex rounded-md border border-yellow-400/55 bg-yellow-500/10 px-4 py-2 text-sm font-medium text-yellow-200 transition hover:bg-yellow-500/20"
           >
-            View Repository
+            View on GitHub
           </a>
           <a
             href="https://github.com/nathanhirsch/mywritingagent/blob/main/README.md"

@@ -34,7 +34,7 @@ export default function CustomerInsightEnginePage() {
             rel="noopener noreferrer"
             className="inline-flex rounded-md border border-slate-700 bg-slate-900/70 px-4 py-2 text-sm font-medium text-slate-200 transition hover:border-yellow-400/60 hover:bg-slate-900"
           >
-            View Public Repo
+            View on GitHub
           </a>
         </div>
       </div>

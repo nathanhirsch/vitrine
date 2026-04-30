@@ -47,6 +47,19 @@ const projects: Project[] = [
       "Hallucination mitigation",
     ],
   },
+  {
+    title: "Slack Feedback Capture Agent",
+    description:
+      "Captures product feedback directly from Slack reactions, classifies it, stores it for review, and exports approved insights as structured CSV.",
+    status: "Launched",
+    href: "/ai-labs/slack-feedback-capture-agent",
+    skills: [
+      "Slack event ingestion",
+      "Feedback classification",
+      "Review workflow + export API",
+      "PostgreSQL-backed pipeline",
+    ],
+  },
 ];
 
 export default function AILabsPage() {
