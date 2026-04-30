@@ -21,13 +21,21 @@ export default function CustomerInsightEnginePage() {
         <p className="max-w-2xl text-base leading-relaxed text-slate-300">
           From unstructured customer feedback to decision-ready recommendation.
         </p>
-        <div>
+        <div className="flex flex-wrap gap-3">
           <Link
             href="/ai-labs/customer-insight-engine/demo"
             className="inline-flex rounded-md border border-yellow-400/55 bg-yellow-500/10 px-4 py-2 text-sm font-medium text-yellow-200 transition hover:bg-yellow-500/20"
           >
             Analyze Your Emails
           </Link>
+          <a
+            href="https://github.com/nathanhirsch/customer-insight-engine"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex rounded-md border border-slate-700 bg-slate-900/70 px-4 py-2 text-sm font-medium text-slate-200 transition hover:border-yellow-400/60 hover:bg-slate-900"
+          >
+            View Public Repo
+          </a>
         </div>
       </div>
 
