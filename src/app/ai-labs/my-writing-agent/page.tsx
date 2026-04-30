@@ -1,9 +1,7 @@
-import Link from "next/link";
-
 const highlights = [
   "Built an end-to-end content agent: generation, human approval, publishing, and learning.",
   "Uses practical tooling that teams already understand: Python scripts, Google Sheets, and API integrations.",
-  "Demonstrates product thinking with feedback loops and measurable performance labels.",
+  "Anyone can plug in their own writing sources and generate X posts quickly.",
 ];
 
 const quickStart = [
@@ -47,12 +45,6 @@ export default function MyWritingAgentPage() {
           >
             Read Setup Guide
           </a>
-          <Link
-            href="/ai-labs"
-            className="inline-flex rounded-md border border-slate-700 bg-slate-900/70 px-4 py-2 text-sm font-medium text-slate-200 transition hover:border-yellow-400/60 hover:bg-slate-900"
-          >
-            Back to AI Labs
-          </Link>
         </div>
       </div>
 
