@@ -24,14 +24,16 @@ const projects: Project[] = [
     ],
   },
   {
-    title: "Autonomous Content Operator",
+    title: "My Writing Agent",
     description:
-      "An agent that reads long-form source material, generates platform-native posts and threads, and refines what ships using feedback and performance signals.",
-    status: "In Progress",
+      "Open-source agent workflow that turns essays into X posts, routes review through Google Sheets, posts approved content automatically, and learns from engagement data.",
+    status: "Launched",
+    href: "/ai-labs/my-writing-agent",
     skills: [
-      "Agent orchestration",
-      "Tool integration",
-      "Autonomous iteration",
+      "OpenAI generation pipeline",
+      "Google Sheets review queue",
+      "X posting + analytics loop",
+      "Taste-profile learning updates",
     ],
   },
   {
@@ -67,14 +69,14 @@ export default function AILabsPage() {
             <Link
               key={project.title}
               href={project.href}
-              className="mb-4 block break-inside-avoid rounded-xl border border-slate-800 bg-slate-900/60 p-5 transition hover:border-cyan-400/60 hover:bg-slate-900"
+              className="mb-4 block break-inside-avoid rounded-xl border border-slate-800 bg-slate-900/60 p-5 transition hover:border-yellow-400/60 hover:bg-slate-900"
             >
               <div className="mb-3 flex items-center justify-between gap-3">
                 <h2 className="text-lg font-medium text-white">{project.title}</h2>
                 <span
                   className={
                     project.status === "Launched"
-                      ? "shrink-0 rounded-full border border-cyan-500/35 bg-cyan-500/10 px-2.5 py-1 text-xs font-medium text-cyan-300"
+                      ? "shrink-0 rounded-full border border-yellow-400/55 bg-yellow-500/10 px-2.5 py-1 text-xs font-medium text-yellow-200"
                       : "shrink-0 rounded-full border border-emerald-500/35 bg-emerald-500/10 px-2.5 py-1 text-xs font-medium text-emerald-300"
                   }
                 >
@@ -103,7 +105,7 @@ export default function AILabsPage() {
                 <span
                   className={
                     project.status === "Launched"
-                      ? "shrink-0 rounded-full border border-cyan-500/35 bg-cyan-500/10 px-2.5 py-1 text-xs font-medium text-cyan-300"
+                      ? "shrink-0 rounded-full border border-yellow-400/55 bg-yellow-500/10 px-2.5 py-1 text-xs font-medium text-yellow-200"
                       : "shrink-0 rounded-full border border-emerald-500/35 bg-emerald-500/10 px-2.5 py-1 text-xs font-medium text-emerald-300"
                   }
                 >

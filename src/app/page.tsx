@@ -176,19 +176,27 @@ export default function Home() {
             AI. Exploring how far AI and humans can go together to create real
             impact. Recently moved to California.
           </p>
-          <div className="flex flex-wrap gap-3 pt-2">
+          <div className="flex flex-wrap items-center gap-3 pt-2">
             <Link
               href="/resume"
-              className="inline-flex items-center justify-center rounded-lg border border-slate-700 bg-slate-900/70 px-5 py-2.5 text-sm font-medium text-white transition hover:border-cyan-400/60 hover:bg-slate-900"
+              className="inline-flex items-center justify-center rounded-lg border border-slate-700 bg-slate-900/70 px-5 py-2.5 text-sm font-medium text-white transition hover:border-yellow-400/60 hover:bg-slate-900"
             >
-              Go to Resume
+              Resume
             </Link>
             <Link
               href="/ai-labs"
-              className="inline-flex items-center justify-center rounded-lg border border-slate-700 bg-slate-900/70 px-5 py-2.5 text-sm font-medium text-white transition hover:border-cyan-400/60 hover:bg-slate-900"
+              className="inline-flex items-center justify-center rounded-lg border border-slate-700 bg-slate-900/70 px-5 py-2.5 text-sm font-medium text-white transition hover:border-yellow-400/60 hover:bg-slate-900"
             >
-              Go to AI Labs
+              AI Labs
             </Link>
+            <a
+              href="https://github.com/nathanhirsch"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center rounded-lg border border-slate-700 bg-slate-900/70 px-5 py-2.5 text-sm font-medium text-white transition hover:border-yellow-400/60 hover:bg-slate-900"
+            >
+              GitHub
+            </a>
           </div>
         </div>
       </div>
@@ -237,7 +245,7 @@ export default function Home() {
                       href={project.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-3 rounded-lg border border-slate-800 bg-slate-900/50 p-2 transition hover:border-cyan-400/60 hover:bg-slate-900"
+                      className="flex items-center gap-3 rounded-lg border border-slate-800 bg-slate-900/50 p-2 transition hover:border-yellow-400/60 hover:bg-slate-900"
                     >
                       <img
                         src={`https://www.google.com/s2/favicons?sz=128&domain_url=${encodeURIComponent(
@@ -266,7 +274,7 @@ export default function Home() {
       <div className="grid gap-4 md:grid-cols-2">
         <Link
           href="/resume"
-          className="rounded-xl border border-slate-800 bg-slate-900/60 p-5 transition hover:border-cyan-400/60 hover:bg-slate-900"
+          className="rounded-xl border border-slate-800 bg-slate-900/60 p-5 transition hover:border-yellow-400/60 hover:bg-slate-900"
         >
           <h2 className="mb-2 text-xl font-semibold text-white">Resume</h2>
           <p className="text-sm text-slate-300">
@@ -275,7 +283,7 @@ export default function Home() {
         </Link>
         <Link
           href="/ai-labs"
-          className="rounded-xl border border-slate-800 bg-slate-900/60 p-5 transition hover:border-cyan-400/60 hover:bg-slate-900"
+          className="rounded-xl border border-slate-800 bg-slate-900/60 p-5 transition hover:border-yellow-400/60 hover:bg-slate-900"
         >
           <h2 className="mb-2 text-xl font-semibold text-white">AI Labs</h2>
           <p className="text-sm text-slate-300">
@@ -295,7 +303,7 @@ export default function Home() {
               href={item.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="block rounded-xl border border-slate-800 bg-slate-900/60 p-5 transition hover:border-cyan-400/60 hover:bg-slate-900"
+              className="block rounded-xl border border-slate-800 bg-slate-900/60 p-5 transition hover:border-yellow-400/60 hover:bg-slate-900"
             >
               <h3 className="text-base font-medium text-white">{item.degree}</h3>
               <p className="mt-1 text-sm text-slate-300">{item.school}</p>
@@ -317,7 +325,7 @@ export default function Home() {
                 href={interest.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="overflow-hidden rounded-xl border border-slate-800 bg-slate-900/60 transition hover:border-cyan-400/60 hover:bg-slate-900"
+                className="overflow-hidden rounded-xl border border-slate-800 bg-slate-900/60 transition hover:border-yellow-400/60 hover:bg-slate-900"
               >
                 <img
                   src={interest.image}

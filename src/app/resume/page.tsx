@@ -34,7 +34,7 @@ export default function ResumePage() {
         <div className="flex flex-wrap gap-3">
           <Link
             href="/resume.pdf"
-            className="rounded-md border border-cyan-500/50 bg-cyan-500/10 px-4 py-2 text-sm font-medium text-cyan-300 transition hover:bg-cyan-500/20"
+            className="rounded-md border border-yellow-400/55 bg-yellow-500/10 px-4 py-2 text-sm font-medium text-yellow-200 transition hover:bg-yellow-500/20"
           >
             Download Resume PDF
           </Link>
@@ -42,7 +42,7 @@ export default function ResumePage() {
             href="https://www.linkedin.com/in/nathanhirsch2/"
             target="_blank"
             rel="noopener noreferrer"
-            className="rounded-md border border-slate-700 px-4 py-2 text-sm font-medium text-slate-200 transition hover:border-cyan-400 hover:text-cyan-300"
+            className="rounded-md border border-slate-700 px-4 py-2 text-sm font-medium text-slate-200 transition hover:border-yellow-400 hover:text-yellow-300"
           >
             Get in Touch
           </Link>

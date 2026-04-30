@@ -160,13 +160,13 @@ export default function CustomerInsightEngineDemoPage() {
           onChange={(event) => setEmailsText(event.target.value)}
           rows={6}
           placeholder="Paste up to 5 customer emails, one per line..."
-          className="w-full rounded-lg border border-slate-700 bg-slate-950/60 p-3 text-sm text-slate-100 outline-none ring-cyan-400/50 placeholder:text-slate-500 focus:ring-2"
+          className="w-full rounded-lg border border-slate-700 bg-slate-950/60 p-3 text-sm text-slate-100 outline-none ring-yellow-400/50 placeholder:text-slate-500 focus:ring-2"
         />
         <div className="mt-3 flex flex-wrap gap-2">
           <button
             onClick={handleAnalyze}
             disabled={loading}
-            className="rounded-md border border-cyan-500/50 bg-cyan-500/10 px-4 py-2 text-sm font-medium text-cyan-300 transition hover:bg-cyan-500/20 disabled:cursor-not-allowed disabled:opacity-60"
+            className="rounded-md border border-yellow-400/55 bg-yellow-500/10 px-4 py-2 text-sm font-medium text-yellow-200 transition hover:bg-yellow-500/20 disabled:cursor-not-allowed disabled:opacity-60"
           >
             Analyze emails
           </button>
@@ -197,7 +197,7 @@ export default function CustomerInsightEngineDemoPage() {
                 key={step}
                 className={
                   index === stepIndex
-                    ? "text-sm text-cyan-300"
+                    ? "text-sm text-yellow-300"
                     : "text-sm text-slate-400"
                 }
               >
@@ -304,7 +304,7 @@ export default function CustomerInsightEngineDemoPage() {
                     }))
                   }
                   rows={3}
-                  className="w-full rounded-lg border border-slate-700 bg-slate-950/60 p-3 text-sm text-slate-100 outline-none ring-cyan-400/50 placeholder:text-slate-500 focus:ring-2"
+                  className="w-full rounded-lg border border-slate-700 bg-slate-950/60 p-3 text-sm text-slate-100 outline-none ring-yellow-400/50 placeholder:text-slate-500 focus:ring-2"
                   placeholder="Adjust themes, emotions, or intents..."
                 />
               </div>
@@ -321,7 +321,7 @@ export default function CustomerInsightEngineDemoPage() {
                     }))
                   }
                   rows={3}
-                  className="w-full rounded-lg border border-slate-700 bg-slate-950/60 p-3 text-sm text-slate-100 outline-none ring-cyan-400/50 placeholder:text-slate-500 focus:ring-2"
+                  className="w-full rounded-lg border border-slate-700 bg-slate-950/60 p-3 text-sm text-slate-100 outline-none ring-yellow-400/50 placeholder:text-slate-500 focus:ring-2"
                   placeholder="Adjust cluster labels, summaries, or email grouping..."
                 />
               </div>
@@ -338,7 +338,7 @@ export default function CustomerInsightEngineDemoPage() {
                     }))
                   }
                   rows={3}
-                  className="w-full rounded-lg border border-slate-700 bg-slate-950/60 p-3 text-sm text-slate-100 outline-none ring-cyan-400/50 placeholder:text-slate-500 focus:ring-2"
+                  className="w-full rounded-lg border border-slate-700 bg-slate-950/60 p-3 text-sm text-slate-100 outline-none ring-yellow-400/50 placeholder:text-slate-500 focus:ring-2"
                   placeholder="Refine recommendation quality and actionability..."
                 />
               </div>
@@ -346,7 +346,7 @@ export default function CustomerInsightEngineDemoPage() {
             <div className="mt-4 flex items-center gap-3">
               <button
                 onClick={handleSaveFeedback}
-                className="rounded-md border border-cyan-500/50 bg-cyan-500/10 px-4 py-2 text-sm font-medium text-cyan-300 transition hover:bg-cyan-500/20"
+                className="rounded-md border border-yellow-400/55 bg-yellow-500/10 px-4 py-2 text-sm font-medium text-yellow-200 transition hover:bg-yellow-500/20"
               >
                 Save feedback
               </button>
@@ -366,7 +366,7 @@ export default function CustomerInsightEngineDemoPage() {
       <div>
         <Link
           href="/ai-labs/customer-insight-engine"
-          className="text-sm font-medium text-cyan-300 transition hover:text-cyan-200"
+          className="text-sm font-medium text-yellow-300 transition hover:text-yellow-200"
         >
           Back to project highlights
         </Link>

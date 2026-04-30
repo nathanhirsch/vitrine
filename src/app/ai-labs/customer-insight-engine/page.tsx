@@ -12,7 +12,7 @@ export default function CustomerInsightEnginePage() {
   return (
     <section className="space-y-8">
       <div className="space-y-4">
-        <p className="inline-flex rounded-full border border-cyan-500/30 bg-cyan-500/10 px-3 py-1 text-xs font-medium tracking-wide text-cyan-300">
+        <p className="inline-flex rounded-full border border-yellow-400/45 bg-yellow-500/10 px-3 py-1 text-xs font-medium tracking-wide text-yellow-200">
           AI Playground
         </p>
         <h1 className="max-w-3xl text-3xl font-semibold tracking-tight text-white md:text-4xl">
@@ -24,7 +24,7 @@ export default function CustomerInsightEnginePage() {
         <div>
           <Link
             href="/ai-labs/customer-insight-engine/demo"
-            className="inline-flex rounded-md border border-cyan-500/50 bg-cyan-500/10 px-4 py-2 text-sm font-medium text-cyan-300 transition hover:bg-cyan-500/20"
+            className="inline-flex rounded-md border border-yellow-400/55 bg-yellow-500/10 px-4 py-2 text-sm font-medium text-yellow-200 transition hover:bg-yellow-500/20"
           >
             Analyze Your Emails
           </Link>
@@ -51,7 +51,7 @@ export default function CustomerInsightEnginePage() {
             href="https://www.loom.com/share/e39d4ef94d5d423e8dce49e477e6fd94"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-sm font-medium text-cyan-300 transition hover:text-cyan-200"
+            className="text-sm font-medium text-yellow-300 transition hover:text-yellow-200"
           >
             Open Loom in a new tab
           </Link>
