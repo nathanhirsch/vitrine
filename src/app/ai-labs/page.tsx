@@ -60,6 +60,32 @@ const projects: Project[] = [
       "PostgreSQL-backed pipeline",
     ],
   },
+  {
+    title: "Sign in with Memory to AI apps",
+    description:
+      "Interactive experience showing how apps request memory permissions OAuth-style, with dynamic consent during chat and user-controlled context access.",
+    status: "In Progress",
+    href: "/ai-labs/sign-in-with-memory",
+    skills: [
+      "Permissioned memory access",
+      "Wallet-style connect flow",
+      "In-chat consent requests",
+      "User memory controls",
+    ],
+  },
+  {
+    title: "Ops (Slack)",
+    description:
+      "Slack app that turns a thread into a PRD draft, thread summary, or action items using slash commands and OpenAI, with post-to-thread and regenerate flows.",
+    status: "Launched",
+    href: "/ai-labs/ops-slack",
+    skills: [
+      "Slack Bolt + Express",
+      "Slash commands",
+      "Thread-to-artifact generation",
+      "OpenAI API",
+    ],
+  },
 ];
 
 export default function AILabsPage() {
