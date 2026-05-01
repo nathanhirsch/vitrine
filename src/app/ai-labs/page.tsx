@@ -50,7 +50,7 @@ const projects: Project[] = [
   {
     title: "Slack Feedback Capture Agent",
     description:
-      "Captures product feedback directly from Slack reactions, classifies it, stores it for review, and exports approved insights as structured CSV.",
+      "Captures product feedback directly from Slack reactions, prepares it for ingestion into a classification pipeline, stores it for review, and exports approved insights as structured CSV.",
     status: "Launched",
     href: "/ai-labs/slack-feedback-capture-agent",
     skills: [
@@ -61,9 +61,9 @@ const projects: Project[] = [
     ],
   },
   {
-    title: "Sign in with Memory to AI apps",
+    title: "Sign in with MyMemory to AI apps",
     description:
-      "Interactive experience showing how apps request memory permissions OAuth-style, with dynamic consent during chat and user-controlled context access.",
+      "Interactive experience for user-owned memory that stays private by design, with permission selection to grant AI apps access only to specific aspects of personal context.",
     status: "In Progress",
     href: "/ai-labs/sign-in-with-memory",
     skills: [

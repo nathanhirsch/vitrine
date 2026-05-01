@@ -19,7 +19,7 @@ const experiences = [
     company: "Napoleon",
     period: "Mar 2025 - Sep 2025 · Paris, France",
     highlight:
-      "Built a behavioral product to reduce social media addiction, launched an MVP, and acquired 200+ users with early paid validation.",
+      "Built and launched a live mobile app to reduce social media addiction, and acquired 200+ users with early paid validation.",
     themes: ["Mobile App", "AI", "Build in Public"],
     links: [
       { label: "Napoleon App", url: "https://www.napoleonapp.com/en" },
@@ -39,7 +39,7 @@ const experiences = [
     company: "Arianee",
     period: "Aug 2022 - Mar 2025 · Paris, France",
     highlight:
-      "Scaled NFT infrastructure to 2M+ NFTs and shipped privacy-first and interoperability products with global brand partners.",
+      "Scaled NFT infrastructure to 2M+ NFTs and shipped privacy-first and interoperability products with global brands including Breitling, Audemars Piguet, and Moncler.",
     themes: ["Enterprise SaaS", "EVM Protocol", "Interoperability"],
     links: [
       { label: "Arianee Protocol", url: "https://www.arianee.org/" },
