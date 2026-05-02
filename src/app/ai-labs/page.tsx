@@ -24,6 +24,19 @@ const projects: Project[] = [
     ],
   },
   {
+    title: "EvalAgent",
+    description:
+      "Generates structured test suites for AI agents — golden path, edge case, and adversarial tests — from a system prompt or GitHub repo URL. Surfaces how an agent behaves when things go right, when assumptions break, and when it is actively pushed off course.",
+    status: "Launched",
+    href: "/ai-labs/eval-agent",
+    skills: [
+      "Agent evaluation",
+      "Assumption matrix",
+      "Adversarial testing",
+      "Claude Haiku + Sonnet",
+    ],
+  },
+  {
     title: "My Writing Agent",
     description:
       "Open-source agent workflow that turns essays into X posts, routes review through Google Sheets, posts approved content automatically, and learns from engagement data.",
@@ -34,17 +47,6 @@ const projects: Project[] = [
       "Google Sheets review queue",
       "X posting + analytics loop",
       "Taste-profile learning updates",
-    ],
-  },
-  {
-    title: "Private Knowledge Engine",
-    description:
-      "A retrieval stack over your notes and documents that answers with citations and tightens retrieval quality as you use it.",
-    status: "In Progress",
-    skills: [
-      "Retrieval-augmented generation",
-      "Context construction",
-      "Hallucination mitigation",
     ],
   },
   {
@@ -61,32 +63,6 @@ const projects: Project[] = [
     ],
   },
   {
-    title: "Sign in with MyMemory to AI apps",
-    description:
-      "Interactive experience for user-owned memory that stays private by design, with permission selection to grant AI apps access only to specific aspects of personal context.",
-    status: "In Progress",
-    href: "/ai-labs/sign-in-with-memory",
-    skills: [
-      "Permissioned memory access",
-      "Wallet-style connect flow",
-      "In-chat consent requests",
-      "User memory controls",
-    ],
-  },
-  {
-    title: "EvalAgent",
-    description:
-      "Generates structured test suites for AI agents — golden path, edge case, and adversarial tests — from a system prompt or GitHub repo URL. Surfaces how an agent behaves when things go right, when assumptions break, and when it is actively pushed off course.",
-    status: "Launched",
-    href: "/ai-labs/eval-agent",
-    skills: [
-      "Agent evaluation",
-      "Assumption matrix",
-      "Adversarial testing",
-      "Claude Haiku + Sonnet",
-    ],
-  },
-  {
     title: "Ops (Slack)",
     description:
       "Slack app that turns a thread into a PRD draft, thread summary, or action items using slash commands and OpenAI, with post-to-thread and regenerate flows.",
@@ -97,6 +73,30 @@ const projects: Project[] = [
       "Slash commands",
       "Thread-to-artifact generation",
       "OpenAI API",
+    ],
+  },
+  {
+    title: "Private Knowledge Engine",
+    description:
+      "A retrieval stack over your notes and documents that answers with citations and tightens retrieval quality as you use it.",
+    status: "In Progress",
+    skills: [
+      "Retrieval-augmented generation",
+      "Context construction",
+      "Hallucination mitigation",
+    ],
+  },
+  {
+    title: "Sign in with MyMemory to AI apps",
+    description:
+      "Interactive experience for user-owned memory that stays private by design, with permission selection to grant AI apps access only to specific aspects of personal context.",
+    status: "In Progress",
+    href: "/ai-labs/sign-in-with-memory",
+    skills: [
+      "Permissioned memory access",
+      "Wallet-style connect flow",
+      "In-chat consent requests",
+      "User memory controls",
     ],
   },
 ];

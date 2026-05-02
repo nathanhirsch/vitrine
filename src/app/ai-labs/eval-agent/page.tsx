@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { WhatSurprisedMeCard } from "@/components/ai-labs/WhatSurprisedMeCard";
 
 const highlights = [
   "Infers what an agent does from its system prompt or GitHub repo — purpose, tools, golden path, and implicit assumptions.",
@@ -85,6 +86,19 @@ export default function EvalAgentPage() {
           ))}
         </div>
       </div>
+
+      {/* What surprised me */}
+      <WhatSurprisedMeCard>
+        <p>
+          Building this made one thing immediately obvious: the agentic framework makes speed and convenience unprecedented. What used to take hours of manual test design — mapping assumptions, writing adversarial inputs, covering edge cases — now takes seconds.
+        </p>
+        <p>
+          But that convenience is exactly where the risk lives. The faster output arrives, the easier it is to skim, approve, and move on. The tool generates fifteen tests; the temptation is to run them and trust the results without reading what each one is actually checking.
+        </p>
+        <p>
+          AI makes it effortless to produce. It does nothing to fix the human tendency to stop paying attention. Reading every test, understanding the pass criteria, questioning whether the adversarial inputs are actually adversarial enough — that still requires the same focused effort it always did. That part AI will never do for you.
+        </p>
+      </WhatSurprisedMeCard>
 
       {/* Built with */}
       <div className="space-y-3">
