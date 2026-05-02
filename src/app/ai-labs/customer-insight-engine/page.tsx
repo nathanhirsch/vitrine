@@ -1,5 +1,7 @@
 import Link from "next/link";
 
+import { WhatSurprisedMeCard } from "@/components/ai-labs/WhatSurprisedMeCard";
+
 const highlights = [
   "Turns messy customer emails into structured insights, behavioral clusters, and product decisions.",
   "Built end-to-end with LLM classification, semantic clustering, and insight generation.",
@@ -38,6 +40,18 @@ export default function CustomerInsightEnginePage() {
           </a>
         </div>
       </div>
+
+      <WhatSurprisedMeCard>
+        <p>
+          What surprised me was how often a cluster that looks tidy in the
+          aggregate falls apart when you read the raw quotes—similar wording can
+          hide different intents until you force yourself to go line by line.
+        </p>
+        <p>
+          Small feedback edits to labels or examples changed cluster boundaries
+          more than I expected; the model part was only half the story.
+        </p>
+      </WhatSurprisedMeCard>
 
       <article className="rounded-xl border border-slate-800 bg-slate-900/60 p-6">
         <h2 className="mb-4 text-xl font-medium text-white">Key Highlights</h2>

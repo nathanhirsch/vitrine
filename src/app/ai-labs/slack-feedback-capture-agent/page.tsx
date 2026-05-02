@@ -1,3 +1,5 @@
+import { WhatSurprisedMeCard } from "@/components/ai-labs/WhatSurprisedMeCard";
+
 const usefulness = [
   "Turns ad-hoc product feedback in Slack into a reliable, reviewable pipeline.",
   "Reduces manual copy/paste from threads and keeps feedback capture consistent.",
@@ -47,6 +49,14 @@ export default function SlackFeedbackCaptureAgentPage() {
           ))}
         </ul>
       </article>
+
+      <WhatSurprisedMeCard>
+        <p>
+          Slack threads are what keep the context window tight—and that assumes
+          people actually use one topic per thread. Next up: channel-wide context
+          for search-style agents when we need it.
+        </p>
+      </WhatSurprisedMeCard>
 
       <article className="rounded-xl border border-slate-800 bg-slate-900/60 p-6">
         <h2 className="mb-4 text-xl font-medium text-white">How it works</h2>

@@ -1,3 +1,5 @@
+import { WhatSurprisedMeCard } from "@/components/ai-labs/WhatSurprisedMeCard";
+
 const highlights = [
   "Turns Slack threads into structured PM outputs: PRD, summary, or action items.",
   "Thread-only slash commands with ephemeral previews and post-to-thread actions.",
@@ -47,6 +49,19 @@ export default function OpsSlackPage() {
           ))}
         </ul>
       </article>
+
+      <WhatSurprisedMeCard>
+        <p>
+          I used to treat Slack&apos;s DM-with-myself as a scratchpad for drafts.
+          With Ops, that same space turned into where I preview agent output—a
+          quiet, persistent thread that&apos;s become a real product surface for
+          one person in Slack.
+        </p>
+        <p>
+          On paper you could dismiss &quot;a conversation with yourself&quot; as
+          pointless; in practice it&apos;s disproportionately useful.
+        </p>
+      </WhatSurprisedMeCard>
 
       <article className="rounded-xl border border-slate-800 bg-slate-900/60 p-6">
         <h2 className="mb-3 text-xl font-medium text-white">Commands</h2>

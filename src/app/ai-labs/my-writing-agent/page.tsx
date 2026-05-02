@@ -1,3 +1,5 @@
+import { WhatSurprisedMeCard } from "@/components/ai-labs/WhatSurprisedMeCard";
+
 const highlights = [
   "Built an end-to-end content agent: generation, human approval, publishing, and learning.",
   "Uses practical tooling that teams already understand: Python scripts, Google Sheets, and API integrations.",
@@ -56,6 +58,18 @@ export default function MyWritingAgentPage() {
           ))}
         </ul>
       </article>
+
+      <WhatSurprisedMeCard>
+        <p>
+          What surprised me most was how long it takes—and how far you have to
+          push—for the model to get anywhere close to the tone of voice of my
+          own essays.
+        </p>
+        <p>
+          I&apos;m still working on getting the tone of voice as close to my own
+          as I want it.
+        </p>
+      </WhatSurprisedMeCard>
 
       <article className="rounded-xl border border-slate-800 bg-slate-900/60 p-6">
         <h2 className="mb-3 text-xl font-medium text-white">Core flow</h2>
