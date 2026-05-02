@@ -74,6 +74,19 @@ const projects: Project[] = [
     ],
   },
   {
+    title: "EvalAgent",
+    description:
+      "Generates structured test suites for AI agents — golden path, edge case, and adversarial tests — from a system prompt or GitHub repo URL. Surfaces how an agent behaves when things go right, when assumptions break, and when it is actively pushed off course.",
+    status: "Launched",
+    href: "/ai-labs/eval-agent",
+    skills: [
+      "Agent evaluation",
+      "Assumption matrix",
+      "Adversarial testing",
+      "Claude Haiku + Sonnet",
+    ],
+  },
+  {
     title: "Ops (Slack)",
     description:
       "Slack app that turns a thread into a PRD draft, thread summary, or action items using slash commands and OpenAI, with post-to-thread and regenerate flows.",
