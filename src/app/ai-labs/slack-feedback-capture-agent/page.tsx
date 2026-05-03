@@ -52,7 +52,7 @@ export default function SlackFeedbackCaptureAgentPage() {
 
       <WhatSurprisedMeCard>
         <p>
-          Slack threads are what keep the context window tight—and that assumes
+          Slack threads are what keep the context window tight, and that assumes
           people actually use one topic per thread. Next up: channel-wide context
           for search-style agents when we need it.
         </p>

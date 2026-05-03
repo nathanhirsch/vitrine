@@ -61,8 +61,8 @@ export default function MyWritingAgentPage() {
 
       <WhatSurprisedMeCard>
         <p>
-          What surprised me most was how long it takes—and how far you have to
-          push—for the model to get anywhere close to the tone of voice of my
+          What surprised me most was how long it takes, and how far you have to
+          push, for the model to get anywhere close to the tone of voice of my
           own essays.
         </p>
         <p>

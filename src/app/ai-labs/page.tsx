@@ -26,7 +26,7 @@ const projects: Project[] = [
   {
     title: "EvalAgent",
     description:
-      "Generates structured test suites for AI agents — golden path, edge case, and adversarial tests — from a system prompt or GitHub repo URL. Surfaces how an agent behaves when things go right, when assumptions break, and when it is actively pushed off course.",
+      "Generates structured test suites for AI agents (golden path, edge case, and adversarial tests) from a system prompt or GitHub repo URL. Surfaces how an agent behaves when things go right, when assumptions break, and when it is actively pushed off course.",
     status: "Launched",
     href: "/ai-labs/eval-agent",
     skills: [
@@ -109,7 +109,7 @@ export default function AILabsPage() {
           My AI Playground
         </h1>
         <p className="max-w-2xl text-slate-300">
-          This is where I showcase my AI-first projects—work that reflects
+          This is where I showcase my AI-first projects: work that reflects
           end-to-end product thinking and execution, with a clear line to
           business relevance.
         </p>

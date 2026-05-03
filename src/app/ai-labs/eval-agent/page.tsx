@@ -2,11 +2,11 @@ import Link from "next/link";
 import { WhatSurprisedMeCard } from "@/components/ai-labs/WhatSurprisedMeCard";
 
 const highlights = [
-  "Infers what an agent does from its system prompt or GitHub repo — purpose, tools, golden path, and implicit assumptions.",
+  "Infers what an agent does from its system prompt or GitHub repo: purpose, tools, golden path, and implicit assumptions.",
   "Generates 5 golden path tests that verify the agent under ideal conditions, establishing a performance baseline.",
   "Produces an assumption matrix: every assumption the agent makes mapped to an edge case input and expected graceful failure.",
   "Generates 5 adversarial tests covering prompt injection, tool confusion, overconfidence traps, loop induction, and scope creep.",
-  "Optional live runner sends each test directly from the browser to your agent API — your key never touches the server.",
+  "Optional live runner sends each test directly from the browser to your agent API. Your key never touches the server.",
 ];
 
 export default function EvalAgentPage() {
@@ -20,7 +20,7 @@ export default function EvalAgentPage() {
           EvalAgent
         </h1>
         <p className="max-w-2xl text-base leading-relaxed text-slate-300">
-          Generate golden path, edge case, and adversarial tests for any AI agent — from a system prompt or GitHub repo URL.
+          Generate golden path, edge case, and adversarial tests for any AI agent, from a system prompt or GitHub repo URL.
         </p>
         <div className="flex flex-wrap gap-3">
           <Link
@@ -62,7 +62,7 @@ export default function EvalAgentPage() {
               label: "Golden Path",
               color: "border-yellow-400/30 bg-yellow-500/5",
               badge: "border-yellow-400/55 bg-yellow-500/10 text-yellow-300",
-              body: "5 tests under ideal conditions — all assumptions met, inputs well-formed. Establishes the performance baseline.",
+              body: "5 tests under ideal conditions: all assumptions met, inputs well-formed. Establishes the performance baseline.",
             },
             {
               label: "Edge Cases",

@@ -44,7 +44,7 @@ export default function CustomerInsightEnginePage() {
       <WhatSurprisedMeCard>
         <p>
           What surprised me was how often a cluster that looks tidy in the
-          aggregate falls apart when you read the raw quotes—similar wording can
+          aggregate falls apart when you read the raw quotes. Similar wording can
           hide different intents until you force yourself to go line by line.
         </p>
         <p>

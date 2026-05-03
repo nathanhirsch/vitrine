@@ -221,7 +221,7 @@ export default function EvalAgentDemo() {
         </Link>
         <h1 className="text-2xl font-semibold tracking-tight text-white">Demo</h1>
         <p className="text-sm text-slate-400">
-          Paste a system prompt to generate a full test suite — golden path, edge cases, and adversarial tests.
+          Paste a system prompt to generate a full test suite: golden path, edge cases, and adversarial tests.
         </p>
       </div>
 
@@ -303,7 +303,7 @@ export default function EvalAgentDemo() {
           )}
           {sessionUsed && !analysis && (
             <span className="text-xs text-slate-500 flex items-center gap-2">
-              One run per session — refresh to start over.
+              One run per session. Refresh to start over.
               {process.env.NODE_ENV === 'development' && (
                 <button
                   onClick={() => { sessionStorage.removeItem('eval_used'); setSessionUsed(false) }}
@@ -471,7 +471,7 @@ export default function EvalAgentDemo() {
             <div className="space-y-3">
               <input
                 className={INPUT_CLS}
-                placeholder="Agent API URL — must allow CORS (e.g. http://localhost:8080/api/chat)"
+                placeholder="Agent API URL (must allow CORS, e.g. http://localhost:8080/api/chat)"
                 value={targetApiUrl}
                 onChange={e => setTargetApiUrl(e.target.value)}
               />
@@ -485,7 +485,7 @@ export default function EvalAgentDemo() {
                 />
                 <p className="text-xs text-slate-500 flex items-center gap-1.5 px-1">
                   <svg className="w-3 h-3 shrink-0 text-slate-600" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" /></svg>
-                  Your key is never sent to our server — requests go directly from your browser to your agent.
+                  Your key is never sent to our server. Requests go directly from your browser to your agent.
                 </p>
               </div>
               <div className="space-y-3">
