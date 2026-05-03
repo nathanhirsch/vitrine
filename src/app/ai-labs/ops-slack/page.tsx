@@ -53,7 +53,7 @@ export default function OpsSlackPage() {
       <WhatSurprisedMeCard>
         <p>
           I used to treat Slack&apos;s DM-with-myself as a scratchpad for drafts.
-          With Ops, that same space turned into where I preview agent output—a
+          With Ops, that same space turned into where I preview agent output. A
           quiet, persistent thread that&apos;s become a real product surface for
           one person in Slack.
         </p>
@@ -67,13 +67,13 @@ export default function OpsSlackPage() {
         <h2 className="mb-3 text-xl font-medium text-white">Commands</h2>
         <ul className="list-inside list-decimal space-y-2 text-slate-300">
           <li>
-            <code className="text-slate-200">/prd</code> — PRD draft from the thread
+            <code className="text-slate-200">/prd</code>: PRD draft from the thread
           </li>
           <li>
-            <code className="text-slate-200">/summarize</code> — Thread summary
+            <code className="text-slate-200">/summarize</code>: Thread summary
           </li>
           <li>
-            <code className="text-slate-200">/actions</code> — Action items
+            <code className="text-slate-200">/actions</code>: Action items
           </li>
         </ul>
       </article>
