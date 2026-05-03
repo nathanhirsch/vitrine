@@ -43,9 +43,12 @@ export default function SlackFeedbackCaptureAgentPage() {
 
       <article className="rounded-xl border border-slate-800 bg-slate-900/60 p-6">
         <h2 className="mb-4 text-xl font-medium text-white">Why it is useful</h2>
-        <ul className="list-inside list-disc space-y-2 text-slate-300">
+        <ul className="space-y-2">
           {usefulness.map((point) => (
-            <li key={point}>{point}</li>
+            <li key={point} className="flex gap-3 text-sm text-slate-300">
+              <span className="mt-1 shrink-0 text-yellow-400/60">—</span>
+              {point}
+            </li>
           ))}
         </ul>
       </article>

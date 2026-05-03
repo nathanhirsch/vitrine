@@ -55,9 +55,12 @@ export default function CustomerInsightEnginePage() {
 
       <article className="rounded-xl border border-slate-800 bg-slate-900/60 p-6">
         <h2 className="mb-4 text-xl font-medium text-white">Key Highlights</h2>
-        <ul className="mb-6 list-inside list-disc space-y-2 text-slate-300">
+        <ul className="mb-6 space-y-2">
           {highlights.map((point) => (
-            <li key={point}>{point}</li>
+            <li key={point} className="flex gap-3 text-sm text-slate-300">
+              <span className="mt-1 shrink-0 text-yellow-400/60">—</span>
+              {point}
+            </li>
           ))}
         </ul>
         <div className="overflow-hidden rounded-lg border border-slate-700 bg-slate-950">
