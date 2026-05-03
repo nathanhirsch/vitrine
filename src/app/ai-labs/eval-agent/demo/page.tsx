@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { FlywheelDemo } from '@/components/ai-labs/FlywheelDemo'
 
 type AnalysisResult = {
   agentPurpose: string
@@ -572,6 +573,8 @@ export default function EvalAgentDemo() {
           {error}
         </div>
       )}
+
+      <FlywheelDemo />
     </section>
   )
 }
