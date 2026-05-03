@@ -90,19 +90,19 @@ export default function EvalAgentPage() {
       {/* What surprised me */}
       <WhatSurprisedMeCard>
         <p>
-          Building this made one thing immediately obvious: the agentic framework makes speed and convenience unprecedented. What used to take hours of manual test design — mapping assumptions, writing adversarial inputs, covering edge cases — now takes seconds.
+          Building this made one thing immediately obvious: the agentic framework makes speed and convenience unprecedented. What used to take hours of manual test design (mapping assumptions, writing adversarial inputs, covering edge cases) now takes seconds.
         </p>
         <p>
           But two things surprised me about the limits of what gets generated.
         </p>
         <p>
-          The first is that the tests are perishable. The framework — golden path, edge cases, adversarial — is evergreen. The actual test inputs inside it aren&apos;t. Every time the agent improves, the adversarial cases that used to challenge it become trivial. Every time the product scope shifts, the golden path tests silently become wrong. You&apos;re not building a test suite once. You&apos;re committing to regenerating it continuously.
+          The first is that the tests are perishable. The structure is evergreen: golden path, edge cases, adversarial. The actual test inputs inside it aren&apos;t. Every time the agent improves, the adversarial cases that used to challenge it become trivial. Every time the product scope shifts, the golden path tests silently become wrong. You&apos;re not building a test suite once. You&apos;re committing to regenerating it continuously.
         </p>
         <p>
-          The second is the measurement problem. The tool produces fifteen tests and pass criteria that read as authoritative. But fifteen is just fifteen sampled points in an infinite input space. And &ldquo;pass criteria&rdquo; written by a model has its own blind spots — you&apos;re often measuring a ruler with another ruler. Coverage feels real before you look closely at it.
+          The second is the measurement problem. The tool produces fifteen tests and pass criteria that read as authoritative. But fifteen is just fifteen sampled points in an infinite input space. And &ldquo;pass criteria&rdquo; written by a model has its own blind spots; you&apos;re often measuring a ruler with another ruler. Coverage feels real before you look closely at it.
         </p>
         <p>
-          That convenience is exactly where the risk lives. The faster output arrives, the easier it is to skim, approve, and move on. Reading every test, questioning whether the adversarial inputs are actually adversarial enough, asking what the framework isn&apos;t measuring — that still requires the same focused effort it always did. That part AI will never do for you.
+          That convenience is exactly where the risk lives. The faster output arrives, the easier it is to skim, approve, and move on. Reading every test, questioning whether the adversarial inputs are actually adversarial enough, asking what the framework isn&apos;t measuring: that still requires the same focused effort it always did. That part AI will never do for you.
         </p>
       </WhatSurprisedMeCard>
 
