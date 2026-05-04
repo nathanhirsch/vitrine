@@ -76,6 +76,19 @@ const projects: Project[] = [
     ],
   },
   {
+    title: "Automation Opportunity Assessment",
+    description:
+      "Multi-step inbound lead tool: visitors answer structured questions about their workflows, Claude generates a personalised automation quick take, and the full assessment lands in my inbox via Resend.",
+    status: "Launched",
+    href: "/ai-labs/automation-assessment",
+    skills: [
+      "Multi-step form",
+      "Claude Sonnet analysis",
+      "Resend email delivery",
+      "Lead qualification",
+    ],
+  },
+  {
     title: "Private Knowledge Engine",
     description:
       "A retrieval stack over your notes and documents that answers with citations and tightens retrieval quality as you use it.",
