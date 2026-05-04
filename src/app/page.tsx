@@ -165,16 +165,14 @@ export default function Home() {
     <section className="space-y-10">
       <div className="flex min-h-[64vh] flex-col justify-center space-y-6 md:min-h-[72vh]">
         <div className="max-w-xl space-y-4 text-left md:max-w-2xl lg:max-w-3xl">
-          <p className="inline-flex rounded-full border border-emerald-500/35 bg-emerald-500/10 px-3 py-1 text-xs font-medium tracking-wide text-emerald-300">
-            AI Labs Active
+          <p className="text-sm font-medium tracking-wide text-slate-400">
+            Nathan Hirsch
           </p>
           <h1 className="max-w-full text-4xl font-semibold tracking-tight text-white md:text-5xl lg:text-6xl">
-            Hi, I&apos;m Nathan. I build products with AI.
+            2x Founder. Senior Product Manager.
           </h1>
           <p className="max-w-xl text-lg leading-relaxed text-slate-300 md:text-xl">
-            Building products that change behavior. Founder. Built in web3 and
-            AI. Exploring how far AI and humans can go together to create real
-            impact. Recently moved to California.
+            +8 years shipping in web3, Enterprise SaaS, and AI. Here&apos;s what I&apos;ve built.
           </p>
           <div className="flex flex-wrap items-center gap-3 pt-2">
             <Link
