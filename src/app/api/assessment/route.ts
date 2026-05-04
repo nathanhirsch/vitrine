@@ -160,7 +160,9 @@ export async function POST(req: NextRequest) {
 - Paragraph 2: What a light first build could look like (concrete, specific)
 - Paragraph 3: What this could unlock if it works well
 
-Keep it direct, specific to their answers, and energizing — this should make them feel like they've already taken the first step.`;
+Keep it direct, specific to their answers, and energizing — this should make them feel like they've already taken the first step.
+
+IMPORTANT: Before writing anything, assess whether the answers contain real, meaningful information about actual workflows. If the answers are blank, one-word, clearly fake (e.g. "test", "aaa", "xxx"), or otherwise too thin to draw real conclusions from, do NOT generate generic automation ideas. Instead, respond with a single short paragraph explaining that the analysis requires genuine workflow details to be useful, and encourage them to fill in the assessment with real answers.`;
 
   const claudeRes = await anthropic.messages.create({
     model: "claude-sonnet-4-6",
