@@ -1,5 +1,4 @@
 import { AutomationAssessment } from "@/components/AutomationAssessment";
-import { WhatSurprisedMeCard } from "@/components/ai-labs/WhatSurprisedMeCard";
 
 const highlights = [
   "Multi-step assessment collects workflow context across sales, pipeline, and operations.",
@@ -36,14 +35,6 @@ export default function AutomationAssessmentPage() {
           ))}
         </ul>
       </article>
-
-      <WhatSurprisedMeCard>
-        <p>
-          The most useful signal came from step 4, the shortlist. When people
-          articulate their top 3 in their own words, the real problem surfaces
-          fast. The earlier questions are context; this one is signal.
-        </p>
-      </WhatSurprisedMeCard>
 
       <AutomationAssessment />
     </section>
