@@ -91,8 +91,6 @@ const GENERATING_STEPS = [
 ]
 
 export default function EvalAgentDemo() {
-  const [inputMode, setInputMode] = useState<'repo' | 'prompt'>('prompt')
-  const [repoUrl, setRepoUrl] = useState('')
   const [systemPrompt, setSystemPrompt] = useState('')
   const [toolDescriptions, setToolDescriptions] = useState('')
   const [targetApiUrl, setTargetApiUrl] = useState('')
@@ -126,7 +124,7 @@ export default function EvalAgentDemo() {
       const res = await fetch('/api/eval/analyze', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ repoUrl, systemPrompt, toolDescriptions }),
+        body: JSON.stringify({ systemPrompt, toolDescriptions }),
       })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error ?? `Server error ${res.status}`)
@@ -231,12 +229,8 @@ export default function EvalAgentDemo() {
           <span className="text-xs text-slate-400 tracking-widest uppercase">01 — Define your agent</span>
           <button
             onClick={() => {
-              if (inputMode === 'prompt') {
-                setSystemPrompt(SAMPLE_PROMPT)
-                setToolDescriptions('lookup_order, initiate_return, issue_refund')
-              } else {
-                setRepoUrl('https://github.com/anthropics/anthropic-quickstarts')
-              }
+              setSystemPrompt(SAMPLE_PROMPT)
+              setToolDescriptions('lookup_order, initiate_return, issue_refund')
             }}
             className="px-3 py-1.5 text-xs rounded-lg border border-slate-700 text-slate-400 hover:border-yellow-400/60 hover:text-yellow-200 transition-colors"
           >
@@ -244,31 +238,7 @@ export default function EvalAgentDemo() {
           </button>
         </div>
 
-        <div className="flex gap-2">
-          {(['prompt', 'repo'] as const).map(mode => (
-            <button
-              key={mode}
-              onClick={() => setInputMode(mode)}
-              className={`px-4 py-1.5 text-xs rounded-lg border font-medium transition-colors ${
-                inputMode === mode
-                  ? 'border-yellow-400/55 bg-yellow-500/10 text-yellow-200'
-                  : 'border-slate-700 text-slate-400 hover:border-yellow-400/40 hover:text-slate-300'
-              }`}
-            >
-              {mode === 'prompt' ? 'System Prompt' : 'GitHub URL'}
-            </button>
-          ))}
-        </div>
-
-        {inputMode === 'repo' ? (
-          <input
-            className={INPUT_CLS}
-            placeholder="https://github.com/yourname/your-agent"
-            value={repoUrl}
-            onChange={e => setRepoUrl(e.target.value)}
-          />
-        ) : (
-          <div className="space-y-3">
+        <div className="space-y-3">
             <textarea
               className={`${INPUT_CLS} resize-none`}
               rows={5}
@@ -284,7 +254,6 @@ export default function EvalAgentDemo() {
               onChange={e => setToolDescriptions(e.target.value)}
             />
           </div>
-        )}
 
         <div className="flex items-center gap-4">
           {analysis ? (
@@ -295,7 +264,7 @@ export default function EvalAgentDemo() {
           ) : (
             <button
               onClick={handleAnalyze}
-              disabled={isLoading || (!repoUrl && !systemPrompt) || sessionUsed}
+              disabled={isLoading || !systemPrompt || sessionUsed}
               className={BTN_GOLD}
             >
               {step === 'analyzing' ? 'Analyzing...' : 'Analyze Agent →'}
