@@ -179,7 +179,7 @@ Keep it direct, specific to their answers, and energizing — this should make t
       : "Unable to generate analysis — please contact us directly.";
 
   await resend.emails.send({
-    from: "Automation Assessment <onboarding@resend.dev>",
+    from: "Automation Assessment <hello@nathanhirsch.xyz>",
     to: [process.env.RECIPIENT_EMAIL ?? ""],
     subject: `New automation assessment: ${body.gate.name} at ${body.gate.company}`,
     html: buildEmailHtml(body, quickTake),
