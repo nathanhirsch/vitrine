@@ -2,6 +2,8 @@
 
 import { useMemo, useState } from "react";
 
+type FlowStep = "signin" | "verify" | "permissions" | "active";
+type VerifyMethod = "passkey" | "hardware" | "wallet";
 type MemoryKey =
   | "writingStyle"
   | "currentProjects"
@@ -9,15 +11,12 @@ type MemoryKey =
   | "personalBackground"
   | "privateNotes"
   | "pastInvestorUpdates";
-
 type AccessScope = "off" | "active" | "session" | "app";
-
 type ChatMessage = {
   id: string;
   role: "system" | "assistant" | "user";
   text: string;
 };
-
 type MemoryCategory = {
   id: string;
   label: string;
@@ -25,7 +24,7 @@ type MemoryCategory = {
   items: string[];
 };
 
-const memoryCategories: MemoryCategory[] = [
+const MEMORY_CATEGORIES: MemoryCategory[] = [
   {
     id: "writing_style",
     label: "Writing style",
@@ -33,9 +32,6 @@ const memoryCategories: MemoryCategory[] = [
     items: [
       "Prefer direct tone. No fluff. Avoid corporate phrasing.",
       "Use short paragraphs and concrete examples.",
-      "Avoid em dashes. They feel unnatural.",
-      "Content should feel sharp and slightly provocative.",
-      "Write for Twitter, LinkedIn, and product UI copy.",
     ],
   },
   {
@@ -45,9 +41,6 @@ const memoryCategories: MemoryCategory[] = [
     items: [
       "Building Napoleon: time-tracking app that charges per minute of social media use.",
       "Testing viral content loops on TikTok and Twitter.",
-      "Exploring AI + privacy + decentralized storage.",
-      "Automating Twitter replies using Google Sheets + GPT.",
-      "Launching personal essay website.",
     ],
   },
   {
@@ -57,9 +50,6 @@ const memoryCategories: MemoryCategory[] = [
     items: [
       "Struggling with user activation drop-off after onboarding.",
       "Refining investor narrative around behavior change.",
-      "Debating punishment-based vs reward-based monetization.",
-      "Trying to systematize viral content strategy.",
-      "Positioning product as identity shift, not tool.",
     ],
   },
   {
@@ -69,9 +59,6 @@ const memoryCategories: MemoryCategory[] = [
     items: [
       "Founder with product background in web3.",
       "Built crypto exchange and tokenization protocol.",
-      "Worked with brands like Breitling and Lacoste.",
-      "Now focused on AI products and behavior change.",
-      "Strong product sense, weaker in visual branding.",
     ],
   },
   {
@@ -79,18 +66,13 @@ const memoryCategories: MemoryCategory[] = [
     label: "Private notes",
     enabled: false,
     items: [
-      "The product is not about time. It’s about self-respect.",
-      "People don’t want to track time. They want control.",
-      "Make the pain of scrolling visible.",
-      "Identity > features.",
-      "This only works if it feels slightly uncomfortable.",
+      "The product is not about time. It's about self-respect.",
+      "People don't want to track time. They want control.",
     ],
   },
 ];
 
-const INITIAL_MESSAGES: ChatMessage[] = [];
-
-const memoryCategoryToKey: Record<string, MemoryKey> = {
+const MEM_CAT_TO_KEY: Record<string, MemoryKey> = {
   writing_style: "writingStyle",
   current_projects: "currentProjects",
   past_conversations: "pastConversations",
@@ -98,155 +80,152 @@ const memoryCategoryToKey: Record<string, MemoryKey> = {
   private_notes: "privateNotes",
 };
 
-function MemoryCard({
-  title,
-  enabled,
-  items,
-  onToggle,
+function VerifyMethodOption({
+  label,
+  sub,
+  selected,
+  onClick,
 }: {
-  title: string;
-  enabled: boolean;
-  items: string[];
-  onToggle: () => void;
+  label: string;
+  sub: string;
+  selected: boolean;
+  onClick: () => void;
 }) {
-  const primary = items[0] ?? "";
-  const secondary = items[1] ?? "";
-  const remainingCount = Math.max(0, items.length - 2);
-
   return (
-    <article className="rounded-2xl border border-[#e5e5e5] bg-[#efefef] p-4 transition hover:bg-[#eaeaea]">
-      <div className="mb-2 flex items-start justify-between gap-2">
-        <h3 className="text-sm font-semibold text-slate-800">{title}</h3>
-        <button
-          type="button"
-          role="switch"
-          aria-checked={enabled}
-          onClick={onToggle}
-          className={
-            enabled
-              ? "relative inline-flex h-6 w-11 items-center rounded-full bg-slate-900 transition"
-              : "relative inline-flex h-6 w-11 items-center rounded-full bg-slate-300 transition"
-          }
-        >
-          <span
-            className={
-              enabled
-                ? "inline-block h-4 w-4 translate-x-6 rounded-full bg-white transition"
-                : "inline-block h-4 w-4 translate-x-1 rounded-full bg-white transition"
-            }
-          />
-        </button>
-      </div>
-      <p className="text-sm leading-snug text-slate-800">"{primary}"</p>
-      <p className="mt-1 text-sm leading-snug text-slate-800/60">"{secondary}"</p>
-      <p className="mt-2 text-xs text-slate-500">+{remainingCount} more</p>
-    </article>
+    <button
+      onClick={onClick}
+      className={`flex w-full items-start gap-3 rounded-xl border p-3 text-left transition-all ${
+        selected
+          ? "border-violet-200 bg-violet-50 ring-1 ring-violet-200"
+          : "border-gray-200 bg-white hover:border-gray-300"
+      }`}
+    >
+      <span
+        className={`mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full border-2 transition-colors ${
+          selected ? "border-violet-600" : "border-gray-300"
+        }`}
+      >
+        {selected && <span className="h-2 w-2 rounded-full bg-violet-600" />}
+      </span>
+      <span>
+        <span className="block text-sm font-medium text-gray-900">{label}</span>
+        <span className="mt-0.5 block text-xs text-gray-500">{sub}</span>
+      </span>
+    </button>
   );
 }
 
-function MemoryModal({
-  categories,
-  isEnabled,
-  onToggleCategory,
-  onDeny,
-  onApprove,
+function PermCategoryCard({
+  category,
+  enabled,
+  onToggle,
 }: {
-  categories: MemoryCategory[];
-  isEnabled: (categoryId: string) => boolean;
-  onToggleCategory: (categoryId: string) => void;
-  onDeny: () => void;
-  onApprove: () => void;
+  category: MemoryCategory;
+  enabled: boolean;
+  onToggle: () => void;
 }) {
   return (
-    <div className="fixed inset-0 z-40 flex items-center justify-center bg-slate-950/12 p-6">
-      <div className="w-full max-w-[760px] overflow-hidden rounded-2xl border border-[#ddd8cd] bg-[#f7f7f7] shadow-[0_35px_90px_-40px_rgba(15,23,42,0.55)]">
-        <div className="max-h-[74vh] overflow-y-auto p-5">
-        <h2 className="text-lg font-semibold text-slate-900">
-          Initial memory permissions
-        </h2>
-        <p className="mt-1 text-sm text-slate-600">Allow access to:</p>
-        <div className="mt-3 space-y-3">
-          {categories.map((category) => (
-            <MemoryCard
-              key={category.id}
-              title={category.label}
-              enabled={isEnabled(category.id)}
-              items={category.items}
-              onToggle={() => onToggleCategory(category.id)}
-            />
-          ))}
-        </div>
-        <p className="mt-3 text-xs text-slate-600">Apps only access what you allow.</p>
-        <div className="mt-4 flex justify-end gap-2">
-          <button
-            onClick={onDeny}
-            className="rounded-md border border-slate-300 px-3 py-2 text-sm font-medium text-slate-700"
-          >
-            Deny
-          </button>
-          <button
-            onClick={onApprove}
-            className="rounded-md bg-slate-900 px-3 py-2 text-sm font-medium text-white"
-          >
-            Approve
-          </button>
-        </div>
+    <div
+      onClick={onToggle}
+      className={`cursor-pointer select-none rounded-xl border p-3.5 transition-all ${
+        enabled
+          ? "border-violet-200 bg-violet-50/70"
+          : "border-gray-200 bg-gray-50/60 hover:border-gray-300"
+      }`}
+    >
+      <div className="mb-2 flex items-start justify-between gap-2">
+        <span className="text-sm font-medium text-gray-900">{category.label}</span>
+        <div
+          className={`relative inline-flex h-5 w-9 shrink-0 items-center rounded-full transition-colors ${
+            enabled ? "bg-violet-600" : "bg-gray-300"
+          }`}
+        >
+          <span
+            className={`inline-block h-3.5 w-3.5 rounded-full bg-white shadow transition-transform ${
+              enabled ? "translate-x-[18px]" : "translate-x-0.5"
+            }`}
+          />
         </div>
       </div>
+      <p className="line-clamp-2 text-xs leading-relaxed text-gray-500">
+        {category.items[0]}
+      </p>
     </div>
   );
 }
 
 export default function SignInWithMemoryPage() {
-  const [messages, setMessages] = useState<ChatMessage[]>(INITIAL_MESSAGES);
-  const [input, setInput] = useState("Help me write a founder update.");
-  const [memoryConnected, setMemoryConnected] = useState(false);
-  const [showConnectModal, setShowConnectModal] = useState(false);
-  const [showSignatureModal, setShowSignatureModal] = useState(false);
-  const [isSigning, setIsSigning] = useState(false);
-  const [signatureMethod, setSignatureMethod] = useState<
-    "hardware" | "passkey" | "wallet"
-  >("hardware");
-  const [showPermissionPanel, setShowPermissionPanel] = useState(false);
-  const [showInlineRequest, setShowInlineRequest] = useState(false);
-  const [showMemoryMenu, setShowMemoryMenu] = useState(false);
-  const [mode, setMode] = useState<"without" | "with">("with");
-
+  const [flowStep, setFlowStep] = useState<FlowStep>("signin");
+  const [verifyMethod, setVerifyMethod] = useState<VerifyMethod>("passkey");
+  const [isVerifying, setIsVerifying] = useState(false);
+  const [permEnabled, setPermEnabled] = useState<Record<string, boolean>>(
+    Object.fromEntries(MEMORY_CATEGORIES.map((c) => [c.id, c.enabled]))
+  );
   const [access, setAccess] = useState<Record<MemoryKey, AccessScope>>({
-    writingStyle: "active",
-    currentProjects: "active",
+    writingStyle: "off",
+    currentProjects: "off",
     pastConversations: "off",
     personalBackground: "off",
     privateNotes: "off",
     pastInvestorUpdates: "off",
   });
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
+  const [input, setInput] = useState("Help me write a founder update.");
+  const [showInlineRequest, setShowInlineRequest] = useState(false);
 
-  const connectedActiveCount = useMemo(
-    () => Object.values(access).filter((value) => value !== "off").length,
+  const isActive = flowStep === "active";
+
+  const enabledPermCount = useMemo(
+    () => Object.values(permEnabled).filter(Boolean).length,
+    [permEnabled]
+  );
+
+  const activeCount = useMemo(
+    () => Object.values(access).filter((v) => v !== "off").length,
     [access]
   );
 
-  const appendMessage = (message: ChatMessage) =>
-    setMessages((prev) => [...prev, message]);
+  const appendMessage = (msg: ChatMessage) =>
+    setMessages((prev) => [...prev, msg]);
 
-  const handleApproveInitialPermissions = () => {
-    setMemoryConnected(true);
-    setShowPermissionPanel(false);
+  const handleVerify = () => {
+    setIsVerifying(true);
+    window.setTimeout(() => {
+      setIsVerifying(false);
+      setFlowStep("permissions");
+    }, 1400);
+  };
+
+  const handleApprovePermissions = () => {
+    const newAccess = { ...access };
+    for (const [catId, enabled] of Object.entries(permEnabled)) {
+      const key = MEM_CAT_TO_KEY[catId];
+      if (key) newAccess[key] = enabled ? "active" : "off";
+    }
+    setAccess(newAccess);
+    setFlowStep("active");
+    const count = Object.values(permEnabled).filter(Boolean).length;
     appendMessage({
       id: "connected",
       role: "system",
-      text: "Memory connected. Writing style and current projects are enabled.",
+      text: `Memory connected. ${count} context ${count === 1 ? "section" : "sections"} enabled.`,
     });
+  };
+
+  const handleDenyPermissions = () => {
+    setFlowStep("signin");
+    setPermEnabled(
+      Object.fromEntries(MEMORY_CATEGORIES.map((c) => [c.id, c.enabled]))
+    );
   };
 
   const handleSend = () => {
     if (!input.trim()) return;
-
     const userText = input.trim();
     appendMessage({ id: `u-${Date.now()}`, role: "user", text: userText });
     setInput("");
 
-    if (mode === "without" || !memoryConnected) {
+    if (!isActive || access.writingStyle === "off") {
       appendMessage({
         id: `a-generic-${Date.now()}`,
         role: "assistant",
@@ -259,7 +238,7 @@ export default function SignInWithMemoryPage() {
       appendMessage({
         id: `a-request-${Date.now()}`,
         role: "assistant",
-        text: "I can draft this using your writing style and current project context.\n\nTo make this more relevant, I need access to:\n→ Past investor updates",
+        text: "I can draft this using your writing style and current project context.\n\nTo make this more relevant, I need access to: Past investor updates",
       });
       setShowInlineRequest(true);
       return;
@@ -283,417 +262,464 @@ export default function SignInWithMemoryPage() {
     appendMessage({
       id: `a-specific-${Date.now()}`,
       role: "assistant",
-      text: "Updated draft with memory context: We progressed from prototype validation to repeatable usage patterns, with stronger signal quality from founder updates and investor-facing narratives.",
+      text: "Updated draft: We progressed from prototype validation to repeatable usage patterns, with stronger signal quality from founder updates and investor-facing narratives.",
     });
   };
 
-  const togglePermission = (key: MemoryKey) => {
-    setAccess((prev) => ({
-      ...prev,
-      [key]: prev[key] === "off" ? "active" : "off",
-    }));
-  };
-
-  const badge = (scope: AccessScope) =>
-    scope === "off" ? "off" : scope === "active" ? "active" : scope;
-
-  const handleStartSignature = () => {
-    setIsSigning(true);
-    window.setTimeout(() => {
-      setIsSigning(false);
-      setShowSignatureModal(false);
-      setShowPermissionPanel(true);
-      appendMessage({
-        id: `sig-ok-${Date.now()}`,
-        role: "system",
-        text: "Device signature verified. Memory connection authorized.",
-      });
-    }, 1200);
-  };
-
-  const activeMemorySections = useMemo(
-    () =>
-      (Object.entries(access) as Array<[MemoryKey, AccessScope]>).filter(
-        ([, scope]) => scope !== "off"
-      ),
-    [access]
-  );
-
-  const toLabel = (key: MemoryKey) =>
-    ({
-      writingStyle: "Writing style",
-      currentProjects: "Current projects",
-      pastConversations: "Past conversations",
-      personalBackground: "Personal background",
-      privateNotes: "Private notes",
-      pastInvestorUpdates: "Past investor updates",
-    })[key];
-
-  const isEmptyState = messages.length === 0;
+  const verifyLabel = {
+    passkey: "passkey",
+    hardware: "security key",
+    wallet: "wallet",
+  }[verifyMethod];
 
   return (
-    <section className="bg-[#f3f1eb] p-3 text-slate-900 md:p-5">
-      <div className="mx-auto grid h-[760px] max-w-[1320px] grid-cols-[260px_1fr] overflow-hidden rounded-2xl border border-[#ddd8cd] bg-[#f7f5ef] shadow-[0_20px_50px_-25px_rgba(15,23,42,0.25)]">
-        <aside className="flex flex-col border-r border-[#e2ddd2] bg-[#efede6] p-3">
-          <div className="mb-2 flex items-center justify-between px-1">
-            <p className="text-sm font-semibold text-slate-800">AnyLLM</p>
-            <button
-              aria-label="Create new chat"
-              className="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-[#ddd8cd] bg-[#f4f2ec] text-slate-600 hover:bg-[#ece9e0]"
-            >
-              <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.8">
-                <rect x="3" y="3" width="18" height="18" rx="4"></rect>
-                <path d="M8 16l2.8-.6L17 9.2a1.4 1.4 0 0 0 0-2l-.2-.2a1.4 1.4 0 0 0-2 0l-6.2 6.2L8 16z"></path>
-                <path d="M13.5 7.5l3 3"></path>
-              </svg>
-            </button>
-          </div>
+    <section className="space-y-8">
+      <div className="space-y-4">
+        <p className="inline-flex rounded-full border border-yellow-400/45 bg-yellow-500/10 px-3 py-1 text-xs font-medium tracking-wide text-yellow-200">
+          AI Playground
+        </p>
+        <h1 className="max-w-3xl text-3xl font-semibold tracking-tight text-white md:text-4xl">
+          Sign In with MyMemory
+        </h1>
+        <p className="max-w-2xl text-base leading-relaxed text-slate-300">
+          Portable identity for LLMs: bring your personal context to any AI app
+          without giving it permanent access to your data.
+        </p>
+      </div>
 
-          <div className="mb-3 rounded-lg border border-[#e6e1d5] bg-[#f4f2ec] px-2.5 py-2 text-sm text-slate-400">
-            Search
-          </div>
-
-          <div className="mt-4 space-y-1">
-            <p className="px-2 text-xs font-medium text-slate-500">Recents</p>
-            {[
-              "Founder update draft",
-              "Napoleon app strategy",
-              "Daily planning",
-            ].map((item, index) => (
+      {/* Demo */}
+      <div className="relative overflow-hidden rounded-2xl border border-slate-700/50 shadow-2xl">
+        {/* Chat shell */}
+        <div
+          className={`grid h-[660px] grid-cols-[220px_1fr] ${
+            !isActive ? "pointer-events-none select-none" : ""
+          }`}
+        >
+          {/* Sidebar */}
+          <aside className="flex flex-col bg-[#111111]">
+            <div className="flex items-center justify-between px-3 py-3">
+              <span className="text-sm font-semibold text-white">AnyLLM</span>
               <button
-                key={item}
-                className={
-                  index === 0
-                    ? "w-full truncate rounded-md bg-[#ddd8cd]/70 px-2 py-2 text-left text-sm font-medium text-slate-800"
-                    : "w-full truncate rounded-md px-2 py-2 text-left text-sm text-slate-700 hover:bg-[#dfd9cc]/55"
-                }
+                aria-label="New chat"
+                className="rounded-md p-1 text-gray-500 hover:bg-white/10 hover:text-gray-300"
               >
-                {item}
+                <svg
+                  viewBox="0 0 24 24"
+                  className="h-4 w-4"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.75"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M12 5v14M5 12h14" />
+                </svg>
               </button>
-            ))}
-          </div>
-
-          <div className="mt-auto space-y-2 border-t border-slate-200 pt-3">
-            <button className="w-full rounded-md px-2 py-2 text-left text-sm text-slate-700 hover:bg-[#dfd9cc]/55">
-              Settings
-            </button>
-            <div className="rounded-lg bg-[#f8f6f1] px-3 py-2 ring-1 ring-[#dfdacc]">
-              <p className="text-xs text-slate-500">Nathan Hirsch</p>
-              <p className="text-sm font-medium text-slate-800">nathan@anyllm.ai</p>
             </div>
-            <div className="relative">
-              <button
-                onClick={() => setShowMemoryMenu((prev) => !prev)}
-                disabled={!memoryConnected || mode === "without"}
-                className="inline-flex w-full items-center justify-between rounded-lg bg-[#f8f6f1] px-3 py-2 text-sm font-medium text-slate-700 ring-1 ring-[#dfdacc] hover:bg-[#f0ede4] disabled:cursor-not-allowed disabled:opacity-60"
-              >
-                <span>MyMemory</span>
-                <span className="inline-flex items-center gap-1">
-                  <span className="inline-block h-2 w-2 rounded-full bg-emerald-500" />
-                  <span className="text-[11px] text-slate-500">On</span>
-                </span>
-              </button>
-              {showMemoryMenu ? (
-                <div className="absolute bottom-12 left-0 z-20 w-[320px] rounded-2xl border border-slate-200 bg-white p-4 shadow-xl">
-                  <div className="mb-2 flex items-center justify-between">
-                    <h2 className="text-sm font-semibold text-slate-800">
-                      MyMemory Wallet
-                    </h2>
-                    <button
-                      onClick={() => setShowMemoryMenu(false)}
-                      className="text-xs font-medium text-slate-600 underline"
-                    >
-                      Close
-                    </button>
-                  </div>
-                  <p className="mb-3 text-xs text-slate-600">
-                    {connectedActiveCount} memory scopes currently enabled.
-                  </p>
-                  <div className="space-y-2 text-sm">
-                    {activeMemorySections.map(([key, scope]) => (
-                      <div
-                        key={key}
-                        className="flex items-center justify-between rounded-lg border border-slate-200 px-3 py-2"
-                      >
-                        <span className="text-slate-700">{toLabel(key)}</span>
-                        <div className="flex items-center gap-2">
-                          <span className="rounded bg-slate-100 px-2 py-0.5 text-xs text-slate-600">
-                            {badge(scope)}
-                          </span>
-                          <button
-                            onClick={() => togglePermission(key)}
-                            className="text-xs font-medium text-slate-700 underline"
-                          >
-                            Revoke
-                          </button>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                  <button
-                    onClick={() => {
-                      appendMessage({
-                        id: `sys-import-${Date.now()}`,
-                        role: "system",
-                        text: "Import started: memory content is being added to this workspace.",
-                      });
-                      setShowMemoryMenu(false);
-                    }}
-                    className="mt-4 rounded-md border border-slate-300 px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100"
-                  >
-                    Import content
-                  </button>
+
+            <div className="mx-3 mb-3 rounded-lg bg-white/[0.06] px-3 py-2 text-sm text-gray-600">
+              Search
+            </div>
+
+            <nav className="flex-1 overflow-y-auto px-2">
+              <p className="px-2 pb-1 pt-1 text-[11px] font-medium uppercase tracking-wider text-gray-600">
+                Recent
+              </p>
+              {[
+                "Founder update draft",
+                "Napoleon app strategy",
+                "Daily planning",
+              ].map((item, i) => (
+                <button
+                  key={item}
+                  className={`w-full truncate rounded-md px-2.5 py-2 text-left text-sm transition-colors ${
+                    i === 0
+                      ? "bg-white/10 text-white"
+                      : "text-gray-500 hover:bg-white/[0.05] hover:text-gray-300"
+                  }`}
+                >
+                  {item}
+                </button>
+              ))}
+            </nav>
+
+            <div className="space-y-1 border-t border-white/[0.06] p-3">
+              {isActive && (
+                <div className="flex items-center gap-2 rounded-lg bg-white/[0.05] px-3 py-2">
+                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+                  <span className="text-xs text-gray-400">MyMemory</span>
+                  <span className="ml-auto text-[11px] text-gray-500">
+                    {activeCount} active
+                  </span>
                 </div>
-              ) : null}
+              )}
+              <div className="flex items-center gap-2.5 rounded-md px-2 py-2">
+                <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-violet-600 text-xs font-semibold text-white">
+                  N
+                </div>
+                <div>
+                  <p className="text-xs font-medium text-white">Nathan Hirsch</p>
+                  <p className="text-[11px] text-gray-500">nathan@anyllm.ai</p>
+                </div>
+              </div>
             </div>
-          </div>
-        </aside>
+          </aside>
 
-        <article className="flex min-w-0 flex-col bg-[#f9f7f2]">
-          <header className="flex items-center border-b border-[#e2ddd2] px-4 py-3">
-            <p className="text-sm font-medium text-slate-700">AnyLLM</p>
-          </header>
+          {/* Main chat area */}
+          <main className="flex flex-col bg-white">
+            <header className="flex items-center justify-between border-b border-gray-100 px-5 py-3">
+              <span className="text-sm font-medium text-gray-700">
+                New conversation
+              </span>
+              <span className="rounded-full border border-gray-200 px-2.5 py-0.5 text-[11px] text-gray-400">
+                Claude 3.5 Sonnet
+              </span>
+            </header>
 
-          {isEmptyState ? (
-            <div className="flex h-[620px] items-center justify-center px-10">
-              <div className="w-full max-w-[560px]">
-                <p className="mb-3 text-xs text-slate-500">Home</p>
-                <div className="rounded-2xl border border-[#ddd8cd] bg-[#f8f6f1] p-3 shadow-sm">
-                  <div className="flex items-center gap-2">
+            {messages.length === 0 ? (
+              <div className="flex flex-1 flex-col items-center justify-center px-8 pb-10">
+                <p className="mb-5 text-xl font-semibold text-gray-900">
+                  What can I help with?
+                </p>
+                <div className="w-full max-w-xl overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
+                  <div className="flex items-center gap-3 px-4 py-3">
                     <input
                       value={input}
-                      onChange={(event) => setInput(event.target.value)}
-                      placeholder="Plan, Build, / for commands, @ for context"
-                      className="flex-1 bg-transparent px-1 text-sm outline-none"
+                      onChange={(e) => setInput(e.target.value)}
+                      onKeyDown={(e) => e.key === "Enter" && handleSend()}
+                      placeholder="Ask anything..."
+                      className="flex-1 bg-transparent text-sm text-gray-900 outline-none placeholder:text-gray-400"
                     />
                     <button
                       onClick={handleSend}
-                      className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-slate-900 text-[10px] font-medium text-white"
+                      className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gray-900 text-white transition hover:bg-gray-700"
                     >
-                      ^
+                      <svg
+                        viewBox="0 0 24 24"
+                        className="h-3.5 w-3.5"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <path d="M5 15l7-7 7 7" />
+                      </svg>
                     </button>
                   </div>
-                  <div className="mt-2 flex items-center gap-3 text-xs text-slate-500">
-                    <span className="inline-flex h-5 w-5 items-center justify-center rounded-full border border-[#d8d2c6]">
-                      +
-                    </span>
-                    <span>Auto</span>
+                  <div className="flex items-center gap-4 border-t border-gray-100 px-4 py-2 text-xs text-gray-400">
+                    <span>Attach</span>
+                    <span>Search</span>
+                    <span>Tools</span>
                   </div>
                 </div>
-                <button
-                  onClick={() => setShowConnectModal(true)}
-                  className="mt-3 rounded-full border border-[#d9d3c7] bg-[#f8f6f1] px-3 py-1.5 text-xs font-medium text-slate-700 hover:bg-[#efebe2]"
-                >
-                  Sign In with MyMemory
-                </button>
               </div>
-            </div>
-          ) : (
-            <>
-              <div className="h-[560px] space-y-3 overflow-y-auto bg-[#f9f7f2] px-11 py-6">
-                {messages.map((message) => (
-                  <div
-                    key={message.id}
-                    className={
-                      message.role === "user"
-                        ? "ml-auto max-w-[78%] rounded-2xl bg-slate-900 p-3 text-sm text-white"
-                        : message.role === "assistant"
-                          ? "max-w-[86%] rounded-2xl border border-[#e3ded2] bg-[#fdfcf9] p-3 text-sm text-slate-800"
-                          : "max-w-[95%] rounded-xl border border-[#e7dfcc] bg-[#f7f1df] p-3 text-xs text-slate-700"
-                    }
-                  >
-                    {message.text}
-                  </div>
-                ))}
+            ) : (
+              <>
+                <div className="flex-1 space-y-4 overflow-y-auto px-8 py-5">
+                  {messages.map((msg) =>
+                    msg.role === "user" ? (
+                      <div key={msg.id} className="flex justify-end">
+                        <div className="max-w-[75%] rounded-2xl bg-gray-900 px-4 py-2.5 text-sm text-white">
+                          {msg.text}
+                        </div>
+                      </div>
+                    ) : msg.role === "assistant" ? (
+                      <div
+                        key={msg.id}
+                        className="max-w-[85%] whitespace-pre-line text-sm leading-relaxed text-gray-800"
+                      >
+                        {msg.text}
+                      </div>
+                    ) : (
+                      <div key={msg.id} className="flex justify-center">
+                        <span className="rounded-full border border-gray-200 bg-gray-50 px-3 py-1 text-xs text-gray-500">
+                          {msg.text}
+                        </span>
+                      </div>
+                    )
+                  )}
 
-                {showInlineRequest ? (
-                  <div className="max-w-[95%] space-y-2 rounded-xl border border-[#ddd8cd] bg-[#fcfaf5] p-3 shadow-sm">
-                    <p className="text-xs font-medium text-slate-700">
-                      Memory permission request
+                  {showInlineRequest && (
+                    <div className="max-w-[85%] rounded-xl border border-violet-100 bg-violet-50/50 p-3">
+                      <p className="mb-2 text-xs font-medium text-violet-700">
+                        Memory permission request
+                      </p>
+                      <div className="flex flex-wrap gap-2">
+                        <button
+                          onClick={() => grantPastInvestorUpdates("session")}
+                          className="rounded-lg border border-violet-200 bg-white px-3 py-1.5 text-xs font-medium text-violet-700 transition hover:bg-violet-50"
+                        >
+                          Allow once
+                        </button>
+                        <button
+                          onClick={() => grantPastInvestorUpdates("app")}
+                          className="rounded-lg border border-violet-200 bg-white px-3 py-1.5 text-xs font-medium text-violet-700 transition hover:bg-violet-50"
+                        >
+                          Allow for this app
+                        </button>
+                        <button
+                          onClick={() => setShowInlineRequest(false)}
+                          className="rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-xs font-medium text-gray-500 transition hover:bg-gray-50"
+                        >
+                          Deny
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                <div className="border-t border-gray-100 px-5 py-3">
+                  <div className="flex items-center gap-3 rounded-xl border border-gray-200 px-4 py-2.5">
+                    <input
+                      value={input}
+                      onChange={(e) => setInput(e.target.value)}
+                      onKeyDown={(e) => e.key === "Enter" && handleSend()}
+                      placeholder="Ask anything..."
+                      className="flex-1 bg-transparent text-sm text-gray-900 outline-none placeholder:text-gray-400"
+                    />
+                    <button
+                      onClick={handleSend}
+                      className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-gray-900 text-white transition hover:bg-gray-700"
+                    >
+                      <svg
+                        viewBox="0 0 24 24"
+                        className="h-3 w-3"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <path d="M5 15l7-7 7 7" />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </>
+            )}
+          </main>
+        </div>
+
+        {/* Overlay + modals */}
+        {!isActive && (
+          <>
+            <div className="absolute inset-0 z-10 bg-black/30 backdrop-blur-[2px]" />
+            <div className="absolute inset-0 z-20 flex items-center justify-center p-4">
+
+              {/* Sign-in card */}
+              {flowStep === "signin" && (
+                <div className="w-full max-w-[340px] rounded-2xl bg-white p-6 shadow-2xl">
+                  <div className="mb-6 text-center">
+                    <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-black">
+                      <span className="text-sm font-bold text-white">A</span>
+                    </div>
+                    <h2 className="text-lg font-semibold text-gray-900">
+                      Sign in to AnyLLM
+                    </h2>
+                    <p className="mt-1 text-sm text-gray-500">
+                      Continue with your preferred method
                     </p>
-                    <div className="flex flex-wrap gap-2">
+                  </div>
+
+                  <div className="space-y-2">
+                    {[
+                      { label: "Continue with Google", letter: "G", color: "text-[#4285F4]" },
+                      { label: "Continue with Apple", letter: "", color: "text-gray-900" },
+                      { label: "Continue with GitHub", letter: "GH", color: "text-gray-700 text-[10px]" },
+                    ].map(({ label, letter, color }) => (
                       <button
-                        onClick={() => grantPastInvestorUpdates("session")}
-                        className="rounded-md border border-slate-300 px-2.5 py-1.5 text-xs font-medium text-slate-800 hover:bg-slate-100"
+                        key={label}
+                        className="flex w-full items-center gap-3 rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm font-medium text-gray-700 transition hover:bg-gray-50"
                       >
-                        Allow once
+                        <span
+                          className={`w-5 shrink-0 text-center text-sm font-bold ${color}`}
+                        >
+                          {letter}
+                        </span>
+                        {label}
+                      </button>
+                    ))}
+                  </div>
+
+                  <div className="my-4 flex items-center gap-3">
+                    <div className="h-px flex-1 bg-gray-200" />
+                    <span className="text-xs text-gray-400">or</span>
+                    <div className="h-px flex-1 bg-gray-200" />
+                  </div>
+
+                  <button
+                    onClick={() => setFlowStep("verify")}
+                    className="w-full rounded-xl bg-violet-600 px-4 py-3 text-left transition hover:bg-violet-700 active:bg-violet-800"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white/20">
+                        <span className="text-sm font-bold text-white">M</span>
+                      </div>
+                      <div>
+                        <p className="text-sm font-semibold text-white">
+                          Sign in with MyMemory
+                        </p>
+                        <p className="text-xs text-violet-200">
+                          Bring your context, privately
+                        </p>
+                      </div>
+                    </div>
+                  </button>
+                </div>
+              )}
+
+              {/* Verify card */}
+              {flowStep === "verify" && (
+                <div className="w-full max-w-[340px] rounded-2xl bg-white p-6 shadow-2xl">
+                  <button
+                    onClick={() => {
+                      if (!isVerifying) setFlowStep("signin");
+                    }}
+                    className="mb-4 flex items-center gap-1 text-xs font-medium text-gray-400 transition hover:text-gray-600"
+                  >
+                    <svg
+                      viewBox="0 0 24 24"
+                      className="h-3.5 w-3.5"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path d="M15 18l-6-6 6-6" />
+                    </svg>
+                    Back
+                  </button>
+
+                  <div className="mb-5">
+                    <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-violet-100 text-xl">
+                      🔐
+                    </div>
+                    <h2 className="text-lg font-semibold text-gray-900">
+                      Verify it&apos;s you
+                    </h2>
+                    <p className="mt-1 text-sm text-gray-500">
+                      Prove your identity to connect your memory
+                    </p>
+                  </div>
+
+                  <div className="space-y-2">
+                    <VerifyMethodOption
+                      label="Device passkey"
+                      sub="Touch ID or Face ID via secure enclave"
+                      selected={verifyMethod === "passkey"}
+                      onClick={() => setVerifyMethod("passkey")}
+                    />
+                    <VerifyMethodOption
+                      label="Hardware security key"
+                      sub="FIDO2 compatible key"
+                      selected={verifyMethod === "hardware"}
+                      onClick={() => setVerifyMethod("hardware")}
+                    />
+                    <VerifyMethodOption
+                      label="Memory wallet"
+                      sub="Session-scoped cryptographic keypair"
+                      selected={verifyMethod === "wallet"}
+                      onClick={() => setVerifyMethod("wallet")}
+                    />
+                  </div>
+
+                  <button
+                    onClick={handleVerify}
+                    disabled={isVerifying}
+                    className="mt-5 flex w-full items-center justify-center gap-2 rounded-xl bg-violet-600 py-2.5 text-sm font-semibold text-white transition hover:bg-violet-700 disabled:opacity-70"
+                  >
+                    {isVerifying ? (
+                      <>
+                        <svg
+                          className="h-4 w-4 animate-spin"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                        >
+                          <circle
+                            className="opacity-25"
+                            cx="12"
+                            cy="12"
+                            r="10"
+                            stroke="currentColor"
+                            strokeWidth="4"
+                          />
+                          <path
+                            className="opacity-75"
+                            fill="currentColor"
+                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+                          />
+                        </svg>
+                        Verifying...
+                      </>
+                    ) : (
+                      `Verify with ${verifyLabel}`
+                    )}
+                  </button>
+                </div>
+              )}
+
+              {/* Permissions card */}
+              {flowStep === "permissions" && (
+                <div className="w-full max-w-[480px] rounded-2xl bg-white shadow-2xl">
+                  <div className="p-6 pb-4">
+                    <div className="mb-4 flex items-start gap-3">
+                      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-violet-600">
+                        <span className="text-sm font-bold text-white">M</span>
+                      </div>
+                      <div>
+                        <h2 className="text-base font-semibold text-gray-900">
+                          Memory access request
+                        </h2>
+                        <p className="mt-0.5 text-sm text-gray-500">
+                          AnyLLM is requesting access to your memory
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-2.5">
+                      {MEMORY_CATEGORIES.map((cat) => (
+                        <PermCategoryCard
+                          key={cat.id}
+                          category={cat}
+                          enabled={permEnabled[cat.id] ?? false}
+                          onToggle={() =>
+                            setPermEnabled((prev) => ({
+                              ...prev,
+                              [cat.id]: !prev[cat.id],
+                            }))
+                          }
+                        />
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-between border-t border-gray-100 px-6 py-4">
+                    <p className="text-xs text-gray-400">
+                      Apps only read what you allow.
+                    </p>
+                    <div className="flex items-center gap-3">
+                      <button
+                        onClick={handleDenyPermissions}
+                        className="text-sm font-medium text-gray-500 transition hover:text-gray-700"
+                      >
+                        Not now
                       </button>
                       <button
-                        onClick={() => grantPastInvestorUpdates("app")}
-                        className="rounded-md border border-slate-300 px-2.5 py-1.5 text-xs font-medium text-slate-800 hover:bg-slate-100"
+                        onClick={handleApprovePermissions}
+                        className="rounded-xl bg-violet-600 px-5 py-2 text-sm font-semibold text-white transition hover:bg-violet-700"
                       >
-                        Allow for this app
-                      </button>
-                      <button
-                        onClick={() => setShowInlineRequest(false)}
-                        className="rounded-md border border-slate-300 px-2.5 py-1.5 text-xs font-medium text-slate-700 hover:bg-slate-100"
-                      >
-                        Deny
+                        Allow {enabledPermCount} selected
                       </button>
                     </div>
                   </div>
-                ) : null}
-              </div>
-
-              <div className="mt-auto border-t border-[#e2ddd2] px-6 py-4">
-                <div className="rounded-2xl border border-[#ddd8cd] bg-[#f1eee6] p-3 shadow-sm">
-                  <div className="flex gap-2">
-                    <input
-                      value={input}
-                      onChange={(event) => setInput(event.target.value)}
-                      placeholder="Ask anything"
-                      className="flex-1 bg-transparent px-1 text-sm outline-none"
-                    />
-                    <button
-                      onClick={handleSend}
-                      className="rounded-full bg-slate-900 px-3 py-1.5 text-xs font-medium text-white"
-                    >
-                      Send
-                    </button>
-                  </div>
-                  <div className="mt-2 flex items-center gap-3 text-xs text-slate-500">
-                    <span>+</span>
-                    <span>Attach</span>
-                    <span>Auto</span>
-                  </div>
                 </div>
-              </div>
-            </>
-          )}
-        </article>
+              )}
+            </div>
+          </>
+        )}
       </div>
-
-      {showConnectModal ? (
-        <div className="fixed inset-0 z-20 flex items-center justify-center bg-slate-950/40 p-4">
-          <div className="w-full max-w-md rounded-2xl bg-white p-5 shadow-xl">
-            <h2 className="text-lg font-semibold text-slate-900">
-              Connect MyMemory
-            </h2>
-            <p className="mt-2 text-sm text-slate-600">
-              This app is requesting access to your personal context through
-              MyMemory.
-            </p>
-            <div className="mt-4 flex justify-end gap-2">
-              <button
-                onClick={() => setShowConnectModal(false)}
-                className="rounded-md border border-slate-300 px-3 py-2 text-sm font-medium text-slate-700"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={() => {
-                  setShowConnectModal(false);
-                  setShowSignatureModal(true);
-                }}
-                className="rounded-md bg-slate-900 px-3 py-2 text-sm font-medium text-white"
-              >
-                Connect Memory
-              </button>
-            </div>
-          </div>
-        </div>
-      ) : null}
-
-      {showSignatureModal ? (
-        <div className="fixed inset-0 z-20 flex items-center justify-center bg-slate-950/40 p-4">
-          <div className="w-full max-w-md rounded-2xl bg-white p-5 shadow-xl">
-            <h2 className="text-lg font-semibold text-slate-900">
-              Authorize memory connection
-            </h2>
-            <p className="mt-2 text-sm text-slate-600">
-              Confirm with your device passkey to sign this memory access
-              request.
-            </p>
-            <div className="mt-4 rounded-xl border border-slate-200 bg-slate-50 p-3 text-xs text-slate-600">
-              <p className="font-medium text-slate-700">Signing request</p>
-              <p className="mt-1">
-                Device: Nathan&apos;s MacBook • Scope: Memory connect • App:
-                AnyLLM
-              </p>
-              <p className="mt-1">
-                Signature: {isSigning ? "Signing..." : "Pending approval"}
-              </p>
-            </div>
-            <div className="mt-4 space-y-2">
-              <p className="text-xs font-medium uppercase tracking-wide text-slate-500">
-                Choose signature method
-              </p>
-              <button
-                onClick={() => setSignatureMethod("hardware")}
-                className={
-                  signatureMethod === "hardware"
-                    ? "w-full rounded-lg border border-slate-900 bg-slate-900 px-3 py-2 text-left text-sm text-white"
-                    : "w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-left text-sm text-slate-700 hover:bg-slate-50"
-                }
-              >
-                Security key signature (FIDO2 hardware key)
-              </button>
-              <button
-                onClick={() => setSignatureMethod("passkey")}
-                className={
-                  signatureMethod === "passkey"
-                    ? "w-full rounded-lg border border-slate-900 bg-slate-900 px-3 py-2 text-left text-sm text-white"
-                    : "w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-left text-sm text-slate-700 hover:bg-slate-50"
-                }
-              >
-                Device passkey (biometric + secure enclave)
-              </button>
-              <button
-                onClick={() => setSignatureMethod("wallet")}
-                className={
-                  signatureMethod === "wallet"
-                    ? "w-full rounded-lg border border-slate-900 bg-slate-900 px-3 py-2 text-left text-sm text-white"
-                    : "w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-left text-sm text-slate-700 hover:bg-slate-50"
-                }
-              >
-                Memory wallet signature (session-scoped keypair)
-              </button>
-            </div>
-            <div className="mt-4 flex justify-end gap-2">
-              <button
-                onClick={() => setShowSignatureModal(false)}
-                disabled={isSigning}
-                className="rounded-md border border-slate-300 px-3 py-2 text-sm font-medium text-slate-700 disabled:opacity-50"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleStartSignature}
-                disabled={isSigning}
-                className="rounded-md bg-slate-900 px-3 py-2 text-sm font-medium text-white disabled:opacity-60"
-              >
-                {isSigning
-                  ? "Signing..."
-                  : signatureMethod === "hardware"
-                    ? "Sign with security key"
-                    : signatureMethod === "passkey"
-                      ? "Sign with passkey"
-                      : "Sign with wallet key"}
-              </button>
-            </div>
-          </div>
-        </div>
-      ) : null}
-
-      {showPermissionPanel ? (
-        <MemoryModal
-          categories={memoryCategories}
-          isEnabled={(categoryId) => {
-            const key = memoryCategoryToKey[categoryId];
-            return key ? access[key] !== "off" : false;
-          }}
-          onToggleCategory={(categoryId) => {
-            const key = memoryCategoryToKey[categoryId];
-            if (key) togglePermission(key);
-          }}
-          onDeny={() => {
-            setShowPermissionPanel(false);
-            setMemoryConnected(false);
-          }}
-          onApprove={handleApproveInitialPermissions}
-        />
-      ) : null}
-
     </section>
   );
 }
