@@ -162,40 +162,28 @@ export async function POST(req: NextRequest) {
 
 Keep it direct, specific to their answers, and energizing — this should make them feel like they've already taken the first step.`;
 
-  const [claudeRes, emailRes] = await Promise.allSettled([
-    anthropic.messages.create({
-      model: "claude-sonnet-4-6",
-      max_tokens: 1000,
-      messages: [
-        {
-          role: "user",
-          content: `${systemPrompt}\n\n${prompt}`,
-        },
-      ],
-    }),
-    resend.emails.send({
-      from: "Automation Assessment <onboarding@resend.dev>",
-      to: [process.env.RECIPIENT_EMAIL ?? ""],
-      subject: `New automation assessment — ${body.gate.name} at ${body.gate.company}`,
-      html: buildEmailHtml(body, "Generating..."),
-    }),
-  ]);
+  const claudeRes = await anthropic.messages.create({
+    model: "claude-sonnet-4-6",
+    max_tokens: 1000,
+    messages: [
+      {
+        role: "user",
+        content: `${systemPrompt}\n\n${prompt}`,
+      },
+    ],
+  }).catch(() => null);
 
   const quickTake =
-    claudeRes.status === "fulfilled" &&
-    claudeRes.value.content[0]?.type === "text"
-      ? claudeRes.value.content[0].text
+    claudeRes?.content[0]?.type === "text"
+      ? claudeRes.content[0].text
       : "Unable to generate analysis — please contact us directly.";
 
-  // Re-send email with the actual quick take if Claude succeeded
-  if (claudeRes.status === "fulfilled" && emailRes.status === "fulfilled") {
-    await resend.emails.send({
-      from: "Automation Assessment <onboarding@resend.dev>",
-      to: [process.env.RECIPIENT_EMAIL ?? ""],
-      subject: `New automation assessment — ${body.gate.name} at ${body.gate.company}`,
-      html: buildEmailHtml(body, quickTake),
-    });
-  }
+  await resend.emails.send({
+    from: "Automation Assessment <onboarding@resend.dev>",
+    to: [process.env.RECIPIENT_EMAIL ?? ""],
+    subject: `New automation assessment: ${body.gate.name} at ${body.gate.company}`,
+    html: buildEmailHtml(body, quickTake),
+  });
 
   return Response.json({ quickTake });
 }
