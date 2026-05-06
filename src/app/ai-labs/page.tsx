@@ -76,6 +76,19 @@ const projects: Project[] = [
     ],
   },
   {
+    title: "LinkedIn Post Generator for Sales",
+    description:
+      "Multi-user SaaS that turns a sales deck PDF into 10 LinkedIn post candidates in under 90 seconds, written in your voice. Review and approve in Google Sheets, publish directly to LinkedIn. Currently in private beta.",
+    status: "Launched",
+    href: "/ai-labs/linkedin-post-generator",
+    skills: [
+      "PDF-to-post pipeline",
+      "Multi-user SaaS",
+      "LinkedIn OAuth publishing",
+      "Per-user voice learning",
+    ],
+  },
+  {
     title: "Automation Opportunity Assessment",
     description:
       "Multi-step inbound lead tool: visitors answer structured questions about their workflows, Claude generates a personalised automation quick take, and the full assessment lands in my inbox via Resend.",
