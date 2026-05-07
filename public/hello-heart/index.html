@@ -3,24 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Heart Health Risk Dashboard — Hello Heart</title>
+  <title>Employer ROI Calculator — Hello Heart</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg: #FAFAF8;
       --accent: #E8395A;
-      --amber: #F5A623;
-      --green: #4CAF50;
+      --accent-light: rgba(232,57,90,0.08);
       --white: #FFFFFF;
       --text-1: #1A1A2E;
       --text-2: #6B7280;
       --text-3: #9CA3AF;
-      --border: rgba(0,0,0,0.07);
+      --border: rgba(0,0,0,0.08);
       --shadow: 0 2px 16px rgba(0,0,0,0.06);
-      --shadow-lg: 0 8px 32px rgba(0,0,0,0.10);
-      --radius: 16px;
-      --radius-sm: 10px;
+      --shadow-lg: 0 4px 24px rgba(0,0,0,0.09);
+      --radius: 14px;
+      --radius-sm: 8px;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -32,7 +31,7 @@
       min-height: 100vh;
     }
 
-    /* ─── HEADER ────────────────────────────────────────────── */
+    /* ── HEADER ─────────────────────────────────────────────── */
     header {
       background: var(--white);
       border-bottom: 1px solid var(--border);
@@ -47,29 +46,20 @@
     }
 
     .logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
+      display: flex; align-items: center; gap: 10px;
       text-decoration: none;
     }
 
     .logo-mark {
-      width: 34px;
-      height: 34px;
-      background: linear-gradient(135deg, #E8395A 0%, #FF6B8A 100%);
-      border-radius: 9px;
-      display: grid;
-      place-items: center;
-      font-size: 17px;
-      box-shadow: 0 3px 10px rgba(232,57,90,0.30);
+      width: 32px; height: 32px;
+      background: linear-gradient(135deg, #E8395A, #FF6B8A);
+      border-radius: 8px;
+      display: grid; place-items: center;
+      font-size: 16px;
+      box-shadow: 0 2px 8px rgba(232,57,90,0.28);
     }
 
-    .logo-name {
-      font-weight: 800;
-      font-size: 19px;
-      color: var(--accent);
-      letter-spacing: -0.4px;
-    }
+    .logo-name { font-weight: 800; font-size: 18px; color: var(--accent); }
 
     .header-tagline {
       font-size: 13px;
@@ -78,572 +68,445 @@
       font-style: italic;
     }
 
-    /* ─── MAIN LAYOUT ───────────────────────────────────────── */
+    /* ── PAGE HERO ──────────────────────────────────────────── */
+    .page-hero {
+      background: linear-gradient(135deg, #1A1A2E 0%, #2C1B2E 100%);
+      padding: 52px 40px;
+      text-align: center;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(232,57,90,0.18);
+      border: 1px solid rgba(232,57,90,0.35);
+      color: #FF8FA3;
+      font-size: 11.5px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 1.2px;
+      padding: 5px 14px; border-radius: 100px;
+      margin-bottom: 20px;
+    }
+
+    .hero-headline {
+      font-size: clamp(26px, 4vw, 38px);
+      font-weight: 800;
+      color: var(--white);
+      letter-spacing: -0.8px;
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+
+    .hero-sub {
+      font-size: 15px;
+      color: rgba(255,255,255,0.60);
+      font-weight: 500;
+      font-style: italic;
+    }
+
+    /* ── MAIN LAYOUT ────────────────────────────────────────── */
     main {
       max-width: 1160px;
       margin: 0 auto;
-      padding: 36px 40px 64px;
+      padding: 40px 40px 64px;
     }
 
-    /* ─── ZONE 1: HERO ──────────────────────────────────────── */
-    .hero-zone {
-      display: flex;
-      justify-content: center;
-      margin-bottom: 28px;
-    }
-
-    .score-card {
-      background: var(--white);
-      border-radius: 20px;
-      box-shadow: var(--shadow-lg);
-      padding: 36px 64px 32px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      width: 100%;
-      max-width: 540px;
-    }
-
-    @media (max-width: 500px) {
-      .score-card { padding: 24px 20px 24px; }
-      .gauge-wrap { max-width: 100%; }
-    }
-
-    .gauge-wrap {
-      position: relative;
-      width: 100%;
-      max-width: 300px;
-      aspect-ratio: 300 / 190;
-      margin-bottom: 4px;
-    }
-
-    #gaugeCanvas {
-      display: block;
-      width: 100%;
-      height: 100%;
-    }
-
-    .gauge-score-overlay {
-      position: absolute;
-      bottom: 7%;
-      left: 50%;
-      transform: translateX(-50%);
-      text-align: center;
-      pointer-events: none;
-      white-space: nowrap;
-    }
-
-    .score-number {
-      font-size: clamp(38px, 13vw, 60px);
-      font-weight: 800;
-      line-height: 1;
-      letter-spacing: -3px;
-      transition: color 0.4s ease;
-      color: var(--accent);
-    }
-
-    .score-label-tiny {
-      font-size: clamp(9px, 2.5vw, 11px);
-      font-weight: 600;
-      color: var(--text-3);
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-top: 3px;
-    }
-
-    .score-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 5px 16px;
-      border-radius: 100px;
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 0.3px;
-      margin-top: 8px;
-      transition: background 0.4s, color 0.4s, border-color 0.4s;
-      border: 1.5px solid transparent;
-    }
-
-    .score-interp {
-      font-size: 14.5px;
-      color: var(--text-2);
-      font-weight: 500;
-      line-height: 1.55;
-      text-align: center;
-      max-width: 320px;
-      margin-top: 10px;
-    }
-
-    .reset-btn {
-      margin-top: 20px;
-      background: none;
-      border: 1.5px solid var(--border);
-      border-radius: 100px;
-      padding: 8px 22px;
-      font-family: inherit;
-      font-size: 12.5px;
-      font-weight: 600;
-      color: var(--text-2);
-      cursor: pointer;
-      transition: all 0.2s;
-      display: flex;
-      align-items: center;
-      gap: 7px;
-    }
-
-    .reset-btn:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-      background: rgba(232,57,90,0.04);
-    }
-
-    /* ─── PAGE HEADLINE ────────────────────────────────────── */
-    .page-headline {
-      text-align: center;
+    .calc-grid {
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      gap: 28px;
+      align-items: start;
       margin-bottom: 36px;
     }
 
-    .headline-title {
-      font-size: 28px;
-      font-weight: 800;
-      color: var(--text-1);
-      letter-spacing: -0.6px;
-      line-height: 1.25;
-    }
-
-    .headline-title em {
-      font-style: normal;
-      color: var(--accent);
-    }
-
-    .headline-sub {
-      margin-top: 10px;
-      font-size: 17px;
-      font-weight: 500;
-      color: var(--text-2);
-    }
-
-    /* ─── DASHBOARD GRID ────────────────────────────────────── */
-    .dashboard-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 24px;
-    }
-
-    .card {
+    /* ── INPUT PANEL ────────────────────────────────────────── */
+    .inputs-panel {
       background: var(--white);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
-      padding: 28px 28px 24px;
+      padding: 28px;
+      position: sticky;
+      top: 84px;
     }
 
-    .card-title {
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--text-1);
+    .panel-title {
+      font-size: 13px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.7px;
+      color: var(--text-3);
       margin-bottom: 22px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      text-transform: uppercase;
-      letter-spacing: 0.6px;
+      display: flex; align-items: center; gap: 8px;
     }
 
-    /* ─── SLIDERS ───────────────────────────────────────────── */
-    .slider-row {
-      margin-bottom: 18px;
+    .input-group { margin-bottom: 20px; }
+    .input-group:last-of-type { margin-bottom: 0; }
+
+    .input-label {
+      font-size: 13.5px; font-weight: 600; color: var(--text-1);
+      display: block; margin-bottom: 7px;
     }
 
-    .slider-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 8px;
-    }
+    .input-hint { font-size: 11.5px; color: var(--text-3); font-weight: 500; margin-bottom: 7px; display: block; }
 
-    .slider-name {
-      font-size: 13.5px;
+    input[type=number], select {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-family: inherit;
+      font-size: 15px;
       font-weight: 600;
       color: var(--text-1);
-    }
-
-    .slider-value {
-      font-size: 13.5px;
-      font-weight: 700;
-      color: var(--accent);
-      min-width: 90px;
-      text-align: right;
-    }
-
-    input[type=range] {
-      -webkit-appearance: none;
-      appearance: none;
-      width: 100%;
-      height: 6px;
-      border-radius: 100px;
+      background: var(--white);
       outline: none;
-      cursor: pointer;
-      background: #F0F0EE;
-      transition: background 0.2s;
+      transition: border-color 0.2s;
+      -moz-appearance: textfield;
     }
 
-    input[type=range]::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      background: var(--accent);
-      cursor: pointer;
-      border: 3px solid white;
-      box-shadow: 0 2px 8px rgba(232,57,90,0.35);
-      transition: transform 0.15s, box-shadow 0.15s;
+    input[type=number]::-webkit-outer-spin-button,
+    input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; }
+
+    input[type=number]:focus, select:focus { border-color: var(--accent); }
+
+    select {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%239CA3AF' stroke-width='1.8' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 36px;
     }
 
-    input[type=range]::-webkit-slider-thumb:hover {
-      transform: scale(1.2);
-      box-shadow: 0 3px 12px rgba(232,57,90,0.45);
+    /* How we calculate expandable */
+    .methodology {
+      margin-top: 24px;
+      border-top: 1px solid var(--border);
+      padding-top: 20px;
     }
 
-    input[type=range]::-moz-range-thumb {
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      background: var(--accent);
-      cursor: pointer;
-      border: 3px solid white;
-      box-shadow: 0 2px 8px rgba(232,57,90,0.35);
+    .methodology summary {
+      font-size: 12.5px; font-weight: 700; color: var(--accent);
+      cursor: pointer; list-style: none;
+      display: flex; align-items: center; justify-content: space-between;
+      user-select: none;
     }
 
-    /* ─── TOGGLE BUTTONS ────────────────────────────────────── */
-    .toggle-group {
+    .methodology summary::-webkit-details-marker { display: none; }
+
+    .methodology summary .arrow {
+      transition: transform 0.2s;
+      font-size: 10px;
+    }
+
+    .methodology[open] summary .arrow { transform: rotate(180deg); }
+
+    .methodology-body {
+      margin-top: 14px;
+      display: flex; flex-direction: column; gap: 10px;
+    }
+
+    .method-row {
+      font-size: 12px; color: var(--text-2); line-height: 1.6;
+    }
+
+    .method-row strong { color: var(--text-1); font-weight: 700; }
+
+    .method-sources {
+      margin-top: 6px;
+      display: flex; flex-direction: column; gap: 4px;
+    }
+
+    .method-source {
+      font-size: 11px; color: var(--text-3);
+      font-style: italic; line-height: 1.5;
+      padding-left: 10px;
+      border-left: 2px solid #EDEDE9;
+    }
+
+    /* ── OUTPUT CARDS ───────────────────────────────────────── */
+    .outputs-panel {
       display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .cards-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .out-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 22px 24px;
+      display: flex;
+      flex-direction: column;
       gap: 6px;
+      position: relative;
+      overflow: hidden;
     }
 
-    .toggle-btn {
-      flex: 1;
-      padding: 7px 8px;
-      border: 1.5px solid var(--border);
-      border-radius: 8px;
-      background: none;
-      font-family: inherit;
-      font-size: 12.5px;
-      font-weight: 600;
-      color: var(--text-2);
-      cursor: pointer;
-      transition: all 0.18s;
-      text-align: center;
-      white-space: nowrap;
-    }
-
-    .toggle-btn.active {
+    .out-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
       background: var(--accent);
-      border-color: var(--accent);
-      color: white;
-      box-shadow: 0 2px 8px rgba(232,57,90,0.25);
+      opacity: 0;
+      transition: opacity 0.3s;
     }
 
-    .toggle-btn:hover:not(.active) {
-      border-color: rgba(232,57,90,0.4);
-      color: var(--accent);
-      background: rgba(232,57,90,0.04);
-    }
+    .out-card.highlight::before { opacity: 1; }
 
-    /* ─── IMPACT BARS ───────────────────────────────────────── */
-    .top-lever {
-      background: linear-gradient(135deg, #FFFBF0, #FFF5E0);
-      border: 1.5px solid #FDDFA0;
-      border-radius: var(--radius-sm);
-      padding: 11px 14px;
-      margin-bottom: 20px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .top-lever.pulse {
-      animation: leverPulse 2.5s ease-in-out infinite;
-    }
-
-    @keyframes leverPulse {
-      0%, 100% { box-shadow: 0 0 0 0 rgba(245,166,35,0.25); }
-      50%       { box-shadow: 0 0 0 8px rgba(245,166,35,0); }
-    }
-
-    .top-lever-text {
-      font-size: 13px;
-      font-weight: 700;
-      color: #7C4A00;
+    .out-card-label {
+      font-size: 12.5px; font-weight: 600; color: var(--text-2);
       line-height: 1.4;
     }
 
-    .impact-bars {
-      display: flex;
-      flex-direction: column;
-      gap: 11px;
+    .out-card-value {
+      font-size: 42px; font-weight: 800;
+      color: var(--accent);
+      letter-spacing: -2px; line-height: 1;
+      font-variant-numeric: tabular-nums;
     }
 
-    .impact-row {
-      display: flex;
-      align-items: center;
-      gap: 10px;
+    .out-card-value.smaller { font-size: 32px; }
+
+    .out-card-source {
+      font-size: 10.5px; color: var(--text-3);
+      font-style: italic; line-height: 1.5;
+      margin-top: 2px;
     }
 
-    .impact-label {
-      font-size: 12.5px;
-      font-weight: 600;
-      color: var(--text-1);
-      width: 148px;
-      flex-shrink: 0;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .impact-track {
-      flex: 1;
-      height: 10px;
-      background: #F0F0EE;
-      border-radius: 100px;
-      overflow: hidden;
-    }
-
-    .impact-fill {
-      height: 100%;
-      border-radius: 100px;
-      transition: width 0.45s cubic-bezier(0.4,0,0.2,1), background 0.4s ease;
-      min-width: 4px;
-    }
-
-    .impact-pts {
-      font-size: 11.5px;
-      font-weight: 700;
-      color: var(--text-3);
-      width: 34px;
-      text-align: right;
-      flex-shrink: 0;
-    }
-
-    /* ─── WORKOUT SECTION ──────────────────────────────────── */
-    .workout-section { margin-top: 28px; }
-
-    /* Single unified card */
-    .workout-outer {
+    /* Clinical card */
+    .clinical-card {
       background: var(--white);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
-      overflow: hidden;
-    }
-
-    /* Top bar — always visible */
-    .wod-prompt {
       padding: 22px 28px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
     }
 
-    .wod-prompt-copy {
+    .clinical-inner {
       display: flex;
+      gap: 40px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .clinical-stat {
+      display: flex; flex-direction: column; gap: 4px;
+    }
+
+    .clinical-num {
+      font-size: 48px; font-weight: 800;
+      color: var(--accent); letter-spacing: -2px; line-height: 1;
+    }
+
+    .clinical-desc {
+      font-size: 13px; font-weight: 600; color: var(--text-2);
+      max-width: 200px; line-height: 1.4;
+    }
+
+    .clinical-divider {
+      width: 1px; height: 60px;
+      background: var(--border);
+      flex-shrink: 0;
+    }
+
+    .clinical-label {
+      font-size: 12.5px; font-weight: 700; color: var(--text-2);
+      margin-bottom: 14px;
+    }
+
+    .clinical-source {
+      font-size: 10.5px; color: var(--text-3);
+      font-style: italic; margin-top: 16px;
+    }
+
+    /* ROI card special styling */
+    .roi-card {
+      background: linear-gradient(135deg, #E8395A 0%, #C42A49 100%);
+      border-radius: var(--radius);
+      box-shadow: 0 4px 20px rgba(232,57,90,0.30);
+      padding: 22px 24px;
+      color: white;
+      text-align: center;
+    }
+
+    .roi-card-label { font-size: 12.5px; font-weight: 600; color: rgba(255,255,255,0.75); }
+
+    .roi-card-value {
+      font-size: 52px; font-weight: 800;
+      color: white; letter-spacing: -3px; line-height: 1;
+    }
+
+    .roi-card-sub { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.85); line-height: 1.4; }
+
+    .roi-card-source { font-size: 10.5px; color: rgba(255,255,255,0.55); font-style: italic; margin-top: 6px; }
+
+    /* ── SAVINGS BREAKDOWN ──────────────────────────────────── */
+    .section-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 28px 32px;
+      margin-bottom: 28px;
+    }
+
+    .section-heading {
+      font-size: 16px; font-weight: 800; color: var(--text-1);
+      margin-bottom: 6px;
+    }
+
+    .section-sub {
+      font-size: 13px; color: var(--text-2); font-weight: 500;
+      margin-bottom: 28px;
+    }
+
+    .breakdown-list { display: flex; flex-direction: column; gap: 16px; }
+
+    .breakdown-row {
+      display: grid;
+      grid-template-columns: 190px 1fr 48px;
       align-items: center;
       gap: 14px;
     }
 
-    .wod-prompt-icon { font-size: 26px; line-height: 1; flex-shrink: 0; }
-
-    .wod-prompt-title {
-      font-size: 15px;
-      font-weight: 700;
-      color: var(--text-1);
+    .breakdown-name {
+      font-size: 13.5px; font-weight: 600; color: var(--text-1);
     }
 
-    .wod-prompt-sub {
-      font-size: 12.5px;
-      color: var(--text-2);
-      font-weight: 500;
-      margin-top: 2px;
-    }
-
-    .generate-btn {
-      background: var(--accent);
-      color: white;
-      border: none;
+    .bar-track {
+      height: 12px;
+      background: #F0F0EE;
       border-radius: 100px;
-      padding: 11px 24px;
-      font-family: inherit;
-      font-size: 13.5px;
-      font-weight: 700;
-      cursor: pointer;
-      white-space: nowrap;
-      flex-shrink: 0;
-      box-shadow: 0 3px 12px rgba(232,57,90,0.30);
-      transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
-      display: flex;
-      align-items: center;
-      gap: 8px;
+      overflow: hidden;
+      position: relative;
     }
 
-    .generate-btn:hover {
-      background: #D42E50;
-      transform: translateY(-1px);
-      box-shadow: 0 5px 16px rgba(232,57,90,0.38);
+    .bar-fill {
+      height: 100%;
+      border-radius: 100px;
+      width: 0%;
+      transition: width 1.1s cubic-bezier(0.4,0,0.2,1);
+      position: relative;
     }
 
-    .generate-btn:active { transform: translateY(0); }
-
-    /* WOD content area */
-    .wod-content {
-      border-top: 1px solid var(--border);
-      animation: fadeSlide 0.3s cubic-bezier(0.4,0,0.2,1);
-    }
-
-    @keyframes fadeSlide {
-      from { opacity: 0; transform: translateY(-6px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    /* WOD type header */
-    .wod-header {
-      background: linear-gradient(135deg, #E8395A 0%, #C42A49 100%);
-      padding: 18px 28px;
-    }
-
-    .wod-format-row {
-      display: flex;
-      align-items: baseline;
-      gap: 10px;
-      margin-bottom: 2px;
-    }
-
-    .wod-type-abbr {
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 1.4px;
-      color: rgba(255,255,255,0.65);
-      text-transform: uppercase;
-    }
-
-    .wod-type-full {
-      font-size: 12px;
-      font-weight: 600;
-      color: rgba(255,255,255,0.85);
-    }
-
-    .wod-title {
+    .bar-tooltip {
+      position: absolute;
+      bottom: calc(100% + 8px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--text-1);
       color: white;
-      font-size: 18px;
-      font-weight: 800;
-      letter-spacing: -0.3px;
-    }
-
-    .wod-meta {
-      color: rgba(255,255,255,0.75);
-      font-size: 12.5px;
-      font-weight: 500;
-      margin-top: 2px;
-    }
-
-    /* Movements — full width, generous */
-    .wod-movements-wrap { padding: 4px 28px 0; }
-
-    .wod-movements { list-style: none; }
-
-    .wod-movement-item {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      padding: 15px 0;
-      border-bottom: 1px solid #F0F0EE;
-    }
-
-    .wod-movement-item:last-child { border-bottom: none; }
-
-    .wod-move-emoji { font-size: 20px; line-height: 1; width: 26px; text-align: center; }
-
-    .wod-reps {
-      font-size: 20px;
-      font-weight: 800;
-      color: var(--accent);
-      min-width: 80px;
-      line-height: 1;
-    }
-
-    .wod-move-name {
-      font-size: 15px;
-      font-weight: 600;
-      color: var(--text-1);
-    }
-
-    /* Tip + Scale footer strip */
-    .wod-footer {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1px;
-      background: #EDEDE9;
-      margin-top: 20px;
-      border-top: 1px solid #EDEDE9;
-    }
-
-    .wod-footer-cell {
-      background: #F7F7F5;
-      padding: 18px 28px;
-    }
-
-    .wod-footer-label {
-      font-size: 10px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.9px;
-      color: var(--text-3);
-      margin-bottom: 7px;
-    }
-
-    .wod-footer-text {
-      font-size: 13.5px;
-      font-weight: 500;
-      color: var(--text-2);
-      line-height: 1.55;
-    }
-
-    @media (max-width: 600px) {
-      .wod-prompt { flex-direction: column; align-items: flex-start; }
-      .wod-footer { grid-template-columns: 1fr; }
-    }
-
-    /* ─── FOOTER ────────────────────────────────────────────── */
-    footer {
-      text-align: center;
-      padding: 28px 40px 36px;
-      border-top: 1px solid var(--border);
-      margin-top: 52px;
-    }
-
-    .footer-disclaimer {
       font-size: 11.5px;
-      color: var(--text-3);
-      line-height: 1.7;
+      font-weight: 600;
+      padding: 6px 12px;
+      border-radius: 6px;
+      white-space: nowrap;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.2s;
+      z-index: 10;
     }
 
-    .footer-credit {
-      font-size: 12.5px;
-      color: var(--text-2);
-      font-weight: 500;
+    .bar-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%; left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: var(--text-1);
+    }
+
+    .bar-track:hover .bar-tooltip { opacity: 1; }
+
+    .breakdown-pct {
+      font-size: 13px; font-weight: 700; color: var(--text-2);
+      text-align: right;
+    }
+
+    .breakdown-note {
+      font-size: 11px; color: var(--text-3); font-style: italic;
+      margin-top: 16px;
+    }
+
+    /* ── TIMELINE ───────────────────────────────────────────── */
+    .timeline-track {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      position: relative;
       margin-top: 8px;
     }
 
-    .footer-link {
+    .timeline-track::before {
+      content: '';
+      position: absolute;
+      top: 18px;
+      left: 18px; right: 18px;
+      height: 2px;
+      background: linear-gradient(to right, var(--accent), #EDEDE9);
+      z-index: 0;
+    }
+
+    .timeline-step { display: flex; flex-direction: column; align-items: center; text-align: center; position: relative; z-index: 1; padding: 0 8px; }
+
+    .timeline-dot {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      display: grid; place-items: center;
+      font-size: 14px;
+      margin-bottom: 12px;
+      flex-shrink: 0;
+      border: 2px solid var(--white);
+      box-shadow: 0 0 0 3px;
+    }
+
+    .timeline-dot.done { background: var(--accent); box-shadow: 0 0 0 3px rgba(232,57,90,0.2); }
+    .timeline-dot.upcoming { background: #F0F0EE; box-shadow: 0 0 0 3px #F0F0EE; }
+
+    .timeline-range {
+      font-size: 11px; font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase; letter-spacing: 0.6px;
+      margin-bottom: 5px;
+    }
+
+    .timeline-label {
+      font-size: 13px; font-weight: 700; color: var(--text-1);
+      line-height: 1.35; margin-bottom: 4px;
+    }
+
+    .timeline-desc {
+      font-size: 11.5px; color: var(--text-2); font-weight: 500;
+      line-height: 1.5;
+    }
+
+    /* ── FLOATING SIDE-QUEST BUTTONS ────────────────────────── */
+    .float-dashboard {
+      position: fixed;
+      bottom: 92px;
+      right: 32px;
+      z-index: 999;
+      background: white;
       color: var(--accent);
       text-decoration: none;
-      font-weight: 600;
+      border-radius: 100px;
+      padding: 12px 20px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.13);
+      border: 1.5px solid rgba(232,57,90,0.25);
+      transition: transform 0.2s, box-shadow 0.2s;
     }
 
-    .footer-link:hover {
-      text-decoration: underline;
+    .float-dashboard:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 28px rgba(232,57,90,0.22);
     }
 
-    /* ─── FLOATING QUIZ BUTTON ──────────────────────────── */
     .float-quiz {
       position: fixed;
       bottom: 32px;
@@ -688,18 +551,41 @@
       28%     { transform: scale(1); }
     }
 
-    @media (max-width: 500px) {
-      .float-quiz { bottom: 20px; right: 20px; padding: 12px 18px; font-size: 13px; }
+    /* ── FOOTER ─────────────────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 28px 40px;
+      text-align: center;
     }
 
-    /* ─── RESPONSIVE ────────────────────────────────────────── */
-    @media (max-width: 800px) {
+    .footer-disclaimer {
+      font-size: 11.5px; color: var(--text-3);
+      line-height: 1.8; max-width: 760px; margin: 0 auto;
+    }
+
+    .footer-credit { font-size: 12.5px; color: var(--text-2); font-weight: 500; margin-top: 8px; }
+    .footer-credit a { color: var(--accent); text-decoration: none; }
+    .footer-credit a:hover { text-decoration: underline; }
+
+    /* ── RESPONSIVE ─────────────────────────────────────────── */
+    @media (max-width: 860px) {
       header { padding: 0 20px; }
       .header-tagline { display: none; }
-      main { padding: 24px 20px 48px; }
-      .dashboard-grid { grid-template-columns: 1fr; }
-      .score-card { padding: 28px 28px 24px; }
+      main { padding: 28px 20px 48px; }
+      .calc-grid { grid-template-columns: 1fr; }
+      .inputs-panel { position: static; }
+      .cards-row { grid-template-columns: 1fr; }
+      .timeline-track { grid-template-columns: 1fr 1fr; gap: 20px; }
+      .timeline-track::before { display: none; }
+      .breakdown-row { grid-template-columns: 1fr; gap: 6px; }
+      .breakdown-pct { text-align: left; }
+      .page-hero { padding: 40px 20px; }
       footer { padding: 24px 20px; }
+    }
+
+    @media (max-width: 500px) {
+      .float-quiz      { bottom: 20px; right: 20px; padding: 12px 18px; font-size: 13px; }
+      .float-dashboard { bottom: 78px; right: 20px; padding: 10px 16px; font-size: 12px; }
     }
   </style>
 </head>
@@ -711,175 +597,211 @@
     <div class="logo-mark">♥</div>
     <span class="logo-name">Hello Heart</span>
   </a>
-  <p class="header-tagline">Understand what moves the needle on your heart health</p>
+  <p class="header-tagline">Employer ROI Calculator</p>
 </header>
+
+<!-- ─── HERO ────────────────────────────────────────────────── -->
+<div class="page-hero">
+  <div class="hero-eyebrow">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+    For Employers
+  </div>
+  <h1 class="hero-headline">See what Hello Heart could mean<br>for your organization</h1>
+  <p class="hero-sub">Based on peer-reviewed outcomes and real employer claims data</p>
+</div>
 
 <!-- ─── MAIN ─────────────────────────────────────────────────── -->
 <main>
+  <div class="calc-grid">
 
-  <!-- Page Headline -->
-  <section class="page-headline">
-    <h1 class="headline-title">Heart disease is the <em>#1 threat</em> to health in America.</h1>
-    <p class="headline-sub">With the right tools, it doesn't have to be.</p>
-  </section>
-
-  <!-- Zone 1: Hero Score -->
-  <section class="hero-zone">
-    <div class="score-card">
-      <div class="gauge-wrap">
-        <canvas id="gaugeCanvas"></canvas>
-        <div class="gauge-score-overlay">
-          <div class="score-number" id="scoreNumber">—</div>
-          <div class="score-label-tiny">Heart Health Score</div>
-        </div>
-      </div>
-      <div class="score-badge" id="scoreBadge">
-        <span id="scoreBadgeText">—</span>
-      </div>
-      <p class="score-interp" id="scoreInterp">Adjust the sliders to explore how lifestyle factors shape your heart health.</p>
-      <button class="reset-btn" onclick="resetToAverage()">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
-        Reset to Average American
-      </button>
-    </div>
-  </section>
-
-  <!-- Zones 2 + 3 -->
-  <div class="dashboard-grid">
-
-    <!-- Zone 2: Variable Sliders -->
-    <div class="card">
-      <div class="card-title">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/><circle cx="8" cy="6" r="2" fill="currentColor" stroke="none"/><circle cx="16" cy="12" r="2" fill="currentColor" stroke="none"/><circle cx="10" cy="18" r="2" fill="currentColor" stroke="none"/></svg>
-        Your Risk Factors
+    <!-- INPUTS -->
+    <div class="inputs-panel">
+      <div class="panel-title">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        Your Organization
       </div>
 
-      <!-- Weekly Workouts -->
-      <div class="slider-row">
-        <div class="slider-header">
-          <span class="slider-name">🏃 Weekly Workouts</span>
-          <span class="slider-value" id="val-workouts">2 days</span>
-        </div>
-        <input type="range" id="sl-workouts" min="0" max="7" step="1" value="2">
+      <div class="input-group">
+        <label class="input-label" for="inp-employees">Total employees</label>
+        <input type="number" id="inp-employees" value="5000" min="100" max="500000" step="100">
       </div>
 
-      <!-- Systolic BP -->
-      <div class="slider-row">
-        <div class="slider-header">
-          <span class="slider-name">🩸 Systolic Blood Pressure</span>
-          <span class="slider-value" id="val-bp">122 mmHg</span>
-        </div>
-        <input type="range" id="sl-bp" min="90" max="180" step="1" value="122">
+      <div class="input-group">
+        <label class="input-label" for="inp-industry">Industry</label>
+        <select id="inp-industry">
+          <option value="government">Government / Public sector</option>
+          <option value="manufacturing">Manufacturing</option>
+          <option value="healthcare">Healthcare</option>
+          <option value="finance">Finance &amp; Insurance</option>
+          <option value="other" selected>Other</option>
+        </select>
+        <span class="input-hint">Adjusts hypertension prevalence rate</span>
       </div>
 
-      <!-- Sleep -->
-      <div class="slider-row">
-        <div class="slider-header">
-          <span class="slider-name">😴 Sleep per Night</span>
-          <span class="slider-value" id="val-sleep">6.5 hrs</span>
-        </div>
-        <input type="range" id="sl-sleep" min="4" max="10" step="0.5" value="6.5">
+      <div class="input-group">
+        <label class="input-label" for="inp-pmpy">Current annual healthcare spend per employee</label>
+        <input type="number" id="inp-pmpy" value="14000" min="1000" max="50000" step="500">
+        <span class="input-hint">Per member per year (PMPY)</span>
       </div>
 
-      <!-- BMI -->
-      <div class="slider-row">
-        <div class="slider-header">
-          <span class="slider-name">⚖️ Body Mass Index (BMI)</span>
-          <span class="slider-value" id="val-bmi">26.5</span>
-        </div>
-        <input type="range" id="sl-bmi" min="16" max="40" step="0.5" value="26.5">
-      </div>
-
-      <!-- Smoking -->
-      <div class="slider-row">
-        <div class="slider-header">
-          <span class="slider-name">🚬 Smoking Status</span>
-        </div>
-        <div class="toggle-group" id="grp-smoking">
-          <button class="toggle-btn active" data-v="never"   onclick="setToggle('smoking','never')">Never</button>
-          <button class="toggle-btn"        data-v="former"  onclick="setToggle('smoking','former')">Former</button>
-          <button class="toggle-btn"        data-v="current" onclick="setToggle('smoking','current')">Current</button>
-        </div>
-      </div>
-
-      <!-- Diet Quality -->
-      <div class="slider-row">
-        <div class="slider-header">
-          <span class="slider-name">🥗 Diet Quality</span>
-        </div>
-        <div class="toggle-group" id="grp-diet">
-          <button class="toggle-btn"        data-v="poor"      onclick="setToggle('diet','poor')">Poor</button>
-          <button class="toggle-btn active"  data-v="fair"      onclick="setToggle('diet','fair')">Fair</button>
-          <button class="toggle-btn"        data-v="good"      onclick="setToggle('diet','good')">Good</button>
-          <button class="toggle-btn"        data-v="excellent" onclick="setToggle('diet','excellent')">Excellent</button>
-        </div>
-      </div>
-
-      <!-- BP Medication -->
-      <div class="slider-row">
-        <div class="slider-header">
-          <span class="slider-name">💊 On BP Medication</span>
-        </div>
-        <div class="toggle-group" id="grp-bpMed">
-          <button class="toggle-btn active" data-v="false" onclick="setToggle('bpMed','false')">No</button>
-          <button class="toggle-btn"        data-v="true"  onclick="setToggle('bpMed','true')">Yes</button>
-        </div>
-      </div>
-
-      <!-- Family History -->
-      <div class="slider-row" style="margin-bottom:0">
-        <div class="slider-header">
-          <span class="slider-name">🧬 Family History of Heart Disease</span>
-        </div>
-        <div class="toggle-group" id="grp-familyHistory">
-          <button class="toggle-btn active" data-v="false" onclick="setToggle('familyHistory','false')">No</button>
-          <button class="toggle-btn"        data-v="true"  onclick="setToggle('familyHistory','true')">Yes</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Zone 3: Impact Breakdown -->
-    <div class="card">
-      <div class="card-title">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="3" y="3" width="4" height="18" rx="1"/><rect x="10" y="8" width="4" height="13" rx="1"/><rect x="17" y="5" width="4" height="16" rx="1"/></svg>
-        Impact Breakdown
-      </div>
-
-      <div class="top-lever pulse" id="topLever">
-        <span style="font-size:20px;line-height:1">💡</span>
-        <div class="top-lever-text" id="topLeverText">Calculating your top lever…</div>
-      </div>
-
-      <div class="impact-bars" id="impactBars">
-        <!-- Populated by JS -->
-      </div>
-    </div>
-
-  </div>
-
-  <!-- Workout Generator -->
-  <section class="workout-section">
-    <div class="workout-outer">
-      <div class="wod-prompt">
-        <div class="wod-prompt-copy">
-          <div class="wod-prompt-icon">🏃</div>
-          <div>
-            <div class="wod-prompt-title">Move more. Live longer.</div>
-            <div class="wod-prompt-sub">Exercise is the single most impactful thing you can do for your heart today.</div>
+      <details class="methodology">
+        <summary>
+          How we calculate this
+          <span class="arrow">▾</span>
+        </summary>
+        <div class="methodology-body">
+          <div class="method-row">
+            <strong>Eligible population</strong> — We apply the CDC NHANES-derived hypertension prevalence rate to your workforce. Rates vary by industry: manufacturing (45%), government (42%), finance (41%), healthcare (38%). CDC estimates ~47% of U.S. adults have hypertension; the 42% figure accounts for working-age adults only.
+          </div>
+          <div class="method-row">
+            <strong>Year 1 enrollment</strong> — Hello Heart's best-practice outreach benchmark yields ~30% of eligible members enrolled in Year 1 with active employer promotion.
+          </div>
+          <div class="method-row">
+            <strong>Medical savings</strong> — The City of Fort Worth deployed Hello Heart to ~3,000 employees. Independent actuarial analysis using a matched-control methodology found $2,604 in avoided medical costs per enrolled member vs. the control group.
+          </div>
+          <div class="method-row">
+            <strong>4:1 ROI</strong> — Across the Fort Worth cohort, for every $1 invested in the program, the employer realized $4 in claims savings. This accounts for subscription cost, outreach, and implementation.
+          </div>
+          <div class="method-row">
+            <strong>Clinical benchmarks</strong> — A peer-reviewed JAMA Network Open study (Gazit et al., 2021) found an average 16 mmHg systolic reduction in Stage 2 hypertension users. The Fort Worth study found 74% of high-risk members improved their blood pressure classification within 12 months.
+          </div>
+          <div class="method-sources">
+            <div class="method-source">City of Fort Worth Case Study — Hello Heart, 2023. Matched-control actuarial analysis.</div>
+            <div class="method-source">Gazit T. et al., "Assessment of Hypertension Control Among Adults Participating in a Mobile Phone–Based Medication Management Program" — JAMA Network Open, 2021.</div>
+            <div class="method-source">CDC NHANES Hypertension Prevalence Data — Centers for Disease Control and Prevention, 2023.</div>
           </div>
         </div>
-        <button class="generate-btn" id="generateBtn" onclick="generateWorkout()">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
-          Generate Today's Workout
-        </button>
-      </div>
-      <div id="workoutContent" style="display:none"></div>
+      </details>
     </div>
-  </section>
+
+    <!-- OUTPUTS -->
+    <div class="outputs-panel">
+      <div class="cards-row">
+        <div class="out-card" id="card-eligible">
+          <div class="out-card-label">Employees likely eligible for Hello Heart</div>
+          <div class="out-card-value" id="val-eligible">—</div>
+          <div class="out-card-source">Based on CDC hypertension prevalence data</div>
+        </div>
+        <div class="out-card" id="card-enrolled">
+          <div class="out-card-label">Projected enrolled members (Year 1)</div>
+          <div class="out-card-value" id="val-enrolled">—</div>
+          <div class="out-card-source">Based on Hello Heart best-practice outreach benchmark</div>
+        </div>
+      </div>
+
+      <div class="cards-row">
+        <div class="out-card highlight" id="card-savings">
+          <div class="out-card-label">Estimated avoided medical costs (Year 1)</div>
+          <div class="out-card-value smaller" id="val-savings">—</div>
+          <div class="out-card-source">$2,604/member — City of Fort Worth case study, matched-control methodology</div>
+        </div>
+        <div class="roi-card">
+          <div class="roi-card-label">Return on investment</div>
+          <div class="roi-card-value">4 : 1</div>
+          <div class="roi-card-sub">For every $1 spent,<br>employers saved $4</div>
+          <div class="roi-card-source">City of Fort Worth case study</div>
+        </div>
+      </div>
+
+      <!-- Clinical card -->
+      <div class="clinical-card">
+        <div class="clinical-label">Clinical impact — what members actually experience</div>
+        <div class="clinical-inner">
+          <div class="clinical-stat">
+            <div class="clinical-num">74%</div>
+            <div class="clinical-desc">of high-risk members reduced their BP risk classification</div>
+          </div>
+          <div class="clinical-divider"></div>
+          <div class="clinical-stat">
+            <div class="clinical-num">16 mmHg</div>
+            <div class="clinical-desc">average systolic drop for Stage 2 hypertension members</div>
+          </div>
+          <div class="clinical-divider"></div>
+          <div class="clinical-stat">
+            <div class="clinical-num" id="val-spend-delta">—</div>
+            <div class="clinical-desc">projected reduction in your cardiovascular claims spend</div>
+          </div>
+        </div>
+        <div class="clinical-source">Hello Heart internal analysis &amp; JAMA Network Open, Gazit et al., 2021</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SAVINGS BREAKDOWN -->
+  <div class="section-card">
+    <h2 class="section-heading">Where the savings actually come from</h2>
+    <p class="section-sub">Breakdown estimated from Fort Worth claims analysis across enrolled population</p>
+    <div class="breakdown-list">
+      <div class="breakdown-row">
+        <div class="breakdown-name">Reduced inpatient stays</div>
+        <div class="bar-track">
+          <div class="bar-fill" id="bar-inpatient" style="background: linear-gradient(90deg, #E8395A, #FF6B8A);">
+            <div class="bar-tooltip">Fewer cardiovascular hospitalizations — the largest single driver. Fort Worth saw an 11% increase vs. 81% in the control group during the same pandemic period.</div>
+          </div>
+        </div>
+        <div class="breakdown-pct">~60%</div>
+      </div>
+      <div class="breakdown-row">
+        <div class="breakdown-name">Lower CVD-related claims</div>
+        <div class="bar-track">
+          <div class="bar-fill" id="bar-cvd" style="background: linear-gradient(90deg, #F5A623, #FFCA6B);">
+            <div class="bar-tooltip">Reduced outpatient cardiology visits and specialist referrals as members achieve better BP control.</div>
+          </div>
+        </div>
+        <div class="breakdown-pct">~30%</div>
+      </div>
+      <div class="breakdown-row">
+        <div class="breakdown-name">Fewer ER visits</div>
+        <div class="bar-track">
+          <div class="bar-fill" id="bar-er" style="background: linear-gradient(90deg, #4CAF50, #81C784);">
+            <div class="bar-tooltip">Hypertension-related ER visits decrease as members monitor and manage BP proactively before crises occur.</div>
+          </div>
+        </div>
+        <div class="breakdown-pct">~10%</div>
+      </div>
+    </div>
+    <div class="breakdown-note">Breakdown estimated from City of Fort Worth claims analysis. Individual results will vary.</div>
+  </div>
+
+  <!-- PAYBACK TIMELINE -->
+  <div class="section-card">
+    <h2 class="section-heading">12-month payback timeline</h2>
+    <p class="section-sub">What to expect from deployment through measurable ROI</p>
+    <div class="timeline-track">
+      <div class="timeline-step">
+        <div class="timeline-dot done">🚀</div>
+        <div class="timeline-range">Month 0 – 2</div>
+        <div class="timeline-label">Enrollment &amp; Onboarding</div>
+        <div class="timeline-desc">Outreach to eligible members, device shipping, app setup, and employer dashboard live</div>
+      </div>
+      <div class="timeline-step">
+        <div class="timeline-dot done">📈</div>
+        <div class="timeline-range">Month 3 – 6</div>
+        <div class="timeline-label">Engagement Ramp</div>
+        <div class="timeline-desc">Daily BP monitoring habit forms. Early systolic improvements visible. Health coaches engage high-risk members</div>
+      </div>
+      <div class="timeline-step">
+        <div class="timeline-dot done">💊</div>
+        <div class="timeline-range">Month 6 – 12</div>
+        <div class="timeline-label">Claims Impact Materializes</div>
+        <div class="timeline-desc">Reduced ER visits and hospitalizations begin to show in claims data. High-risk members reclassify to lower risk tiers</div>
+      </div>
+      <div class="timeline-step">
+        <div class="timeline-dot done">✅</div>
+        <div class="timeline-range">Month 12</div>
+        <div class="timeline-label">ROI Measurable</div>
+        <div class="timeline-desc">Full-year actuarial review shows savings vs. control. 4:1 ROI realized. Program renewal decision with data in hand</div>
+      </div>
+    </div>
+  </div>
 
 </main>
 
-<!-- ─── FLOATING QUIZ BUTTON ─────────────────────────────────── -->
+<!-- ─── FLOATING SIDE-QUEST BUTTONS ──────────────────────────── -->
+<a href="/hello-heart/dashboard.html" target="_blank" rel="noopener" class="float-dashboard">
+  <span>📊</span>
+  Heart Health Score
+</a>
 <a href="/hello-heart/quiz.html" target="_blank" rel="noopener" class="float-quiz">
   <span class="float-quiz-heart">🫀</span>
   What's Your Heart Age?
@@ -888,519 +810,124 @@
 <!-- ─── FOOTER ────────────────────────────────────────────────── -->
 <footer>
   <p class="footer-disclaimer">
-    This tool is for educational purposes only and does not constitute medical advice.<br>
-    Always consult a qualified healthcare professional for personalized guidance.
+    Projections are estimates based on published Hello Heart outcomes data and may vary by organization size, engagement rate, and population health profile. Not a guarantee of results.<br>
+    <strong>Sources:</strong> City of Fort Worth Case Study (Hello Heart, 2023) &nbsp;·&nbsp; JAMA Network Open, Gazit et al., 2021 &nbsp;·&nbsp; CDC NHANES Hypertension Prevalence Data
   </p>
-  <p class="footer-credit">Built as a portfolio project for Hello Heart &nbsp;·&nbsp; <a href="https://nathanhirsch.xyz" target="_blank" rel="noopener" class="footer-link">Nathan Hirsch</a></p>
+  <p class="footer-credit">Built by <a href="https://nathanhirsch.xyz" target="_blank" rel="noopener">Nathan Hirsch</a></p>
 </footer>
 
-
 <script>
-// ─── STATE ────────────────────────────────────────────────────────
-const DEFAULTS = {
-  workouts: 2,
-  bp: 122,
-  sleep: 6.5,
-  bmi: 26.5,
-  smoking: 'never',
-  diet: 'fair',
-  bpMed: false,
-  familyHistory: false,
-};
-const state = { ...DEFAULTS };
-
-// ─── RISK MODEL ───────────────────────────────────────────────────
-// Returns individual risk contributions for each variable (0 = best, higher = worse)
-function getRisk(s) {
-  const bpBase   = Math.max(0, (s.bp - 90) / 90 * 44);
-  const bpBonus  = s.bpMed ? bpBase * 0.38 : 0;
-  const bpFinal  = Math.max(0, bpBase - bpBonus);
-
-  const smokingMap = { never: 0, former: 11, current: 29 };
-  const dietMap    = { excellent: 0, good: 6, fair: 14, poor: 22 };
-
-  const sleepDev   = Math.abs(s.sleep - 7.5);
-  const sleepRisk  = Math.min(14, sleepDev * 4.8);
-
-  let bmiRisk = 0;
-  if      (s.bmi < 18.5)  bmiRisk = 7;
-  else if (s.bmi <= 24.9) bmiRisk = 0;
-  else if (s.bmi <= 29.9) bmiRisk = 10;
-  else if (s.bmi <= 34.9) bmiRisk = 20;
-  else                     bmiRisk = 27;
-
-  const workoutRisk = Math.max(0, (7 - s.workouts) / 7 * 24);
-  const familyRisk  = s.familyHistory ? 14 : 0;
-
-  return {
-    'Blood Pressure':   Math.round(bpFinal),
-    'Smoking':          smokingMap[s.smoking],
-    'BMI':              bmiRisk,
-    'Exercise':         Math.round(workoutRisk),
-    'Diet Quality':     dietMap[s.diet],
-    'Sleep':            Math.round(sleepRisk),
-    'Family History':   familyRisk,
-  };
-}
-
-const RISK_EMOJIS = {
-  'Blood Pressure': '🩸',
-  'Smoking':        '🚬',
-  'BMI':            '⚖️',
-  'Exercise':       '🏃',
-  'Diet Quality':   '🥗',
-  'Sleep':          '😴',
-  'Family History': '🧬',
+// ── INDUSTRY PREVALENCE RATES (CDC-grounded) ─────────────────────
+const PREVALENCE = {
+  government:    0.42,
+  manufacturing: 0.45,
+  healthcare:    0.38,
+  finance:       0.41,
+  other:         0.42,
 };
 
-const MAX_TOTAL_RISK = 44 + 29 + 27 + 24 + 22 + 14 + 14; // ≈ 174
+const ENROLLMENT_RATE  = 0.30;
+const SAVINGS_PER_MEMBER = 2604;
+const CVD_SPEND_SHARE  = 0.17;
 
-function calcScore(s) {
-  const risk = getRisk(s);
-  const total = Object.values(risk).reduce((a, b) => a + b, 0);
-  return Math.max(0, Math.min(100, Math.round(100 - (total / MAX_TOTAL_RISK) * 100)));
-}
+// ── FORMATTERS ────────────────────────────────────────────────────
+const fmtInt    = n => Math.round(n).toLocaleString('en-US');
+const fmtDollar = n => '$' + Math.round(n).toLocaleString('en-US');
 
-// ─── GAUGE (Canvas) ───────────────────────────────────────────────
-const canvas = document.getElementById('gaugeCanvas');
-const ctx    = canvas.getContext('2d');
+// ── ANIMATED COUNT-UP ─────────────────────────────────────────────
+const currentVals = {};
 
-const START_A = (135 * Math.PI) / 180;
-const SPAN    = (270 * Math.PI) / 180;
-
-let animScore   = 0;
-let targetScore = 0;
-let rafId       = null;
-
-function lerpHex(c1, c2, t) {
-  const h1 = parseInt(c1.slice(1), 16);
-  const h2 = parseInt(c2.slice(1), 16);
-  const r1=(h1>>16)&0xFF, g1=(h1>>8)&0xFF, b1=h1&0xFF;
-  const r2=(h2>>16)&0xFF, g2=(h2>>8)&0xFF, b2=h2&0xFF;
-  return `rgb(${Math.round(r1+(r2-r1)*t)},${Math.round(g1+(g2-g1)*t)},${Math.round(b1+(b2-b1)*t)})`;
-}
-
-function scoreColor(s) {
-  if (s <= 40) return lerpHex('#E8395A','#F5A623', s/40);
-  if (s <= 70) return lerpHex('#F5A623','#4CAF50', (s-40)/30);
-  return '#4CAF50';
-}
-
-function syncCanvasSize() {
-  const dpr = window.devicePixelRatio || 1;
-  const W = canvas.clientWidth;
-  const H = canvas.clientHeight;
-  if (canvas.width !== Math.round(W * dpr) || canvas.height !== Math.round(H * dpr)) {
-    canvas.width  = Math.round(W * dpr);
-    canvas.height = Math.round(H * dpr);
-  }
-}
-
-function drawGauge(s) {
-  syncCanvasSize();
-  const dpr = window.devicePixelRatio || 1;
-  const W   = canvas.clientWidth;
-  const H   = canvas.clientHeight;
-
-  // Derive all dimensions from logical size so it scales to any width
-  const CX = W / 2;
-  const CY = H * 0.895;
-  const R  = W * 0.416;
-  const SW = Math.max(10, W * 0.057);
-
-  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-  ctx.clearRect(0, 0, W, H);
-
-  const endA = START_A + (s / 100) * SPAN;
-
-  // Background track
-  ctx.beginPath();
-  ctx.arc(CX, CY, R, START_A, START_A + SPAN, false);
-  ctx.strokeStyle = '#EDEDE9';
-  ctx.lineWidth   = SW;
-  ctx.lineCap     = 'round';
-  ctx.stroke();
-
-  // Value arc
-  if (s > 0.5) {
-    const grad = ctx.createLinearGradient(CX - R, CY, CX + R, CY);
-    grad.addColorStop(0,    '#E8395A');
-    grad.addColorStop(0.45, '#F5A623');
-    grad.addColorStop(1,    '#4CAF50');
-    ctx.beginPath();
-    ctx.arc(CX, CY, R, START_A, endA, false);
-    ctx.strokeStyle = grad;
-    ctx.lineWidth   = SW;
-    ctx.lineCap     = 'round';
-    ctx.stroke();
-  }
-
-  // 0 / 100 tick labels
-  const fs    = Math.max(9, W * 0.054);
-  const tickR = R + SW * 0.85;
-  ctx.font      = `600 ${fs}px 'Plus Jakarta Sans', sans-serif`;
-  ctx.fillStyle = '#C4C4BC';
-  ctx.textAlign = 'center';
-  ctx.fillText('0',   CX + tickR * Math.cos(START_A),        CY + tickR * Math.sin(START_A) + 4);
-  ctx.fillText('100', CX + tickR * Math.cos(START_A + SPAN), CY + tickR * Math.sin(START_A + SPAN) + 4);
-}
-
-function tick() {
-  const diff = targetScore - animScore;
-  if (Math.abs(diff) < 0.3) {
-    animScore = targetScore;
-    drawGauge(animScore);
-    return;
-  }
-  animScore += diff * 0.11;
-  drawGauge(animScore);
-  rafId = requestAnimationFrame(tick);
-}
-
-function setScore(s) {
-  targetScore = s;
-  if (rafId) cancelAnimationFrame(rafId);
-  rafId = requestAnimationFrame(tick);
-}
-
-// Redraw on container resize (orientation change, window resize)
-new ResizeObserver(() => drawGauge(animScore)).observe(canvas);
-
-// ─── INTERPRETATION TEXT ──────────────────────────────────────────
-function getInterp(s) {
-  if (s <= 40) return { label:'High Risk',      color:'#E8395A', bg:'rgba(232,57,90,0.10)', text:'High risk — now is a critical time to make meaningful changes.' };
-  if (s <= 55) return { label:'Elevated Risk',  color:'#E8395A', bg:'rgba(232,57,90,0.08)', text:'Elevated risk — you have real, actionable room to improve.' };
-  if (s <= 70) return { label:'Moderate Risk',  color:'#F5A623', bg:'rgba(245,166,35,0.12)', text:'Moderate risk — small, consistent changes can make a big difference.' };
-  if (s <= 85) return { label:'Low Risk',        color:'#4CAF50', bg:'rgba(76,175,80,0.10)',  text:'Low risk — your habits are working. Keep the momentum going.' };
-  return              { label:'Excellent',       color:'#4CAF50', bg:'rgba(76,175,80,0.10)',  text:'Excellent — your heart health is a genuine strength. Well done.' };
-}
-
-// ─── IMPACT BARS ──────────────────────────────────────────────────
-let prevTopKey = null;
-
-function updateImpact(risk) {
-  const entries = Object.entries(risk).sort((a,b) => b[1] - a[1]);
-  const maxVal  = Math.max(...entries.map(e => e[1]), 1);
-
-  // Top lever callout
-  const topKey = entries[0][0];
-  const topLever = document.getElementById('topLever');
-  document.getElementById('topLeverText').textContent =
-    `${RISK_EMOJIS[topKey]} ${topKey} is your #1 lever right now`;
-  if (topKey !== prevTopKey) {
-    topLever.classList.remove('pulse');
-    void topLever.offsetWidth; // reflow
-    topLever.classList.add('pulse');
-    prevTopKey = topKey;
-  }
-
-  // Render bars
-  const container = document.getElementById('impactBars');
-  entries.forEach(([label, val]) => {
-    const id = 'bar-' + label.replace(/\s+/g,'');
-    let row = document.getElementById(id);
-    if (!row) {
-      row = document.createElement('div');
-      row.className = 'impact-row';
-      row.id = id;
-      row.innerHTML = `
-        <div class="impact-label">${RISK_EMOJIS[label]} ${label}</div>
-        <div class="impact-track"><div class="impact-fill"></div></div>
-        <div class="impact-pts"></div>
-      `;
-      container.appendChild(row);
-    }
-
-    const ratio = val / maxVal;
-    let color;
-    if (ratio > 0.65) color = '#E8395A';
-    else if (ratio > 0.32) color = '#F5A623';
-    else color = '#4CAF50';
-
-    const fill = row.querySelector('.impact-fill');
-    fill.style.width      = Math.max(val > 0 ? 4 : 0, (val / 45) * 100) + '%';
-    fill.style.background = color;
-
-    row.querySelector('.impact-pts').textContent = val > 0 ? val + 'pt' : '—';
-  });
-
-  // Re-sort rows in DOM to match sorted order
-  entries.forEach(([label]) => {
-    const id = 'bar-' + label.replace(/\s+/g,'');
-    container.appendChild(document.getElementById(id));
-  });
-}
-
-// ─── SLIDER FILL TRACK ────────────────────────────────────────────
-function refreshSliderFill(el) {
-  const min = +el.min, max = +el.max, val = +el.value;
-  const pct = ((val - min) / (max - min)) * 100;
-  el.style.background = `linear-gradient(to right, #E8395A ${pct}%, #F0F0EE ${pct}%)`;
-}
-
-// ─── MASTER UPDATE ────────────────────────────────────────────────
-function update() {
-  const score = calcScore(state);
-  const risk  = getRisk(state);
-  const interp = getInterp(score);
-
-  // Gauge animation
-  setScore(score);
-
-  // Score number + color
-  const numEl = document.getElementById('scoreNumber');
-  numEl.textContent = score;
-  numEl.style.color = scoreColor(score);
-
-  // Badge
-  const badge = document.getElementById('scoreBadge');
-  badge.style.background   = interp.bg;
-  badge.style.color        = interp.color;
-  badge.style.borderColor  = interp.color + '40';
-  document.getElementById('scoreBadgeText').textContent = interp.label;
-
-  // Interpretation
-  document.getElementById('scoreInterp').textContent = interp.text;
-
-  // Impact bars
-  updateImpact(risk);
-}
-
-// ─── SLIDER BINDINGS ──────────────────────────────────────────────
-function bindSlider(id, stateKey, display) {
+function countUp(id, target, formatter, duration = 700) {
   const el = document.getElementById(id);
-  refreshSliderFill(el);
-  el.addEventListener('input', () => {
-    state[stateKey] = +el.value;
-    display(el.value);
-    refreshSliderFill(el);
-    update();
+  if (!el) return;
+  const from = currentVals[id] ?? 0;
+  currentVals[id] = target;
+  if (from === target) { el.textContent = formatter(target); return; }
+
+  const start = performance.now();
+  const step = (now) => {
+    const t = Math.min((now - start) / duration, 1);
+    const eased = 1 - Math.pow(1 - t, 3);
+    el.textContent = formatter(from + (target - from) * eased);
+    if (t < 1) requestAnimationFrame(step);
+    else el.textContent = formatter(target);
+  };
+  requestAnimationFrame(step);
+}
+
+// ── FLASH CARD ────────────────────────────────────────────────────
+function flashCard(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.style.transition = 'none';
+  el.style.background = 'rgba(232,57,90,0.04)';
+  requestAnimationFrame(() => {
+    el.style.transition = 'background 0.6s ease';
+    el.style.background = '';
   });
 }
 
-bindSlider('sl-workouts', 'workouts', v => {
-  document.getElementById('val-workouts').textContent = +v === 1 ? '1 day' : `${v} days`;
-});
-bindSlider('sl-bp', 'bp', v => {
-  document.getElementById('val-bp').textContent = `${v} mmHg`;
-});
-bindSlider('sl-sleep', 'sleep', v => {
-  document.getElementById('val-sleep').textContent = `${(+v).toFixed(1)} hrs`;
-});
-bindSlider('sl-bmi', 'bmi', v => {
-  document.getElementById('val-bmi').textContent = (+v).toFixed(1);
-});
+// ── MAIN CALCULATE ────────────────────────────────────────────────
+let debounce;
 
-// ─── TOGGLE BINDINGS ──────────────────────────────────────────────
-function setToggle(key, val) {
-  // Coerce string booleans
-  state[key] = (val === 'true') ? true : (val === 'false') ? false : val;
-  document.querySelectorAll(`#grp-${key} .toggle-btn`).forEach(b =>
-    b.classList.toggle('active', b.dataset.v === val)
-  );
-  update();
+function calculate() {
+  const employees = Math.max(100, +document.getElementById('inp-employees').value || 5000);
+  const industry  = document.getElementById('inp-industry').value;
+  const pmpy      = Math.max(1000, +document.getElementById('inp-pmpy').value || 14000);
+
+  const rate      = PREVALENCE[industry] ?? 0.42;
+  const eligible  = employees * rate;
+  const enrolled  = eligible * ENROLLMENT_RATE;
+  const savings   = enrolled * SAVINGS_PER_MEMBER;
+  const cvdSpend  = employees * pmpy * CVD_SPEND_SHARE;
+  const spendDelta = (savings / cvdSpend) * 100;
+
+  countUp('val-eligible', eligible, fmtInt);
+  countUp('val-enrolled',  enrolled, fmtInt);
+  countUp('val-savings',   savings,  fmtDollar);
+  countUp('val-spend-delta', spendDelta, n => (Math.round(n * 10) / 10).toFixed(1) + '%');
+
+  flashCard('card-eligible');
+  flashCard('card-enrolled');
+  flashCard('card-savings');
+
+  animateBars();
 }
 
-// ─── RESET ────────────────────────────────────────────────────────
-function resetToAverage() {
-  Object.assign(state, DEFAULTS);
-
-  document.getElementById('sl-workouts').value = state.workouts;
-  document.getElementById('sl-bp').value       = state.bp;
-  document.getElementById('sl-sleep').value    = state.sleep;
-  document.getElementById('sl-bmi').value      = state.bmi;
-
-  document.getElementById('val-workouts').textContent = `${state.workouts} days`;
-  document.getElementById('val-bp').textContent       = `${state.bp} mmHg`;
-  document.getElementById('val-sleep').textContent    = `${state.sleep.toFixed(1)} hrs`;
-  document.getElementById('val-bmi').textContent      = state.bmi.toFixed(1);
-
-  ['sl-workouts','sl-bp','sl-sleep','sl-bmi'].forEach(id =>
-    refreshSliderFill(document.getElementById(id))
-  );
-
-  setToggle('smoking',       'never');
-  setToggle('diet',          'fair');
-  setToggle('bpMed',         'false');
-  setToggle('familyHistory', 'false');
+function onInput() {
+  clearTimeout(debounce);
+  debounce = setTimeout(calculate, 160);
 }
 
-// ─── INIT ─────────────────────────────────────────────────────────
-update();
+// ── BARS ──────────────────────────────────────────────────────────
+const BAR_TARGETS = { 'bar-inpatient': 60, 'bar-cvd': 30, 'bar-er': 10 };
+let barsAnimated = false;
 
-// ─── WORKOUT GENERATOR ────────────────────────────────────────────
-const WODS = [
-  {
-    type: 'AMRAP',
-    meta: '10 Minutes — as many rounds as possible',
-    movements: [
-      { reps: '10', name: 'Push-Ups',          emoji: '💪' },
-      { reps: '15', name: 'Air Squats',         emoji: '🦵' },
-      { reps: '20', name: 'Sit-Ups',            emoji: '🎯' },
-    ],
-    tip: 'Move at a steady pace you can hold the whole 10 minutes. Rest only when you must.',
-    scale: 'Easier: drop to 7 push-ups. Harder: add 5 burpees each round.',
-  },
-  {
-    type: 'FOR TIME',
-    meta: '3 Rounds — record your finish time',
-    movements: [
-      { reps: '400m', name: 'Run (or 2 min jog in place)', emoji: '🏃' },
-      { reps: '20',   name: 'Push-Ups',                    emoji: '💪' },
-      { reps: '30',   name: 'Air Squats',                  emoji: '🦵' },
-    ],
-    tip: 'Push the run. Walk the last stretch if needed, but keep moving.',
-    scale: 'Easier: 2 rounds. Harder: 5 rounds.',
-  },
-  {
-    type: 'FOR TIME',
-    meta: '21 – 15 – 9 reps of each',
-    movements: [
-      { reps: '21-15-9', name: 'Burpees',      emoji: '🔥' },
-      { reps: '21-15-9', name: 'Jump Squats',  emoji: '🚀' },
-    ],
-    tip: 'Break the burpees into small sets early — they add up fast.',
-    scale: 'Easier: step-back burpees (no jump). Harder: add a push-up at the bottom.',
-  },
-  {
-    type: 'AMRAP',
-    meta: '12 Minutes — full body blitz',
-    movements: [
-      { reps: '5',  name: 'Burpees',            emoji: '🔥' },
-      { reps: '10', name: 'Push-Ups',            emoji: '💪' },
-      { reps: '15', name: 'Air Squats',          emoji: '🦵' },
-      { reps: '20', name: 'Mountain Climbers',   emoji: '🏔️' },
-    ],
-    tip: 'The mountain climbers are your cardio — drive the knees fast.',
-    scale: 'Easier: halve the reps. Harder: 10 burpees to open each round.',
-  },
-  {
-    type: 'EMOM',
-    meta: '10 Minutes — every minute on the minute',
-    movements: [
-      { reps: 'Odd min →',  name: '12 Push-Ups + 12 Sit-Ups',     emoji: '💪' },
-      { reps: 'Even min →', name: '15 Squats + 10 Lunges (each)', emoji: '🦵' },
-    ],
-    tip: 'Finish each minute\'s work with time to rest before the next starts.',
-    scale: 'Easier: 8 reps per movement. Harder: 15 push-ups + 15 sit-ups.',
-  },
-  {
-    type: 'FOR TIME',
-    meta: 'One big chipper — go straight through',
-    movements: [
-      { reps: '50',  name: 'Jumping Jacks',   emoji: '⚡' },
-      { reps: '40',  name: 'Air Squats',       emoji: '🦵' },
-      { reps: '30',  name: 'Push-Ups',         emoji: '💪' },
-      { reps: '20',  name: 'Burpees',          emoji: '🔥' },
-      { reps: '10',  name: 'V-Ups',            emoji: '🎯' },
-    ],
-    tip: 'Chip away top to bottom. Short breaks are fine — just keep the clock running.',
-    scale: 'Easier: halve every number. Harder: do it twice.',
-  },
-  {
-    type: 'TABATA',
-    meta: '8 rounds · 20 sec on / 10 sec off per move',
-    movements: [
-      { reps: '8 × 20s', name: 'Burpees',       emoji: '🔥' },
-      { reps: '8 × 20s', name: 'Air Squats',     emoji: '🦵' },
-      { reps: '8 × 20s', name: 'Push-Ups',       emoji: '💪' },
-    ],
-    tip: 'Do all 8 rounds of burpees first, then squats, then push-ups. Count your lowest-rep round as your score.',
-    scale: 'Easier: 10 sec on / 20 sec off. Harder: no rest between movements.',
-  },
-  {
-    type: 'FOR TIME',
-    meta: '5 Rounds — grit work',
-    movements: [
-      { reps: '10',   name: 'Burpees',                      emoji: '🔥' },
-      { reps: '200m', name: 'Run (or 1 min jog in place)',  emoji: '🏃' },
-      { reps: '20',   name: 'Alternating Lunges',           emoji: '🦵' },
-    ],
-    tip: 'Use the run as active recovery — keep moving even if it\'s slow.',
-    scale: 'Easier: 3 rounds or 7 burpees. Harder: 15 burpees + 400m run.',
-  },
-  {
-    type: 'AMRAP',
-    meta: '15 Minutes — endurance builder',
-    movements: [
-      { reps: '200m', name: 'Run (or 90 sec jog in place)', emoji: '🏃' },
-      { reps: '15',   name: 'Push-Ups',                     emoji: '💪' },
-      { reps: '15',   name: 'Sit-Ups',                      emoji: '🎯' },
-    ],
-    tip: 'The longer window rewards a steady pace. Don\'t blow up on the first round.',
-    scale: 'Easier: 10 push-ups + 10 sit-ups. Harder: 20 of each.',
-  },
-  {
-    type: 'FOR TIME',
-    meta: '4 Rounds — legs and lungs',
-    movements: [
-      { reps: '20', name: 'Jump Squats',         emoji: '🚀' },
-      { reps: '20', name: 'Mountain Climbers',   emoji: '🏔️' },
-      { reps: '20', name: 'High Knees (each)',   emoji: '🏃' },
-      { reps: '10', name: 'Push-Ups',            emoji: '💪' },
-    ],
-    tip: 'Keep your core tight on the mountain climbers — hips level, not bouncing.',
-    scale: 'Easier: 3 rounds or 10 reps. Harder: 30 reps of everything.',
-  },
-];
-
-const FORMAT_FULL = {
-  'AMRAP':    'As Many Rounds As Possible',
-  'EMOM':     'Every Minute On the Minute',
-  'TABATA':   '20 sec on · 10 sec off',
-  'FOR TIME': 'Complete all reps, record your time',
-};
-
-let lastWodIndex = -1;
-
-function generateWorkout() {
-  let idx;
-  do { idx = Math.floor(Math.random() * WODS.length); } while (idx === lastWodIndex);
-  lastWodIndex = idx;
-  const wod = WODS[idx];
-
-  const movementRows = wod.movements.map(m => `
-    <li class="wod-movement-item">
-      <span class="wod-move-emoji">${m.emoji}</span>
-      <span class="wod-reps">${m.reps}</span>
-      <span class="wod-move-name">${m.name}</span>
-    </li>`).join('');
-
-  const content = document.getElementById('workoutContent');
-  content.innerHTML = `
-    <div class="wod-content">
-      <div class="wod-header">
-        <div class="wod-format-row">
-          <span class="wod-type-abbr">${wod.type}</span>
-          <span class="wod-type-full">— ${FORMAT_FULL[wod.type]}</span>
-        </div>
-        <div class="wod-title">Today's Workout</div>
-        <div class="wod-meta">${wod.meta}</div>
-      </div>
-      <div class="wod-movements-wrap">
-        <ul class="wod-movements">${movementRows}</ul>
-      </div>
-      <div class="wod-footer">
-        <div class="wod-footer-cell">
-          <div class="wod-footer-label">Coach's tip</div>
-          <div class="wod-footer-text">${wod.tip}</div>
-        </div>
-        <div class="wod-footer-cell">
-          <div class="wod-footer-label">Scale it</div>
-          <div class="wod-footer-text">${wod.scale}</div>
-        </div>
-      </div>
-    </div>`;
-
-  // Swap button label after first generation
-  const btn = document.getElementById('generateBtn');
-  btn.innerHTML = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg> Different workout`;
-
-  // Trigger animation
-  content.style.display = 'none';
-  void content.offsetWidth;
-  content.style.display = 'block';
+function animateBars() {
+  Object.entries(BAR_TARGETS).forEach(([id, pct]) => {
+    const el = document.getElementById(id);
+    if (el) el.style.width = pct + '%';
+  });
 }
+
+// ── INTERSECTION OBSERVER FOR BAR ANIMATION ───────────────────────
+const barSection = document.querySelector('.breakdown-list');
+if (barSection) {
+  new IntersectionObserver(([entry]) => {
+    if (entry.isIntersecting && !barsAnimated) {
+      barsAnimated = true;
+      animateBars();
+    }
+  }, { threshold: 0.3 }).observe(barSection);
+}
+
+// ── BIND INPUTS ───────────────────────────────────────────────────
+document.getElementById('inp-employees').addEventListener('input', onInput);
+document.getElementById('inp-industry').addEventListener('change', calculate);
+document.getElementById('inp-pmpy').addEventListener('input', onInput);
+
+// ── INIT ──────────────────────────────────────────────────────────
+calculate();
 </script>
 </body>
 </html>
