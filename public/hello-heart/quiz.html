@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>What's Your Heart Age? — Hello Heart</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #FAFAF8;
+      --accent: #E8395A;
+      --text-1: #1A1A2E;
+      --text-2: #6B7280;
+      --text-3: #9CA3AF;
+      --white: #FFFFFF;
+      --border: rgba(0,0,0,0.08);
+      --shadow: 0 2px 16px rgba(0,0,0,0.06);
+      --radius: 16px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      height: 100%;
+      font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text-1);
+      overflow-x: hidden;
+    }
+
+    .phase { min-height: 100vh; display: flex; flex-direction: column; }
+    .phase.hidden { display: none !important; }
+
+    /* ── SHARED NAV ───────────────────────────────────── */
+    .nav {
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .logo-mark {
+      width: 30px; height: 30px;
+      background: linear-gradient(135deg, #E8395A, #FF6B8A);
+      border-radius: 8px;
+      display: grid; place-items: center;
+      font-size: 15px;
+      box-shadow: 0 2px 8px rgba(232,57,90,0.28);
+    }
+
+    .logo-name { font-weight: 800; font-size: 16px; color: var(--accent); }
+
+    .nav-back {
+      background: none; border: none; cursor: pointer;
+      display: flex; align-items: center; gap: 6px;
+      font-family: inherit; font-size: 13px; font-weight: 600;
+      color: var(--text-2); margin-left: auto; padding: 6px 12px;
+      border-radius: 100px; transition: color 0.2s, background 0.2s;
+    }
+    .nav-back:hover { color: var(--accent); background: rgba(232,57,90,0.06); }
+
+    /* ── WELCOME ──────────────────────────────────────── */
+    #ph-welcome { position: relative; justify-content: space-between; }
+
+    .welcome-body {
+      flex: 1;
+      display: flex; flex-direction: column;
+      justify-content: center; align-items: center;
+      text-align: center;
+      padding: 32px 32px 24px;
+      max-width: 480px; margin: 0 auto; width: 100%;
+    }
+
+    .welcome-eyebrow {
+      font-size: 11px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 1.4px;
+      color: var(--accent); margin-bottom: 18px;
+    }
+
+    .welcome-headline {
+      font-size: clamp(30px, 8vw, 46px);
+      font-weight: 800; letter-spacing: -1.2px; line-height: 1.12;
+      margin-bottom: 16px;
+    }
+
+    .welcome-headline em { font-style: normal; color: var(--accent); }
+
+    .welcome-sub {
+      font-size: 16px; font-weight: 500; color: var(--text-2);
+      line-height: 1.6; max-width: 320px; margin-bottom: 40px;
+    }
+
+    .start-btn {
+      background: var(--accent); color: white; border: none;
+      border-radius: 100px; padding: 15px 36px;
+      font-family: inherit; font-size: 16px; font-weight: 700;
+      cursor: pointer; display: inline-flex; align-items: center; gap: 10px;
+      box-shadow: 0 4px 20px rgba(232,57,90,0.38);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .start-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 28px rgba(232,57,90,0.48); }
+
+    .welcome-note { font-size: 12px; color: var(--text-3); margin-top: 14px; }
+
+    /* EKG strip */
+    .ekg-strip {
+      flex-shrink: 0; height: 80px;
+      overflow: hidden; position: relative;
+    }
+    .ekg-strip::before, .ekg-strip::after {
+      content: ''; position: absolute; top: 0; bottom: 0; width: 80px; z-index: 1;
+    }
+    .ekg-strip::before { left: 0; background: linear-gradient(to right, var(--bg), transparent); }
+    .ekg-strip::after  { right: 0; background: linear-gradient(to left, var(--bg), transparent); }
+
+    .ekg-wrap {
+      display: flex; width: 200%;
+      animation: ekgScroll 7s linear infinite;
+    }
+    .ekg-wrap svg { width: 50%; flex-shrink: 0; }
+
+    @keyframes ekgScroll {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ── QUIZ ─────────────────────────────────────────── */
+    .quiz-top {
+      padding: 18px 24px 0;
+      max-width: 480px; margin: 0 auto; width: 100%;
+    }
+
+    .progress-header {
+      display: flex; align-items: center;
+      justify-content: space-between; margin-bottom: 8px;
+    }
+
+    .progress-text { font-size: 12px; font-weight: 600; color: var(--text-3); }
+
+    .progress-track {
+      height: 4px; background: #EDEDE9;
+      border-radius: 100px; overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%; background: var(--accent);
+      border-radius: 100px;
+      transition: width 0.4s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    .back-btn {
+      background: none; border: none; cursor: pointer;
+      color: var(--text-2); display: flex; align-items: center; gap: 6px;
+      font-family: inherit; font-size: 12.5px; font-weight: 600;
+      padding: 8px 0; margin-top: 6px;
+      transition: color 0.2s; opacity: 0; pointer-events: none;
+    }
+    .back-btn.visible { opacity: 1; pointer-events: auto; }
+    .back-btn:hover { color: var(--accent); }
+
+    .question-area {
+      flex: 1; display: flex; flex-direction: column;
+      justify-content: center;
+      padding: 20px 24px 40px;
+      max-width: 480px; margin: 0 auto; width: 100%;
+      overflow: hidden;
+    }
+
+    .q-slide { animation: slideInRight 0.3s cubic-bezier(0.4,0,0.2,1); }
+    .q-slide.from-left { animation: slideInLeft 0.3s cubic-bezier(0.4,0,0.2,1); }
+
+    @keyframes slideInRight {
+      from { opacity: 0; transform: translateX(28px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes slideInLeft {
+      from { opacity: 0; transform: translateX(-28px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+
+    .q-emoji { font-size: 34px; margin-bottom: 12px; display: block; }
+
+    .q-text {
+      font-size: clamp(20px, 5.5vw, 26px);
+      font-weight: 800; letter-spacing: -0.4px; line-height: 1.25;
+      margin-bottom: 28px;
+    }
+
+    .options { display: flex; flex-direction: column; gap: 10px; }
+
+    .opt {
+      background: var(--white);
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      padding: 15px 18px;
+      cursor: pointer;
+      font-family: inherit; font-size: 15px; font-weight: 600;
+      color: var(--text-1); text-align: left;
+      display: flex; align-items: center;
+      justify-content: space-between; gap: 12px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+      transition: border-color 0.16s, background 0.16s, transform 0.12s;
+    }
+    .opt:hover {
+      border-color: rgba(232,57,90,0.4);
+      background: rgba(232,57,90,0.03);
+      transform: translateX(3px);
+    }
+    .opt.selected { border-color: var(--accent); background: rgba(232,57,90,0.06); }
+
+    .opt-check {
+      width: 22px; height: 22px; border-radius: 50%;
+      border: 2px solid #E0E0DE;
+      display: grid; place-items: center; flex-shrink: 0;
+      font-size: 12px; transition: all 0.16s;
+    }
+    .opt.selected .opt-check {
+      background: var(--accent); border-color: var(--accent); color: white;
+    }
+    .opt.selected .opt-check::after { content: '✓'; font-weight: 900; }
+
+    /* ── LOADING ──────────────────────────────────────── */
+    #ph-loading {
+      justify-content: center; align-items: center;
+      gap: 28px; text-align: center; padding: 40px;
+    }
+
+    .heart-pulse {
+      font-size: 68px; line-height: 1;
+      animation: pulse 1.1s ease-in-out infinite;
+      display: block;
+    }
+
+    @keyframes pulse {
+      0%,100%{ transform: scale(1); }
+      14%    { transform: scale(1.22); }
+      28%    { transform: scale(1); }
+      42%    { transform: scale(1.13); }
+      56%    { transform: scale(1); }
+    }
+
+    .loading-text {
+      font-size: 17px; font-weight: 600; color: var(--text-2);
+      max-width: 260px; line-height: 1.5;
+      transition: opacity 0.35s;
+    }
+
+    .dots span {
+      display: inline-block;
+      animation: dotPop 1.4s ease-in-out infinite;
+      margin-left: 1px;
+    }
+    .dots span:nth-child(2) { animation-delay: 0.2s; }
+    .dots span:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes dotPop {
+      0%,80%,100% { transform: translateY(0); opacity: 0.4; }
+      40%         { transform: translateY(-5px); opacity: 1; }
+    }
+
+    /* ── RESULTS ──────────────────────────────────────── */
+    #ph-results { transition: background 0.7s ease; }
+    #ph-results.glow-green { background: linear-gradient(180deg,#EDFBF3 0%,#FAFAF8 44%); }
+    #ph-results.glow-amber { background: linear-gradient(180deg,#FFFBEF 0%,#FAFAF8 44%); }
+    #ph-results.glow-red   { background: linear-gradient(180deg,#FFF3F5 0%,#FAFAF8 44%); }
+
+    .results-inner {
+      max-width: 480px; margin: 0 auto;
+      padding: 0 24px 56px; width: 100%;
+    }
+
+    .ages-row {
+      display: flex; align-items: flex-end;
+      justify-content: center; gap: 32px;
+      margin: 8px 0 24px;
+    }
+
+    .age-block { text-align: center; }
+
+    .age-label {
+      font-size: 10px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 1.2px;
+      color: var(--text-3); margin-bottom: 2px;
+    }
+
+    .age-num {
+      font-size: clamp(60px, 16vw, 80px);
+      font-weight: 800; line-height: 1; letter-spacing: -4px;
+    }
+
+    .age-num.real   { color: #CBCBC4; }
+    .age-num.older  { color: var(--accent); }
+    .age-num.close  { color: #F5A623; }
+    .age-num.younger{ color: #4CAF50; }
+
+    .vs { font-size: 14px; font-weight: 700; color: #D0D0CA; margin-bottom: 12px; flex-shrink: 0; }
+
+    .verdict {
+      font-size: clamp(17px, 4.5vw, 20px);
+      font-weight: 700; line-height: 1.4;
+      text-align: center; margin-bottom: 36px;
+      padding: 0 4px;
+    }
+
+    /* Insight cards */
+    .section-label {
+      font-size: 10.5px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.9px;
+      color: var(--text-3); margin-bottom: 12px;
+    }
+
+    .insights { display: flex; flex-direction: column; gap: 10px; margin-bottom: 32px; }
+
+    .insight {
+      background: var(--white); border-radius: var(--radius);
+      padding: 16px 18px; box-shadow: var(--shadow);
+      display: flex; gap: 14px; align-items: flex-start;
+    }
+
+    .insight-ico { font-size: 22px; flex-shrink: 0; margin-top: 1px; line-height: 1; }
+
+    .insight-finding {
+      font-size: 14px; font-weight: 700; color: var(--text-1);
+      line-height: 1.35; margin-bottom: 5px;
+    }
+
+    .insight-tip { font-size: 13px; font-weight: 500; color: var(--text-2); line-height: 1.5; }
+
+    /* CTAs */
+    .ctas { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+
+    .btn-primary {
+      display: block; text-align: center; text-decoration: none;
+      background: var(--accent); color: white; border: none;
+      border-radius: 100px; padding: 14px;
+      font-family: inherit; font-size: 14.5px; font-weight: 700;
+      cursor: pointer; box-shadow: 0 3px 12px rgba(232,57,90,0.28);
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-primary:hover { background: #D42E50; transform: translateY(-1px); }
+
+    .btn-ghost {
+      background: none; border: 1.5px solid rgba(0,0,0,0.1);
+      border-radius: 100px; padding: 13px;
+      font-family: inherit; font-size: 14px; font-weight: 600;
+      color: var(--text-2); cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+    .share-row {
+      display: flex; align-items: center; justify-content: center;
+      gap: 10px; padding: 4px 0 0;
+    }
+    .share-lbl { font-size: 12px; font-weight: 600; color: var(--text-3); }
+
+    .share-btn {
+      background: none; border: 1.5px solid rgba(0,0,0,0.1);
+      border-radius: 8px; padding: 7px 14px;
+      font-family: inherit; font-size: 12px; font-weight: 600;
+      color: var(--text-2); cursor: pointer;
+      display: flex; align-items: center; gap: 5px;
+      transition: all 0.2s;
+    }
+    .share-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+    .results-footer {
+      margin-top: 44px; text-align: center;
+      font-size: 11.5px; color: var(--text-3); line-height: 1.7;
+    }
+    .results-footer a { color: var(--accent); text-decoration: none; }
+    .results-footer a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- PHASE 1 · WELCOME                                      -->
+<!-- ══════════════════════════════════════════════════════ -->
+<div id="ph-welcome" class="phase">
+  <div class="nav">
+    <div class="logo-mark">♥</div>
+    <span class="logo-name">Hello Heart</span>
+    <a href="/hello-heart" class="nav-back">
+      ← Dashboard
+    </a>
+  </div>
+
+  <div class="welcome-body">
+    <p class="welcome-eyebrow">60-Second Quiz</p>
+    <h1 class="welcome-headline">What's Your<br><em>Heart Age?</em></h1>
+    <p class="welcome-sub">Answer 7 quick questions to find out how old your heart really is — and what you can do about it.</p>
+    <button class="start-btn" onclick="startQuiz()">
+      Start Quiz
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+    </button>
+    <p class="welcome-note">Takes about 60 seconds · No account needed</p>
+  </div>
+
+  <div class="ekg-strip">
+    <div class="ekg-wrap">
+      <svg id="ekg1" viewBox="0 0 1200 80" preserveAspectRatio="none"></svg>
+      <svg id="ekg2" viewBox="0 0 1200 80" preserveAspectRatio="none"></svg>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- PHASE 2 · QUIZ                                         -->
+<!-- ══════════════════════════════════════════════════════ -->
+<div id="ph-quiz" class="phase hidden">
+  <div class="quiz-top">
+    <div class="progress-header">
+      <span class="progress-text" id="progressText">Question 1 of 7</span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="progressFill" style="width:0%"></div>
+    </div>
+    <button class="back-btn" id="backBtn" onclick="goBack()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+      Back
+    </button>
+  </div>
+  <div class="question-area" id="questionArea"></div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- PHASE 3 · LOADING                                      -->
+<!-- ══════════════════════════════════════════════════════ -->
+<div id="ph-loading" class="phase hidden">
+  <span class="heart-pulse">❤️</span>
+  <p class="loading-text" id="loadingMsg">Analyzing your responses<span class="dots"><span>.</span><span>.</span><span>.</span></span></p>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- PHASE 4 · RESULTS                                      -->
+<!-- ══════════════════════════════════════════════════════ -->
+<div id="ph-results" class="phase hidden">
+  <div class="nav">
+    <div class="logo-mark">♥</div>
+    <span class="logo-name">Hello Heart</span>
+  </div>
+  <div class="results-inner">
+    <div class="ages-row">
+      <div class="age-block">
+        <div class="age-label">Your Age</div>
+        <div class="age-num real" id="realAgeNum">—</div>
+      </div>
+      <div class="vs">vs</div>
+      <div class="age-block">
+        <div class="age-label">Heart Age</div>
+        <div class="age-num" id="heartAgeNum">—</div>
+      </div>
+    </div>
+
+    <p class="verdict" id="verdictText"></p>
+
+    <p class="section-label">Your top risk factors</p>
+    <div class="insights" id="insightsGrid"></div>
+
+    <div class="ctas">
+      <a href="https://www.helloheart.com" target="_blank" rel="noopener" class="btn-primary">Learn More at Hello Heart →</a>
+      <button class="btn-ghost" onclick="retake()">Retake Quiz</button>
+    </div>
+
+    <div class="share-row">
+      <span class="share-lbl">Share your result</span>
+      <button class="share-btn" onclick="shareTwitter()">
+        𝕏 Post
+      </button>
+      <button class="share-btn" onclick="copyLink()">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+        Copy link
+      </button>
+    </div>
+
+    <div class="results-footer">
+      This tool is for educational purposes only and does not constitute medical advice.<br>
+      Built by <a href="https://nathanhirsch.xyz" target="_blank" rel="noopener">Nathan Hirsch</a> as a portfolio project for Hello Heart.
+    </div>
+  </div>
+</div>
+
+<script>
+// ── QUIZ DATA ──────────────────────────────────────────────────────
+
+const QUESTIONS = [
+  {
+    id: 'age',
+    emoji: '🎂',
+    text: 'How old are you?',
+    options: [
+      { label: '18 – 29', value: '18-29' },
+      { label: '30 – 39', value: '30-39' },
+      { label: '40 – 49', value: '40-49' },
+      { label: '50 – 59', value: '50-59' },
+      { label: '60+',     value: '60+'   },
+    ],
+  },
+  {
+    id: 'exercise',
+    emoji: '🏃',
+    text: 'How often do you exercise?',
+    options: [
+      { label: 'Never',             value: 'never', modifier: 5  },
+      { label: '1–2× per week',     value: '1-2x',  modifier: 2  },
+      { label: '3–4× per week',     value: '3-4x',  modifier: 0  },
+      { label: '5+ times per week', value: '5x+',   modifier: -2 },
+    ],
+  },
+  {
+    id: 'smoking',
+    emoji: '🚬',
+    text: 'Do you smoke?',
+    options: [
+      { label: 'Current smoker', value: 'current', modifier: 8 },
+      { label: 'Former smoker',  value: 'former',  modifier: 2 },
+      { label: 'Never smoked',   value: 'never',   modifier: 0 },
+    ],
+  },
+  {
+    id: 'diet',
+    emoji: '🥗',
+    text: 'How would you describe your diet?',
+    options: [
+      { label: 'Mostly fast food',   value: 'fast-food',   modifier: 4  },
+      { label: 'Mixed',              value: 'mixed',       modifier: 1  },
+      { label: 'Mostly whole foods', value: 'whole-foods', modifier: 0  },
+      { label: 'Very clean',         value: 'very-clean',  modifier: -2 },
+    ],
+  },
+  {
+    id: 'bp',
+    emoji: '🩸',
+    text: "How's your blood pressure?",
+    options: [
+      { label: 'High — told by a doctor', value: 'high',       modifier: 6 },
+      { label: 'Borderline',              value: 'borderline', modifier: 3 },
+      { label: 'Normal',                  value: 'normal',     modifier: 0 },
+      { label: "Don't know",              value: 'unknown',    modifier: 2 },
+    ],
+  },
+  {
+    id: 'sleep',
+    emoji: '😴',
+    text: 'How many hours of sleep do you get?',
+    options: [
+      { label: 'Less than 5 hrs', value: 'lt5',  modifier: 4 },
+      { label: '5 – 6 hrs',       value: '5-6', modifier: 2 },
+      { label: '7 – 8 hrs',       value: '7-8', modifier: 0 },
+      { label: '9+ hrs',          value: '9+',  modifier: 1 },
+    ],
+  },
+  {
+    id: 'family',
+    emoji: '🧬',
+    text: 'Any family history of heart disease?',
+    options: [
+      { label: 'Yes',      value: 'yes',      modifier: 3 },
+      { label: 'No',       value: 'no',       modifier: 0 },
+      { label: 'Not sure', value: 'not-sure', modifier: 1 },
+    ],
+  },
+];
+
+const AGE_MAP = { '18-29': 24, '30-39': 34, '40-49': 44, '50-59': 54, '60+': 65 };
+
+const INSIGHTS = {
+  exercise: {
+    never:  { ico: '🏃', finding: 'No exercise adds ~5 years to your heart age', tip: 'Even a 20-min walk 3× per week measurably lowers cardiovascular risk' },
+    '1-2x': { ico: '🏃', finding: 'Light activity still has room to grow',       tip: '3+ sessions/week is the threshold where heart benefits really kick in' },
+  },
+  smoking: {
+    current: { ico: '🚬', finding: 'Smoking adds ~8 years to your heart age',      tip: 'Cutting back — or quitting — significantly reduces risk within weeks' },
+    former:  { ico: '🚬', finding: 'Former smoking still carries a +2 year impact', tip: 'Your risk keeps dropping every smoke-free year — keep going' },
+  },
+  diet: {
+    'fast-food': { ico: '🥗', finding: 'A fast-food heavy diet adds ~4 years',    tip: 'Swapping one meal per day for whole foods shifts your risk profile' },
+    'mixed':     { ico: '🥗', finding: 'A mixed diet has modest impact (+1 yr)',   tip: 'More vegetables and less processed food moves the needle quickly' },
+  },
+  bp: {
+    'high':       { ico: '🩸', finding: 'High blood pressure is the #1 heart age driver', tip: 'Managing BP — even slightly — delivers the biggest single risk reduction' },
+    'borderline': { ico: '🩸', finding: 'Borderline BP adds ~3 years to heart age',         tip: 'Exercise and less sodium can bring borderline BP back to normal range' },
+    'unknown':    { ico: '🩸', finding: "Not knowing your BP is itself a risk",               tip: 'A free BP check takes 2 minutes — most pharmacies offer it' },
+  },
+  sleep: {
+    'lt5': { ico: '😴', finding: 'Under 5 hrs of sleep adds ~4 years',    tip: 'Chronic undersleeping elevates cortisol and blood pressure' },
+    '5-6': { ico: '😴', finding: 'Mild sleep deprivation adds ~2 years',  tip: 'Even one extra hour a night shows measurable cardiovascular benefit' },
+    '9+':  { ico: '😴', finding: 'Oversleeping can signal underlying issues', tip: '7–8 hour nights are the sweet spot for heart health' },
+  },
+  family: {
+    'yes':      { ico: '🧬', finding: 'Family history adds ~3 years to heart age',   tip: "Genetics aren't destiny — lifestyle changes matter even more with family risk" },
+    'not-sure': { ico: '🧬', finding: 'Unknown family history is worth investigating', tip: "Ask relatives about heart disease — it's valuable data for your health" },
+  },
+};
+
+// ── STATE ──────────────────────────────────────────────────────────
+let current = 0;
+let answers = {};
+let direction = 'forward';
+
+// ── EKG PATH ───────────────────────────────────────────────────────
+function buildEkg() {
+  const W = 1200, H = 80, base = 52, cycles = 3, segW = W / cycles;
+  let d = `M 0,${base}`;
+  for (let i = 0; i < cycles; i++) {
+    const x = i * segW;
+    d += ` L ${x + segW*0.20},${base}`;
+    d += ` L ${x + segW*0.26},${base-11}`;
+    d += ` L ${x + segW*0.30},${base}`;
+    d += ` L ${x + segW*0.36},${base}`;
+    d += ` L ${x + segW*0.375},${base+8}`;
+    d += ` L ${x + segW*0.392},${base-46}`;
+    d += ` L ${x + segW*0.410},${base+16}`;
+    d += ` L ${x + segW*0.425},${base}`;
+    d += ` L ${x + segW*0.468},${base-21}`;
+    d += ` L ${x + segW*0.518},${base}`;
+    d += ` L ${x + segW},${base}`;
+  }
+  return d;
+}
+
+function initEkg() {
+  const pathHtml = (d) => `<path d="${d}" fill="none" stroke="#E8395A" stroke-width="2.5" stroke-linejoin="round"/>`;
+  const d = buildEkg();
+  document.getElementById('ekg1').innerHTML = pathHtml(d);
+  document.getElementById('ekg2').innerHTML = pathHtml(d);
+}
+
+// ── PHASE SWITCHING ────────────────────────────────────────────────
+function showPhase(id) {
+  ['ph-welcome','ph-quiz','ph-loading','ph-results'].forEach(p =>
+    document.getElementById(p).classList.toggle('hidden', p !== id)
+  );
+}
+
+// ── QUIZ LOGIC ─────────────────────────────────────────────────────
+function startQuiz() {
+  current = 0;
+  answers = {};
+  direction = 'forward';
+  showPhase('ph-quiz');
+  renderQuestion();
+}
+
+function renderQuestion(dir = 'forward') {
+  const q = QUESTIONS[current];
+  const area = document.getElementById('questionArea');
+
+  // Progress
+  document.getElementById('progressText').textContent = `Question ${current + 1} of ${QUESTIONS.length}`;
+  document.getElementById('progressFill').style.width = `${((current + 1) / QUESTIONS.length) * 100}%`;
+
+  // Back button
+  const backBtn = document.getElementById('backBtn');
+  backBtn.classList.toggle('visible', current > 0);
+
+  // Build HTML
+  area.innerHTML = `
+    <div class="q-slide${dir === 'back' ? ' from-left' : ''}">
+      <span class="q-emoji">${q.emoji}</span>
+      <p class="q-text">${q.text}</p>
+      <div class="options">
+        ${q.options.map(opt => `
+          <button
+            class="opt${answers[q.id] === opt.value ? ' selected' : ''}"
+            onclick="selectAnswer('${q.id}', '${opt.value}', this)"
+          >
+            ${opt.label}
+            <span class="opt-check"></span>
+          </button>
+        `).join('')}
+      </div>
+    </div>`;
+}
+
+function selectAnswer(qId, value, btn) {
+  answers[qId] = value;
+  // Flash selected state
+  document.querySelectorAll('.opt').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+
+  setTimeout(() => {
+    if (current < QUESTIONS.length - 1) {
+      current++;
+      renderQuestion('forward');
+    } else {
+      showLoading();
+    }
+  }, 260);
+}
+
+function goBack() {
+  if (current > 0) {
+    current--;
+    renderQuestion('back');
+  }
+}
+
+// ── LOADING ────────────────────────────────────────────────────────
+const LOADING_MSGS = [
+  'Analyzing your responses',
+  'Comparing to 10,000+ health profiles',
+  'Calculating your heart age',
+];
+
+function showLoading() {
+  showPhase('ph-loading');
+  let i = 0;
+  const el = document.getElementById('loadingMsg');
+
+  const cycle = setInterval(() => {
+    el.style.opacity = '0';
+    setTimeout(() => {
+      i = (i + 1) % LOADING_MSGS.length;
+      el.innerHTML = `${LOADING_MSGS[i]}<span class="dots"><span>.</span><span>.</span><span>.</span></span>`;
+      el.style.opacity = '1';
+    }, 350);
+  }, 1100);
+
+  setTimeout(() => {
+    clearInterval(cycle);
+    showResults();
+  }, 2800);
+}
+
+// ── SCORE ──────────────────────────────────────────────────────────
+function calcHeartAge() {
+  const actual = AGE_MAP[answers.age] || 34;
+  let mod = 0;
+
+  const tables = {
+    exercise: { never: 5, '1-2x': 2, '3-4x': 0, '5x+': -2 },
+    smoking:  { current: 8, former: 2, never: 0 },
+    diet:     { 'fast-food': 4, mixed: 1, 'whole-foods': 0, 'very-clean': -2 },
+    bp:       { high: 6, borderline: 3, normal: 0, unknown: 2 },
+    sleep:    { 'lt5': 4, '5-6': 2, '7-8': 0, '9+': 1 },
+    family:   { yes: 3, 'not-sure': 1, no: 0 },
+  };
+
+  for (const [key, map] of Object.entries(tables)) {
+    mod += map[answers[key]] ?? 0;
+  }
+
+  const heartAge = Math.max(18, Math.min(actual + 20, actual + mod));
+  return { actual, heartAge, diff: heartAge - actual };
+}
+
+function getTopInsights() {
+  const results = [];
+  for (const [qId, lookup] of Object.entries(INSIGHTS)) {
+    const answer = answers[qId];
+    if (lookup[answer]) {
+      const q = QUESTIONS.find(q => q.id === qId);
+      const opt = q?.options.find(o => o.value === answer);
+      results.push({ ...lookup[answer], modifier: opt?.modifier ?? 0 });
+    }
+  }
+  return results.sort((a, b) => b.modifier - a.modifier).slice(0, 3);
+}
+
+// ── RESULTS ────────────────────────────────────────────────────────
+function showResults() {
+  const { actual, heartAge, diff } = calcHeartAge();
+  showPhase('ph-results');
+
+  // Color tone
+  const phase = document.getElementById('ph-results');
+  phase.className = 'phase';
+  if      (diff <= -1) phase.classList.add('glow-green');
+  else if (diff <= 2)  phase.classList.add('glow-amber');
+  else                 phase.classList.add('glow-red');
+
+  // Actual age (static)
+  document.getElementById('realAgeNum').textContent = actual;
+
+  // Heart age — count up
+  const heartEl = document.getElementById('heartAgeNum');
+  heartEl.className = 'age-num ' + (diff <= -1 ? 'younger' : diff <= 2 ? 'close' : 'older');
+  countUp(heartEl, heartAge, 1500);
+
+  // Verdict
+  const verdictEl = document.getElementById('verdictText');
+  if (diff === 0) {
+    verdictEl.textContent = "Your heart age matches your real age — solid baseline to build from.";
+  } else if (diff < 0) {
+    verdictEl.innerHTML = `Your heart is <strong style="color:#4CAF50">${Math.abs(diff)} year${Math.abs(diff)===1?'':'s'} younger</strong> than you — keep it up! 🎉`;
+  } else {
+    verdictEl.innerHTML = `Your heart is <strong style="color:var(--accent)">${diff} year${diff===1?'':'s'} older</strong> than you — but that's changeable.`;
+  }
+
+  // Insight cards
+  const insights = getTopInsights();
+  const grid = document.getElementById('insightsGrid');
+  if (insights.length === 0) {
+    grid.innerHTML = `<div class="insight"><div class="insight-ico">🌟</div><div><div class="insight-finding">Outstanding lifestyle across the board</div><div class="insight-tip">You're already doing the right things for your heart. Keep going.</div></div></div>`;
+  } else {
+    grid.innerHTML = insights.map(ins => `
+      <div class="insight">
+        <div class="insight-ico">${ins.ico}</div>
+        <div>
+          <div class="insight-finding">${ins.finding}</div>
+          <div class="insight-tip">${ins.tip}</div>
+        </div>
+      </div>`).join('');
+  }
+}
+
+function countUp(el, target, duration) {
+  const start = performance.now();
+  el.textContent = '0';
+  const step = (now) => {
+    const t = Math.min((now - start) / duration, 1);
+    const eased = 1 - Math.pow(1 - t, 3);
+    el.textContent = Math.round(eased * target);
+    if (t < 1) requestAnimationFrame(step);
+    else el.textContent = target;
+  };
+  requestAnimationFrame(step);
+}
+
+function retake() {
+  startQuiz();
+}
+
+// ── SHARE ──────────────────────────────────────────────────────────
+function shareTwitter() {
+  const { actual, heartAge, diff } = calcHeartAge();
+  const msg = diff > 0
+    ? `My heart age is ${heartAge} — ${diff} years older than I am. Time to make some changes. 🫀`
+    : diff < 0
+    ? `My heart age is ${heartAge} — ${Math.abs(diff)} years younger than me! 💚 #HeartHealth`
+    : `My heart age exactly matches my real age. Room to improve! 🫀`;
+  window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(msg)}`, '_blank');
+}
+
+function copyLink() {
+  navigator.clipboard.writeText(window.location.href).then(() => {
+    const btn = event.target.closest('.share-btn');
+    const original = btn.innerHTML;
+    btn.innerHTML = '✓ Copied!';
+    setTimeout(() => { btn.innerHTML = original; }, 2000);
+  });
+}
+
+// ── INIT ───────────────────────────────────────────────────────────
+initEkg();
+</script>
+</body>
+</html>
