@@ -623,7 +623,7 @@
 
       <div class="input-group">
         <label class="input-label" for="inp-employees">Total employees</label>
-        <input type="number" id="inp-employees" value="5000" min="100" max="500000" step="100">
+        <input type="number" id="inp-employees" value="5000" min="1" max="500000" step="100">
       </div>
 
       <div class="input-group">
@@ -871,15 +871,16 @@ function flashCard(id) {
 let debounce;
 
 function calculate() {
-  const employees = Math.max(100, +document.getElementById('inp-employees').value || 5000);
+  const employees = Math.max(1, +document.getElementById('inp-employees').value || 5000);
   const industry  = document.getElementById('inp-industry').value;
   const pmpy      = Math.max(1000, +document.getElementById('inp-pmpy').value || 14000);
 
-  const rate      = PREVALENCE[industry] ?? 0.42;
-  const eligible  = employees * rate;
-  const enrolled  = eligible * ENROLLMENT_RATE;
-  const savings   = enrolled * SAVINGS_PER_MEMBER;
-  const cvdSpend  = employees * pmpy * CVD_SPEND_SHARE;
+  const rate             = PREVALENCE[industry] ?? 0.42;
+  const eligible         = employees * rate;
+  const enrolled         = eligible * ENROLLMENT_RATE;
+  const savingsPerMember = SAVINGS_PER_MEMBER * (pmpy / 14000);
+  const savings          = enrolled * savingsPerMember;
+  const cvdSpend         = employees * pmpy * CVD_SPEND_SHARE;
   const spendDelta = (savings / cvdSpend) * 100;
 
   countUp('val-eligible', eligible, fmtInt);
