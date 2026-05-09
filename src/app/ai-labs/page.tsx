@@ -4,7 +4,7 @@ import Link from "next/link";
 type Project = {
   title: string;
   description: string;
-  status: "In Progress" | "Launched";
+  status: "Coming Soon" | "Launched";
   href?: string;
   skills: string[];
 };
@@ -105,7 +105,7 @@ const projects: Project[] = [
     title: "Private Knowledge Engine",
     description:
       "A retrieval stack over your notes and documents that answers with citations and tightens retrieval quality as you use it.",
-    status: "In Progress",
+    status: "Coming Soon",
     skills: [
       "Retrieval-augmented generation",
       "Context construction",
@@ -116,13 +116,37 @@ const projects: Project[] = [
     title: "Sign in with MyMemory to AI apps",
     description:
       "Interactive experience for user-owned memory that stays private by design, with permission selection to grant AI apps access only to specific aspects of personal context.",
-    status: "In Progress",
+    status: "Coming Soon",
     href: "/ai-labs/sign-in-with-memory",
     skills: [
       "Permissioned memory access",
       "Wallet-style connect flow",
       "In-chat consent requests",
       "User memory controls",
+    ],
+  },
+  {
+    title: "US Visa Assistant",
+    description:
+      "Share your LinkedIn profile, resume, and personal history — a multi-agent system searches the current visa landscape, identifies your most plausible US visa pathways, explains why each fits your profile, and assembles an up-to-date document checklist for each option.",
+    status: "Coming Soon",
+    skills: [
+      "Multi-agent orchestration",
+      "Privacy-first design",
+      "LinkedIn + resume parsing",
+      "Live document retrieval",
+    ],
+  },
+  {
+    title: "CrossFit: Fix Your Weakness",
+    description:
+      "Tell the agent your back squat, strict handstand push-up count, snatch, and other benchmarks. It draws on 10 years of CrossFit Games and Semifinal workouts plus the CrossFit Journal to build a personalized daily program targeting your exact weak points.",
+    status: "Coming Soon",
+    skills: [
+      "Conversational intake Q&A",
+      "Movement database RAG",
+      "CrossFit Journal corpus",
+      "Weakness-targeted programming",
     ],
   },
 ];
@@ -155,7 +179,7 @@ export default function AILabsPage() {
                   className={
                     project.status === "Launched"
                       ? "shrink-0 rounded-full border border-yellow-400/55 bg-yellow-500/10 px-2.5 py-1 text-xs font-medium text-yellow-200"
-                      : "shrink-0 rounded-full border border-emerald-500/35 bg-emerald-500/10 px-2.5 py-1 text-xs font-medium text-emerald-300"
+                      : "shrink-0 rounded-full border border-violet-500/40 bg-violet-500/10 px-2.5 py-1 text-xs font-medium text-violet-300"
                   }
                 >
                   {project.status}
@@ -184,7 +208,7 @@ export default function AILabsPage() {
                   className={
                     project.status === "Launched"
                       ? "shrink-0 rounded-full border border-yellow-400/55 bg-yellow-500/10 px-2.5 py-1 text-xs font-medium text-yellow-200"
-                      : "shrink-0 rounded-full border border-emerald-500/35 bg-emerald-500/10 px-2.5 py-1 text-xs font-medium text-emerald-300"
+                      : "shrink-0 rounded-full border border-violet-500/40 bg-violet-500/10 px-2.5 py-1 text-xs font-medium text-violet-300"
                   }
                 >
                   {project.status}
