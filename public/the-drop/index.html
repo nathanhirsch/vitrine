@@ -12,11 +12,11 @@
   body {
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
     background: #F5F6FA;
-    min-height: 100vh;
+    height: 100vh;
+    overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 24px 0;
   }
 
   /* Phone frame */
@@ -1185,6 +1185,19 @@
 </div><!-- /phone-frame -->
 
 <script>
+  function scalePhone() {
+    var frame = document.querySelector('.phone-frame');
+    var scaleH = (window.innerHeight - 40) / 844;
+    var scaleW = (window.innerWidth - 40) / 390;
+    var scale = Math.min(1, scaleH, scaleW);
+    var excess = (844 - 844 * scale) / 2;
+    frame.style.transform = 'scale(' + scale + ')';
+    frame.style.marginTop = '-' + excess + 'px';
+    frame.style.marginBottom = '-' + excess + 'px';
+  }
+  scalePhone();
+  window.addEventListener('resize', scalePhone);
+
   function goTo(n) {
     document.querySelectorAll('.screen').forEach(function(s) {
       s.classList.remove('active');
