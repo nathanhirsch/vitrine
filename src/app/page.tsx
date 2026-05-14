@@ -17,9 +17,9 @@ const experiences = [
   {
     role: "Founder",
     company: "Napoleon",
-    period: "Mar 2025 - Sep 2025 · Paris, France",
+    period: "Mar 2025 - Present · Paris / San Diego, CA",
     highlight:
-      "Built and launched a live mobile app to reduce social media addiction, and acquired 200+ users with early paid validation.",
+      "Launched iOS app to 100s of users, achieved paid validation within weeks, and was banned by Apple. Built in public to reach 100K people on LinkedIn and X, and secured non-profit partnerships via Time Left Association.",
     themes: ["Mobile App", "AI", "Build in Public"],
     links: [
       { label: "Napoleon App", url: "https://www.napoleonapp.com/en" },
@@ -39,7 +39,7 @@ const experiences = [
     company: "Arianee",
     period: "Aug 2022 - Mar 2025 · Paris, France",
     highlight:
-      "Scaled NFT infrastructure to 2M+ NFTs and shipped privacy-first and interoperability products with global brands including Breitling, Audemars Piguet, and Moncler.",
+      "Scaled NFT infrastructure to 2M+ assets for Breitling, Panerai, and Fnac Darty. Enabled a $10M opportunity via new EVM standards and launched the first web3 CRM on Salesforce.",
     themes: ["Enterprise SaaS", "EVM Protocol", "Interoperability"],
     links: [
       { label: "Arianee Protocol", url: "https://www.arianee.org/" },
@@ -62,7 +62,7 @@ const experiences = [
     company: "Clean Design",
     period: "Aug 2021 - Jul 2022 · Paris, France",
     highlight:
-      "Built and launched a browser-based mobile testing environment, reached 100+ active users, and integrated with core design workflows.",
+      "Launched web platform for mobile testing to 100+ active users across PMs and designers, automated workflows across Miro, Figma, and Google Suite, and pitched top-tier VCs including Y Combinator.",
     themes: ["0-1 Product", "Fundraising", "Tooling"],
     links: [
       {
@@ -76,7 +76,7 @@ const experiences = [
     company: "Luno",
     period: "Apr 2019 - Aug 2021 · Cape Town, South Africa",
     highlight:
-      "Led wallet division strategy and delivered products that drove $1.1B+ trading volume and $20M+ revenue from listings.",
+      "Led crypto Wallet product from 6 to 10M+ active customers as fleet leader of a 60-person division, driving $1.1B+ in trading volume, $20M+ revenue, and $500K+ from Earn products.",
     themes: ["Growth", "Monetization", "Team Leadership"],
     links: [{ label: "Luno", url: "https://www.luno.com/" }] as ProjectLink[],
   },
@@ -85,7 +85,7 @@ const experiences = [
     company: "Wala",
     period: "Mar 2018 - Apr 2019 · Cape Town, South Africa",
     highlight:
-      "Helped scale the product from 0 to 100K+ users, built analytics foundations, and ran deep user research for PMF.",
+      "Grew product from 0 to 100K+ users as early team member (#6) and conducted 200+ user interviews to find product-market fit.",
     themes: ["PMF", "Customer research", "Analytics"],
     links: [
       {

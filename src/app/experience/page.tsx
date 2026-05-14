@@ -3,9 +3,9 @@ const experiences = [
   {
     role: "Founder",
     company: "Napoleon",
-    period: "Mar 2025 - Sep 2025 · Paris, France",
+    period: "Mar 2025 - Present · Paris / San Diego, CA",
     impact:
-      "Built a behavioral product to reduce scrolling addiction with usage-based pricing on attention. Launched an MVP and acquired 200+ users generating early revenue, while building in public to reach 100k people.",
+      "Launched iOS app to 100s of users, achieved paid validation within weeks, and was banned by Apple. Built in public to reach 100K people on LinkedIn and X, and secured non-profit partnerships via Time Left Association.",
     stack: ["Mobile App", "AI", "Build in Public"],
   },
   {
@@ -13,7 +13,7 @@ const experiences = [
     company: "Arianee",
     period: "Aug 2022 - Mar 2025 · Paris, France",
     impact:
-      "Scaled NFT infrastructure to support 2M+ NFTs for global brands, led EVM standards integration with eBay, and launched privacy-first minting and Salesforce-integrated web3 insights products.",
+      "Scaled NFT infrastructure to 2M+ assets for Breitling, Panerai, and Fnac Darty. Enabled a $10M opportunity via new EVM standards, launched the first web3 CRM on Salesforce, and delivered bank-grade security with MPC wallets.",
     stack: ["Enterprise SaaS", "EVM Protocol", "Interoperability"],
   },
   {
@@ -21,7 +21,7 @@ const experiences = [
     company: "Clean Design",
     period: "Aug 2021 - Jul 2022 · Paris, France",
     impact:
-      "Built and launched a browser-based mobile testing environment for product teams, acquired 100+ active users, integrated with core design workflows, and pitched top-tier VCs including YC.",
+      "Launched web platform for mobile testing to 100+ active users across PMs and designers, automated workflows across Miro, Figma, and Google Suite, and pitched top-tier VCs including Y Combinator (YC W22).",
     stack: ["0-1 Product", "Fundraising", "Tooling"],
   },
   {
@@ -29,7 +29,7 @@ const experiences = [
     company: "Luno",
     period: "Apr 2019 - Aug 2021 · Cape Town, South Africa",
     impact:
-      "Led a 60-person wallet division, drove $1.1B+ in trading volume and $20M+ in revenue from listings, launched Earn products, and improved engagement, NPS, and paid upgrades through product redesign.",
+      "Led crypto Wallet product from 6 to 10M+ active customers as fleet leader of a 60-person division. Generated $1.1B+ trading volume and $20M+ revenue from listings, $500K+ from Earn products, increased NPS by +24 pts, and drove +50% QoQ paid upgrades.",
     stack: ["Growth", "Monetization", "Team Leadership"],
   },
   {
@@ -37,7 +37,7 @@ const experiences = [
     company: "Wala",
     period: "Mar 2018 - Apr 2019 · Cape Town, South Africa",
     impact:
-      "Helped grow the product from 0 to 100K+ users as an early team member, ran 200+ user interviews, built analytics foundations, and launched an ambassador program at scale.",
+      "Grew product from 0 to 100K+ users as early team member (#6) and conducted 200+ user interviews to find product-market fit.",
     stack: ["PMF", "Customer research", "Analytics"],
   },
   {
