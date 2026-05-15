@@ -14,7 +14,7 @@ const experiences = [
     period: "Aug 2022 - Mar 2025 · Paris, France",
     impact:
       "Scaled NFT infrastructure to 2M+ assets for Breitling, Panerai, and Fnac Darty. Enabled a $10M opportunity via new EVM standards, launched the first web3 CRM on Salesforce, and delivered bank-grade security with MPC wallets.",
-    stack: ["Enterprise SaaS", "EVM Protocol", "Interoperability"],
+    stack: ["Enterprise SaaS", "EVM Protocol", "Interoperability", "RWA"],
   },
   {
     role: "Founder",

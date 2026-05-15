@@ -40,7 +40,7 @@ const experiences = [
     period: "Aug 2022 - Mar 2025 · Paris, France",
     highlight:
       "Scaled NFT infrastructure to 2M+ assets for Breitling, Panerai, and Fnac Darty. Enabled a $10M opportunity via new EVM standards and launched the first web3 CRM on Salesforce.",
-    themes: ["Enterprise SaaS", "EVM Protocol", "Interoperability"],
+    themes: ["Enterprise SaaS", "EVM Protocol", "Interoperability", "RWA"],
     links: [
       { label: "Arianee Protocol", url: "https://www.arianee.org/" },
       {
