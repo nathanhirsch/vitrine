@@ -4,9 +4,9 @@ import { PandaDogClassifier } from "./PandaDogClassifier";
 
 const notebooks = [
   {
-    title: "Dog vs. Panda Classifier",
+    title: "Is it a dog, a panda or something else?",
     description:
-      "Binary image classifier trained on a dataset of dogs and pandas using ResNet-34 with transfer learning. Fine-tuned with discriminative learning rates and test-time augmentation.",
+      "Binary image classifier trained on a dataset of dogs and pandas using ResNet-34 with transfer learning.",
     tags: ["ResNet-34", "Transfer learning", "Binary classification"],
     active: true,
   },
@@ -27,7 +27,7 @@ export default function FastAIPage() {
         </p>
         <div className="flex flex-wrap gap-3">
           <a
-            href="https://nathanhirsch-nhdemo.hf.space"
+            href="https://huggingface.co/spaces/NathanHirsch/nhdemo/tree/main"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex rounded-md border border-slate-700 bg-slate-900/70 px-4 py-2 text-sm font-medium text-slate-200 transition hover:border-yellow-400/60 hover:bg-slate-900"
