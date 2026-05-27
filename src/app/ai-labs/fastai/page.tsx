@@ -4,7 +4,7 @@ import { PandaDogClassifier } from "./PandaDogClassifier";
 
 const notebooks = [
   {
-    title: "Is it a dog, a panda or something else?",
+    title: "Is it a dog or a panda?",
     description:
       "Binary image classifier trained on a dataset of dogs and pandas using ResNet-34 with transfer learning.",
     tags: ["ResNet-34", "Transfer learning", "Binary classification"],

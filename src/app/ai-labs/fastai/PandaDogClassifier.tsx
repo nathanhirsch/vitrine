@@ -49,7 +49,7 @@ export function PandaDogClassifier() {
   return (
     <div className="rounded-xl border border-slate-700/80 bg-slate-900/40 p-6 space-y-5">
       <div className="space-y-1">
-        <h3 className="text-base font-medium text-white">Is it a dog, a panda or something else?</h3>
+        <h3 className="text-base font-medium text-white">Is it a dog or a panda?</h3>
         <p className="text-sm text-slate-400">
           Upload any image and the model will predict whether it is a dog or a panda.
         </p>
