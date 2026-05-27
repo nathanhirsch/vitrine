@@ -11,6 +11,19 @@ type Project = {
 
 const projects: Project[] = [
   {
+    title: "Fast.ai",
+    description:
+      "Computer vision models trained using the fast.ai library. Includes a live dog vs. panda classifier: upload any image and the model predicts which it is, with a confidence score.",
+    status: "Launched",
+    href: "/ai-labs/fastai",
+    skills: [
+      "fast.ai",
+      "PyTorch",
+      "Transfer learning",
+      "Hugging Face Spaces",
+    ],
+  },
+  {
     title: "Customer Insight Engine",
     description:
       "Clusters customer feedback at scale, surfaces product-level themes and blind spots, and improves insight quality through evaluation loops.",
