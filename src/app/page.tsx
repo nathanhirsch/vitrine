@@ -39,7 +39,7 @@ const experiences = [
     company: "Arianee",
     period: "Aug 2022 - Mar 2025 · Paris, France",
     highlight:
-      "Scaled NFT infrastructure to 2M+ assets for Breitling, Panerai, and Fnac Darty. Enabled a $10M opportunity via new EVM standards and launched the first web3 CRM on Salesforce.",
+      "Led product strategy for the Arianee Protocol and our SaaS infrastructure, which scaled to 50+ enterprise customers including Richemont Group, Audemars Piguet, Breitling, and Moncler.",
     themes: ["Enterprise SaaS", "EVM Protocol", "Interoperability", "RWA"],
     links: [
       { label: "Arianee Protocol", url: "https://www.arianee.org/" },
@@ -76,7 +76,7 @@ const experiences = [
     company: "Luno",
     period: "Apr 2019 - Aug 2021 · Cape Town, South Africa",
     highlight:
-      "Led crypto Wallet product from 6 to 10M+ active customers as fleet leader of a 60-person division, driving $1.1B+ in trading volume, $20M+ revenue, and $500K+ from Earn products.",
+      "Led the wallet product through a period of 6M to 10M active customers as fleet leader of a 50-person division, driving $1.1B+ in trading volume from new listings, $20M+ net new revenue, and $500K+ from Earn products.",
     themes: ["Growth", "Monetization", "Team Leadership"],
     links: [{ label: "Luno", url: "https://www.luno.com/" }] as ProjectLink[],
   },
