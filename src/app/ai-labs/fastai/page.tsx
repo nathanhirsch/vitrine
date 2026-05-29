@@ -6,7 +6,7 @@ const notebooks = [
   {
     title: "Is it a dog or a panda?",
     description:
-      "Binary image classifier trained on a dataset of dogs and pandas using ResNet-34 with transfer learning.",
+      "Binary image classifier trained on a dataset of dogs and pandas using ResNet-34 with transfer learning. Experienced with DataLoaders, data augmentation, and fine-tuning using the Fast.ai library.",
     tags: ["ResNet-34", "Transfer learning", "Binary classification"],
     active: true,
   },
