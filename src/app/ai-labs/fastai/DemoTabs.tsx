@@ -13,16 +13,16 @@ export function DemoTabs() {
   const [active, setActive] = useState('dog-panda')
 
   return (
-    <div className="space-y-4">
-      <div className="flex gap-1 rounded-lg border border-slate-700/60 bg-slate-950/40 p-1 w-fit">
+    <div className="space-y-5">
+      <div className="flex flex-wrap gap-2">
         {tabs.map((tab) => (
           <button
             key={tab.id}
             onClick={() => setActive(tab.id)}
             className={
               active === tab.id
-                ? 'rounded-md px-4 py-1.5 text-sm font-medium text-white bg-slate-800 border border-slate-700/60 transition'
-                : 'rounded-md px-4 py-1.5 text-sm font-medium text-slate-400 transition hover:text-slate-200'
+                ? 'rounded-full border border-yellow-400/55 bg-yellow-500/10 px-4 py-1.5 text-sm font-medium text-yellow-200 transition'
+                : 'rounded-full border border-slate-700/60 bg-slate-900/40 px-4 py-1.5 text-sm font-medium text-slate-400 transition hover:border-slate-600 hover:text-slate-200'
             }
           >
             {tab.label}

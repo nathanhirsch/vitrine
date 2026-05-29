@@ -13,8 +13,8 @@ const notebooks = [
   {
     title: "3 vs. 7 Digit Classifier",
     description:
-      "MNIST-based classifier trained to distinguish handwritten 3s and 7s. Users draw directly in the browser; the canvas is downsampled to 28×28 before inference.",
-    tags: ["ResNet", "MNIST", "Transfer learning", "Binary classification"],
+      "Binary classifier built from scratch using pure PyTorch on the MNIST dataset — no high-level abstractions, every layer and training loop implemented manually. Draw a digit in the browser; the canvas is downsampled to 28×28 before inference.",
+    tags: ["Built from scratch", "Pure PyTorch", "MNIST", "Binary classification"],
     active: true,
   },
 ];
