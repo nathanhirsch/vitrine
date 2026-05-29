@@ -178,13 +178,13 @@ export default function AILabsPage() {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:items-start">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         {projects.map((project) =>
           project.href ? (
             <Link
               key={project.title}
               href={project.href}
-              className="block rounded-xl border border-slate-800 bg-slate-900/60 p-5 transition hover:border-yellow-400/60 hover:bg-slate-900"
+              className="flex flex-col rounded-xl border border-slate-800 bg-slate-900/60 p-5 transition hover:border-yellow-400/60 hover:bg-slate-900"
             >
               <div className="mb-3 flex items-center justify-between gap-3">
                 <h2 className="text-lg font-medium text-white">{project.title}</h2>
@@ -198,8 +198,8 @@ export default function AILabsPage() {
                   {project.status}
                 </span>
               </div>
-              <p className="text-sm text-slate-300">{project.description}</p>
-              <div className="mt-3 flex flex-wrap gap-1.5">
+              <p className="line-clamp-3 text-sm text-slate-300">{project.description}</p>
+              <div className="mt-auto flex flex-wrap gap-1.5 pt-3">
                 {project.skills.map((skill) => (
                   <span
                     key={skill}
@@ -213,7 +213,7 @@ export default function AILabsPage() {
           ) : (
             <article
               key={project.title}
-              className="rounded-xl border border-slate-800 bg-slate-900/60 p-5"
+              className="flex flex-col rounded-xl border border-slate-800 bg-slate-900/60 p-5"
             >
               <div className="mb-3 flex items-center justify-between gap-3">
                 <h2 className="text-lg font-medium text-white">{project.title}</h2>
@@ -227,8 +227,8 @@ export default function AILabsPage() {
                   {project.status}
                 </span>
               </div>
-              <p className="text-sm text-slate-300">{project.description}</p>
-              <div className="mt-3 flex flex-wrap gap-1.5">
+              <p className="line-clamp-3 text-sm text-slate-300">{project.description}</p>
+              <div className="mt-auto flex flex-wrap gap-1.5 pt-3">
                 {project.skills.map((skill) => (
                   <span
                     key={skill}
