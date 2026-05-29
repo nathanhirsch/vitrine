@@ -12,25 +12,21 @@ export default function ResumePage() {
     <section className="space-y-8">
       <div className="space-y-4">
         <h1 className="max-w-3xl text-3xl font-semibold tracking-tight text-white md:text-4xl">
-          I am an{" "}
+          I am a{" "}
           <span className="rounded-md bg-yellow-400/25 px-2 py-0.5 font-semibold text-yellow-200 shadow-[0_0_24px_-4px_rgba(250,204,21,0.45)] ring-1 ring-yellow-400/60">
-            AI product manager
+            senior product manager
           </span>
-          
         </h1>
         <p className="max-w-2xl text-base leading-relaxed text-slate-300">
-          +8 years of experience, fluent in AI, 2x founder. Built in AI,
-          SaaS and Web3.
+          +8 years of experience, fluent in AI, 2x founder. Built in consumers, SaaS and Web3.
         </p>
       </div>
 
       <article className="rounded-xl border border-slate-800 bg-slate-900/60 p-6">
-        <h2 className="mb-4 text-xl font-medium text-white">Highlights</h2>
-        <ul className="mb-6 list-inside list-disc space-y-2 text-slate-300">
-          {resumeBullets.map((point) => (
-            <li key={point}>{point}</li>
-          ))}
-        </ul>
+        <h2 className="mb-4 text-xl font-medium text-white">About me</h2>
+        <p className="mb-6 text-slate-300 leading-relaxed">
+          I&apos;ve spent 8+ years building product, as PM lead at Luno Exchange, where I owned the wallet product from 6 to 10M users leading a 50-person fleet, then 3 years at Arianee building an EVM protocol and developer infrastructure used by 50+ enterprise customers. I also built two companies from scratch: one was banned by Apple and the other got me a YC interview. Recently moved to the U.S., looking for a team building something important.
+        </p>
         <div className="flex flex-wrap gap-3">
           <Link
             href="/resume.pdf"
