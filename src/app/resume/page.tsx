@@ -14,7 +14,7 @@ export default function ResumePage() {
         <h1 className="max-w-3xl text-3xl font-semibold tracking-tight text-white md:text-4xl">
           I am a{" "}
           <span className="rounded-md bg-yellow-400/25 px-2 py-0.5 font-semibold text-yellow-200 shadow-[0_0_24px_-4px_rgba(250,204,21,0.45)] ring-1 ring-yellow-400/60">
-            senior product manager
+            senior PM
           </span>
         </h1>
         <p className="max-w-2xl text-base leading-relaxed text-slate-300">
@@ -25,7 +25,7 @@ export default function ResumePage() {
       <article className="rounded-xl border border-slate-800 bg-slate-900/60 p-6">
         <h2 className="mb-4 text-xl font-medium text-white">About me</h2>
         <p className="mb-6 text-slate-300 leading-relaxed">
-          I&apos;ve spent 8+ years building product, as PM lead at Luno Exchange, where I owned the wallet product from 6 to 10M users leading a 50-person fleet, then 3 years at Arianee building an EVM protocol and developer infrastructure used by 50+ enterprise customers. I also built two companies from scratch: one was banned by Apple and the other got me a YC interview. Recently moved to the U.S., looking for a team building something important.
+          I&apos;ve spent <strong className="text-white">8+ years</strong> building product, as PM lead at Luno Exchange, where I owned the wallet product from <strong className="text-white">6 to 10M users</strong> leading a <strong className="text-white">50-person fleet</strong>, then <strong className="text-white">3 years</strong> at Arianee building an <strong className="text-white">EVM protocol</strong> and developer infrastructure used by <strong className="text-white">50+ enterprise customers</strong>. I also built <strong className="text-white">two companies</strong> from scratch: one was banned by <strong className="text-white">Apple</strong> and the other got me a <strong className="text-white">YCombinator</strong> interview. Recently moved to the U.S., looking for a team building something important.
         </p>
         <div className="flex flex-wrap gap-3">
           <Link
