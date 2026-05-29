@@ -101,13 +101,14 @@ export function MnistClassifier() {
   }
 
   const confidence = result ? Math.round(result.confidence * 100) : 0
+  const isUnsure = result?.prediction?.toLowerCase().includes('not sure') || result?.prediction?.toLowerCase().includes('uncertain')
 
   return (
     <div className="rounded-xl border border-slate-700/80 bg-slate-900/40 p-6 space-y-5">
       <div className="space-y-1">
         <h3 className="text-base font-medium text-white">Is it a 3 or a 7?</h3>
         <p className="text-sm text-slate-400">
-          Draw a digit in the canvas and the model will predict whether it is a 3 or a 7.
+          Draw a digit and the model predicts whether it is a 3 or a 7 — or says &ldquo;not sure&rdquo; when it isn&apos;t confident enough.
         </p>
       </div>
 
@@ -155,7 +156,7 @@ export function MnistClassifier() {
             <p className="text-sm text-red-400">{error}</p>
           )}
 
-          {result && !loading && (
+          {result && !loading && !isUnsure && (
             <div className="space-y-3">
               <div className="flex items-center gap-2">
                 <span className="text-2xl font-semibold text-white">{result.prediction}</span>
@@ -171,6 +172,26 @@ export function MnistClassifier() {
                   />
                 </div>
                 <p className="text-xs text-slate-500">{confidence}% sure it&apos;s a {result.prediction}</p>
+              </div>
+            </div>
+          )}
+
+          {result && !loading && isUnsure && (
+            <div className="space-y-3">
+              <div className="flex items-center gap-2">
+                <span className="text-2xl font-semibold text-slate-400">Not sure</span>
+                <span className="rounded-full border border-slate-600/60 bg-slate-800/50 px-2.5 py-0.5 text-xs font-medium text-slate-400">
+                  {confidence}% confidence
+                </span>
+              </div>
+              <div className="space-y-1">
+                <div className="h-1.5 w-full overflow-hidden rounded-full bg-slate-800">
+                  <div
+                    className="h-full rounded-full bg-slate-600/70 transition-all duration-500"
+                    style={{ width: `${confidence}%` }}
+                  />
+                </div>
+                <p className="text-xs text-slate-500">The model isn&apos;t confident enough to call it — try drawing more clearly.</p>
               </div>
             </div>
           )}
