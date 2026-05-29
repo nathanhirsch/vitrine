@@ -195,6 +195,14 @@ export default function Home() {
             >
               GitHub
             </a>
+            <a
+              href="https://huggingface.co/NathanHirsch/spaces"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center rounded-lg border border-slate-700 bg-slate-900/70 px-5 py-2.5 text-sm font-medium text-white transition hover:border-yellow-400/60 hover:bg-slate-900"
+            >
+              Hugging Face
+            </a>
           </div>
         </div>
       </div>
