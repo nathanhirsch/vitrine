@@ -105,7 +105,7 @@ export default function FastAIPage() {
       <WhatSurprisedMeCard>
         <ul className="list-disc list-inside space-y-2">
           <li>The hardest part is to get the dataset.</li>
-          <li>Tensors, broadcasting, SGD, non-linearity, and Sigmoid took me a minute to truly get.</li>
+          <li>Tensors, broadcasting, SGD, non-linearity, and Sigmoid (and more) took me a minute to truly get.</li>
         </ul>
       </WhatSurprisedMeCard>
 
