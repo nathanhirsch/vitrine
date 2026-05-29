@@ -6,6 +6,16 @@ type ProjectLink = {
   url: string;
 };
 
+type Experience = {
+  role: string;
+  company: string;
+  tagline?: string;
+  period: string;
+  highlight: string;
+  themes: string[];
+  links: ProjectLink[];
+};
+
 type Interest = {
   title: string;
   image: string;
@@ -13,13 +23,14 @@ type Interest = {
   objectPosition?: string;
 };
 
-const experiences = [
+const experiences: Experience[] = [
   {
     role: "Founder",
     company: "Napoleon",
+    tagline: "pay per minute to stop scrolling",
     period: "Mar 2025 - Present · Paris / San Diego, CA",
     highlight:
-      "Launched iOS app to 100s of users, achieved paid validation within weeks, and was banned by Apple. Built in public to reach 100K people on LinkedIn and X, and secured non-profit partnerships via Time Left Association.",
+      "Built and launched iOS app to 100s of users. Paid validation within weeks, and was banned by Apple. Built in public to reach 100K people on LinkedIn and X, and secured non-profit partnerships via Time Left Association.",
     themes: ["Mobile App", "AI", "Build in Public"],
     links: [
       { label: "Napoleon App", url: "https://www.napoleonapp.com/en" },
@@ -231,6 +242,11 @@ export default function Home() {
               <div className="min-w-0">
                 <h3 className="text-lg font-medium leading-snug text-white">
                   {item.role} · {item.company}
+                  {item.tagline && (
+                    <span className="ml-2 text-sm font-normal text-slate-400">
+                      {item.tagline}
+                    </span>
+                  )}
                 </h3>
                 <p className="mt-1 text-sm text-slate-400">{item.period}</p>
                 <p className="mt-2 max-w-3xl text-slate-300">{item.highlight}</p>
