@@ -103,9 +103,10 @@ export default function FastAIPage() {
 
       {/* What surprised me */}
       <WhatSurprisedMeCard>
-        <p>
-          The hardest part is to get the dataset.
-        </p>
+        <ul className="list-disc list-inside space-y-2">
+          <li>The hardest part is to get the dataset.</li>
+          <li>Tensors, broadcasting, SGD, non-linearity, and Sigmoid took me a minute to truly get.</li>
+        </ul>
       </WhatSurprisedMeCard>
 
       {/* Built with */}
