@@ -183,7 +183,7 @@ export default function Home() {
             2x Founder. Senior Product Manager.
           </h1>
           <p className="max-w-xl text-lg leading-relaxed text-slate-300 md:text-xl">
-            +8 years shipping in web3, Enterprise SaaS, and AI. Here&apos;s what I&apos;ve built.
+            +8 years PM experience shipping to millions of customers in web3, SaaS, and consumers. Here&apos;s what I&apos;ve built.
           </p>
           <div className="flex flex-wrap items-center gap-3 pt-2">
             <Link
