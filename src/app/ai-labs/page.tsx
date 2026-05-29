@@ -4,7 +4,7 @@ import Link from "next/link";
 type Project = {
   title: string;
   description: string;
-  status: "Coming Soon" | "Launched";
+  status: "Coming Soon" | "Launched" | "Research";
   href?: string;
   skills: string[];
 };
@@ -14,7 +14,7 @@ const projects: Project[] = [
     title: "AI/ML Projects",
     description:
       "A repository of deep learning projects to teach me how to train models from scratch (or from pre-trained models) using PyTorch and the Fast.ai book.",
-    status: "Launched",
+    status: "Research",
     href: "/ai-labs/fastai",
     skills: [
       "fast.ai",
@@ -192,6 +192,8 @@ export default function AILabsPage() {
                   className={
                     project.status === "Launched"
                       ? "shrink-0 rounded-full border border-yellow-400/55 bg-yellow-500/10 px-2.5 py-1 text-xs font-medium text-yellow-200"
+                      : project.status === "Research"
+                      ? "shrink-0 rounded-full border border-emerald-500/50 bg-emerald-500/10 px-2.5 py-1 text-xs font-medium text-emerald-300"
                       : "shrink-0 rounded-full border border-violet-500/40 bg-violet-500/10 px-2.5 py-1 text-xs font-medium text-violet-300"
                   }
                 >
@@ -221,6 +223,8 @@ export default function AILabsPage() {
                   className={
                     project.status === "Launched"
                       ? "shrink-0 rounded-full border border-yellow-400/55 bg-yellow-500/10 px-2.5 py-1 text-xs font-medium text-yellow-200"
+                      : project.status === "Research"
+                      ? "shrink-0 rounded-full border border-emerald-500/50 bg-emerald-500/10 px-2.5 py-1 text-xs font-medium text-emerald-300"
                       : "shrink-0 rounded-full border border-violet-500/40 bg-violet-500/10 px-2.5 py-1 text-xs font-medium text-violet-300"
                   }
                 >
