@@ -11,9 +11,9 @@ type Project = {
 
 const projects: Project[] = [
   {
-    title: "Fast.ai",
+    title: "AI/ML Projects",
     description:
-      "Computer vision models trained using the fast.ai library. Includes a live dog vs. panda classifier: upload any image and the model predicts which it is, with a confidence score.",
+      "A repository of deep learning projects to teach me how to train models from scratch (or from pre-trained models) using PyTorch and the Fast.ai book.",
     status: "Launched",
     href: "/ai-labs/fastai",
     skills: [
