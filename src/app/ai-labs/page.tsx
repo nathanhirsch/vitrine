@@ -173,8 +173,7 @@ export default function AILabsPage() {
         </h1>
         <p className="max-w-2xl text-slate-300">
           This is where I showcase my AI-first projects: work that reflects
-          end-to-end product thinking and execution, with a clear line to
-          business relevance.
+          end-to-end product thinking, curiosity and execution.
         </p>
       </div>
 
