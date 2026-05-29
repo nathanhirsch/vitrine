@@ -178,13 +178,13 @@ export default function AILabsPage() {
         </p>
       </div>
 
-      <div className="columns-1 gap-4 md:columns-2">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:items-start">
         {projects.map((project) =>
           project.href ? (
             <Link
               key={project.title}
               href={project.href}
-              className="mb-4 block break-inside-avoid rounded-xl border border-slate-800 bg-slate-900/60 p-5 transition hover:border-yellow-400/60 hover:bg-slate-900"
+              className="block rounded-xl border border-slate-800 bg-slate-900/60 p-5 transition hover:border-yellow-400/60 hover:bg-slate-900"
             >
               <div className="mb-3 flex items-center justify-between gap-3">
                 <h2 className="text-lg font-medium text-white">{project.title}</h2>
@@ -213,7 +213,7 @@ export default function AILabsPage() {
           ) : (
             <article
               key={project.title}
-              className="mb-4 break-inside-avoid rounded-xl border border-slate-800 bg-slate-900/60 p-5"
+              className="rounded-xl border border-slate-800 bg-slate-900/60 p-5"
             >
               <div className="mb-3 flex items-center justify-between gap-3">
                 <h2 className="text-lg font-medium text-white">{project.title}</h2>
