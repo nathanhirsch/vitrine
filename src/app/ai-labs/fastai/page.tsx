@@ -13,7 +13,7 @@ const notebooks = [
   {
     title: "3 vs. 7 Digit Classifier",
     description:
-      "Binary classifier built from scratch using pure PyTorch on the MNIST dataset — no high-level abstractions, every layer and training loop implemented manually. Temperature scaling is applied to the sigmoid output to soften confidence scores, which surfaces a 'not sure' result more frequently when the model is genuinely uncertain.",
+      "Binary classifier built from scratch using pure PyTorch on the MNIST dataset. Every layer and training loop was implemented manually. Temperature scaling is applied to the sigmoid output to soften confidence scores.",
     tags: ["Built from scratch", "Pure PyTorch", "MNIST", "Temperature scaling"],
     active: true,
   },
