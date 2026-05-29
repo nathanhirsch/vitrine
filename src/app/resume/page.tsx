@@ -16,6 +16,7 @@ export default function ResumePage() {
           <span className="rounded-md bg-yellow-400/25 px-2 py-0.5 font-semibold text-yellow-200 shadow-[0_0_24px_-4px_rgba(250,204,21,0.45)] ring-1 ring-yellow-400/60">
             senior PM
           </span>
+          . Moved from 🇫🇷 to 🇺🇸
         </h1>
         <p className="max-w-2xl text-base leading-relaxed text-slate-300">
           +8 years of experience, fluent in AI, 2x founder. Built in consumers, SaaS and Web3.
