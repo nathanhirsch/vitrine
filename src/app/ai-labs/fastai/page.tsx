@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { WhatSurprisedMeCard } from "@/components/ai-labs/WhatSurprisedMeCard";
-import { PandaDogClassifier } from "./PandaDogClassifier";
+import { DemoTabs } from "./DemoTabs";
 
 const notebooks = [
   {
@@ -8,6 +8,13 @@ const notebooks = [
     description:
       "Binary image classifier trained on a dataset of dogs and pandas using ResNet-34 with transfer learning.",
     tags: ["ResNet-34", "Transfer learning", "Binary classification"],
+    active: true,
+  },
+  {
+    title: "3 vs. 7 Digit Classifier",
+    description:
+      "MNIST-based classifier trained to distinguish handwritten 3s and 7s. Users draw directly in the browser; the canvas is downsampled to 28×28 before inference.",
+    tags: ["ResNet", "MNIST", "Transfer learning", "Binary classification"],
     active: true,
   },
 ];
@@ -73,7 +80,7 @@ export default function FastAIPage() {
       {/* Live demo */}
       <div className="space-y-3">
         <h2 className="text-lg font-semibold text-white">Live demo</h2>
-        <PandaDogClassifier />
+        <DemoTabs />
       </div>
 
       {/* What surprised me */}
