@@ -27,10 +27,28 @@ export default function FastAIPage() {
           AI Playground
         </p>
         <h1 className="max-w-3xl text-3xl font-semibold tracking-tight text-white md:text-4xl">
-          Fast.ai
+          AI/ML Projects
         </h1>
         <p className="max-w-2xl text-base leading-relaxed text-slate-300">
-          Computer vision models trained from scratch using the fast.ai library. Each notebook covers a full training run: data prep, architecture choice, fine-tuning, and deployment to Hugging Face Spaces.
+          AI/ML projects that trained computer vision models from scratch or from pre-trained models. Projects are learning output from following the course{" "}
+          <a
+            href="https://www.amazon.com/Deep-Learning-Coders-fastai-PyTorch/dp/1492045527"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline underline-offset-2 decoration-slate-500 hover:text-white hover:decoration-yellow-400/70 transition"
+          >
+            Deep Learning for Coders
+          </a>{" "}
+          from{" "}
+          <a
+            href="https://course.fast.ai/Resources/book.html"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline underline-offset-2 decoration-slate-500 hover:text-white hover:decoration-yellow-400/70 transition"
+          >
+            fastai
+          </a>
+          .
         </p>
         <div className="flex flex-wrap gap-3">
           <a
