@@ -180,7 +180,7 @@ export default function Home() {
             Nathan Hirsch
           </p>
           <h1 className="max-w-full text-4xl font-semibold tracking-tight text-white md:text-5xl lg:text-6xl">
-            2x Founder. Senior Product Manager.
+            2x Founder. Senior PM and Builder.
           </h1>
           <p className="max-w-xl text-lg leading-relaxed text-slate-300 md:text-xl">
             +8 years PM experience shipping to millions of customers in web3, SaaS, and consumers. Here&apos;s what I&apos;ve built.
