@@ -169,7 +169,7 @@ export default function AILabsPage() {
     <section className="space-y-8">
       <div className="space-y-3">
         <h1 className="text-3xl font-semibold tracking-tight text-white">
-          My AI Playground
+          Projects I have built
         </h1>
         <p className="max-w-2xl text-slate-300">
           This is where I showcase my AI-first projects: work that reflects
