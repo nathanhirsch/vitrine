@@ -28,7 +28,6 @@ export default function ResumePage() {
         <p className="mb-6 text-slate-300 leading-relaxed">
           I&apos;ve spent <strong className="text-white">8+ years</strong> building product, as PM lead at Luno Exchange, where I owned the wallet product from <strong className="text-white">6 to 10M users</strong> leading a <strong className="text-white">50-person fleet</strong>, then <strong className="text-white">3 years</strong> at Arianee building an <strong className="text-white">EVM protocol</strong> and developer infrastructure used by <strong className="text-white">50+ enterprise customers</strong>. I also built <strong className="text-white">two companies</strong> from scratch: one was banned by <strong className="text-white">Apple</strong> and the other got me a <strong className="text-white">YCombinator</strong> interview. Recently moved to the U.S., looking for a team building something important.
         </p>
-        <p className="mb-6 text-xs text-slate-500">* Legally authorised to work in the US</p>
         <div className="flex flex-wrap gap-3">
           <Link
             href="/resume.pdf"
@@ -46,6 +45,13 @@ export default function ResumePage() {
           </Link>
         </div>
       </article>
+
+      <div className="flex items-center gap-3 rounded-xl border border-emerald-500/30 bg-emerald-500/5 px-5 py-4">
+        <span className="text-lg">🇺🇸</span>
+        <p className="text-sm font-medium text-emerald-300">
+          * Legally authorised to work in the US
+        </p>
+      </div>
     </section>
   );
 }
