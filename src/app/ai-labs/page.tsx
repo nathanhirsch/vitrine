@@ -164,7 +164,11 @@ const projects: Project[] = [
   },
 ];
 
+const featured = ["AI/ML Projects", "Customer Insight Engine", "EvalAgent"];
+
 export default function AILabsPage() {
+  const featuredProjects = projects.filter((p) => featured.includes(p.title));
+
   return (
     <section className="space-y-8">
       <div className="space-y-3">
@@ -175,6 +179,45 @@ export default function AILabsPage() {
           This is where I showcase my AI-first projects: work that reflects
           end-to-end product thinking, curiosity and execution.
         </p>
+      </div>
+
+      {/* Start here */}
+      <div className="space-y-3">
+        <div className="space-y-1">
+          <h2 className="text-lg font-semibold text-white">Start here</h2>
+          <p className="text-sm text-slate-400">Not sure where to start? These three show the range.</p>
+        </div>
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+          {featuredProjects.map((project) =>
+            project.href ? (
+              <Link
+                key={project.title}
+                href={project.href}
+                className="flex flex-col rounded-xl border border-yellow-400/25 bg-yellow-500/5 p-5 transition hover:border-yellow-400/50 hover:bg-yellow-500/10"
+              >
+                <div className="mb-3 flex items-center justify-between gap-3">
+                  <h3 className="text-base font-medium text-white">{project.title}</h3>
+                </div>
+                <p className="line-clamp-3 text-sm text-slate-300">{project.description}</p>
+                <div className="mt-auto flex flex-wrap gap-1.5 pt-3">
+                  {project.skills.map((skill) => (
+                    <span
+                      key={skill}
+                      className="rounded-full border border-slate-700/70 bg-slate-950/40 px-2.5 py-0.5 text-[11px] leading-snug text-slate-400"
+                    >
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+              </Link>
+            ) : null
+          )}
+        </div>
+      </div>
+
+      {/* All projects */}
+      <div className="space-y-3">
+        <h2 className="text-lg font-semibold text-white">All projects</h2>
       </div>
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
