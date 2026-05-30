@@ -46,12 +46,10 @@ export default function ResumePage() {
         </div>
       </article>
 
-      <div className="flex items-center gap-3 rounded-xl border border-emerald-500/30 bg-emerald-500/5 px-5 py-4">
-        <span className="text-lg">🇺🇸</span>
-        <p className="text-sm font-medium text-emerald-300">
-          * Legally authorised to work in the US
-        </p>
-      </div>
+      <p className="flex items-center gap-2 text-sm font-medium text-emerald-300">
+        <span>🇺🇸</span>
+        * Legally authorised to work in the US
+      </p>
     </section>
   );
 }
